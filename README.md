@@ -1,4 +1,4 @@
-#Zeipt Ionic App
+# Zeipt Ionic App 
 Is an example app made to showcase the API for Zeipt. //TODO: Add link
 It's meant to document an example use-case for the API and provide examples for interacting with it.
 
