@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { ResourcesProvider } from '../../providers/resources/resources';
 
 /**
  * Generated class for the LandingPage page.
@@ -14,11 +15,29 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class LandingPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  cards: any = [];
+  loading:any;
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public resProvider: ResourcesProvider,
+    public loadCtrl: LoadingController
+  ) {
+
+    this.loading = loadCtrl.create({
+      content: 'Please wait, loading...'
+    });
+    this.loading.present();
+
+    resProvider.loadCards().then((c) => {
+        this.cards = c;
+        this.loading.dismiss();
+    });
+
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LandingPage');
   }
 
 }
