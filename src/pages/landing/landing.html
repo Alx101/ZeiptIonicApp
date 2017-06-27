@@ -5,14 +5,33 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>Landing</ion-title>
+  <ion-toolbar class="blue-section">
+    <img src="/assets/img/zeipt.png" height="40px">
+    <img src="http://placehold.it/60" alt="" class="title-avatar">
+  </ion-toolbar>
+  <ion-navbar class="white-section">
+    <h6>User:</h6>
+    <ion-title>
+      {{user.name}}
+    </ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content>
+  <h5 padding>Your active cards</h5>
+  <ion-list no-lines>
+    <ion-item *ngFor="let card of cards; let idx = index">
+      <button ion-button icon-only clear item-end large (click)="popCard(idx)">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+      <ion-label>
+        <h2>XXXX XXXX XXXX {{card.last4}}</h2>
+      </ion-label>
+      <!--ion-thumbnail item-start-->
+        <ion-icon name='card' item-start large></ion-icon>
+      <!--/ion-thumbnail-->
+    </ion-item>
+  </ion-list>
 </ion-content>

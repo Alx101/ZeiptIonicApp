@@ -17,10 +17,75 @@
 
 .toolbar-background-ios
 {
-  background-color: rgba(33,70,108,0.9);
+  background-color: white;
+  border-color:transparent !important;
 }
 
-.toolbar-title-ios
+.blue-section
 {
-  color:white;
+  text-align: center;
+  .toolbar-background-ios
+  {
+    background-color: rgba(33,70,108,0.9);
+  }
+
+  .toolbar-title-ios
+  {
+    color:white;
+  }
+}
+
+.content-ios
+{
+  background-color:#F1F5FA !important;
+}
+
+page-landing
+{
+
+  .blue-section
+  {
+    position: relative;
+    padding-bottom:3em;
+    padding-top:1em;
+    overflow:visible;
+
+    .title-avatar
+    {
+    	box-shadow: 0 -3px 20px 0 rgba(60,191,113,0.7);
+      position: absolute;
+      left:calc(50% - 30px);
+      bottom:-30px;
+      width:60px;
+      height: 60px;
+      border-radius:30px;
+      z-index: 99;
+    }
+  }
+
+  .white-section
+  {
+  }
+
+  ion-navbar
+  {
+    .toolbar-title, h6
+    {
+      font-weight: normal;
+      padding-top:1.5em;
+    }
+  }
+
+  .scroll-content
+  {
+    h5
+    {
+      padding-bottom:0 !important;
+    }
+  }
+
+  .item-ios
+  {
+    margin-bottom:5px;
+  }
 }

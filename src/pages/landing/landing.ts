@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { ResourcesProvider } from '../../providers/resources/resources';
 
 /**
@@ -16,13 +16,17 @@ import { ResourcesProvider } from '../../providers/resources/resources';
 export class LandingPage {
 
   cards: any = [];
+  user: any = {
+    name: 'the get-receipt guy'
+  };
   loading:any;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public resProvider: ResourcesProvider,
-    public loadCtrl: LoadingController
+    public loadCtrl: LoadingController,
+    public alertCtrl: AlertController
   ) {
 
     this.loading = loadCtrl.create({
@@ -38,6 +42,34 @@ export class LandingPage {
   }
 
   ionViewDidLoad() {
+  }
+
+  popCard(index)
+  {
+    if(index <= this.cards.length)
+    {
+      let alert = this.alertCtrl.create({
+        title: 'Remove card',
+        message: 'Are you sure you want to remove this card?',
+        buttons: [
+          {
+            text: 'Yes',
+            handler: () => {
+              this.cards.splice(index, 1);
+            }
+          },
+          {
+            text: 'No',
+            role: 'cancel',
+            handler: () => {
+              //Do nothing I guess?
+            }
+          }
+        ]
+      });
+
+      alert.present();
+    }
   }
 
 }
