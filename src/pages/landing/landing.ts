@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { ResourcesProvider } from '../../providers/resources/resources';
+import { ReceiptsPage } from '../receipts/receipts';
 
 /**
  * Generated class for the LandingPage page.
@@ -70,6 +71,11 @@ export class LandingPage {
 
       alert.present();
     }
+  }
+
+  goToReceipts()
+  {
+    this.navCtrl.push(ReceiptsPage, {});
   }
 
 }

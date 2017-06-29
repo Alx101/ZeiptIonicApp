@@ -33,5 +33,21 @@
         <ion-icon name='card' item-start large></ion-icon>
       <!--/ion-thumbnail-->
     </ion-item>
+    <ion-item>
+      <button ion-button icon-end block clear large>
+        Add card
+        <ion-icon name="md-add"></ion-icon>
+      </button>
+    </ion-item>
   </ion-list>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <button ion-button full clear icon-end (click)="goToReceipts()">
+      Your receipts
+      <img src="http://placehold.it/50" class="spaced-image"/>
+      <ion-icon name="play"></ion-icon>
+    </button>
+  </ion-toolbar>
+</ion-footer>
