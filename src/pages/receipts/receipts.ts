@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { ResourcesProvider } from '../../providers/resources/resources';
+import { LandingPage } from '../landing/landing';
 
 /**
  * Generated class for the ReceiptsPage page.
@@ -14,11 +16,32 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ReceiptsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  receiptParts: any = [];
+  loading:any;
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public resProvider: ResourcesProvider,
+    public loadCtrl: LoadingController
+  ) {
+    this.loading = loadCtrl.create({
+      content: 'Please wait, loading...'
+    });
+    this.loading.present();
+
+    resProvider.loadReceiptParts().then((c) => {
+        this.receiptParts = c;
+        this.loading.dismiss();
+    });
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ReceiptsPage');
+  }
+
+  goToCards()
+  {
+    this.navCtrl.setRoot(LandingPage, {}, {animate: true, direction: 'forward'});
   }
 
 }

@@ -40,8 +40,13 @@
   background-color:#F1F5FA !important;
 }
 
-page-landing
+page-landing, page-receipts
 {
+  .more-padding
+  {
+    padding-top:2.5em;
+    padding-bottom:2.5em;
+  }
 
   .blue-section
   {

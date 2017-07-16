@@ -35,4 +35,72 @@ export class ResourcesProvider {
     });
   }
 
+  public loadReceiptParts() {
+    return new Promise((resolve, reject) => {
+        let receiptParts = [
+          {
+            year: '2017',
+            months: [
+              {
+                month: 'June',
+                weeks: [
+                  {
+                    nr: '28',
+                    days: [
+                      {
+                        date:'8',
+                        weekday: 'Tuesday',
+                        receipts: [
+                          {
+                            id:'1',
+                            name: 'Bohus',
+                            city: 'Ås',
+                            time: '14:39',
+                            sum: '12 000,00',
+                            currency: 'NOK'
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            year: '2016',
+            months: [
+              {
+                month: 'January',
+                weeks: [
+                  {
+                    nr: '1',
+                    days: [
+                      {
+                        date:'1',
+                        weekday: 'Monday',
+                        receipts: [
+                          {
+                            id:'3',
+                            name: 'Starbucks',
+                            city: 'Oslo',
+                            time: '13:37',
+                            sum: '200,00',
+                            currency: 'NOK'
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ];
+
+        resolve(receiptParts);
+
+    });
+  }
+
 }

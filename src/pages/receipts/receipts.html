@@ -5,14 +5,29 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>receipts</ion-title>
+  <ion-toolbar class="blue-section">
+    <img src="/assets/img/zeipt.png" height="40px">
+    <img src="http://placehold.it/60" alt="" class="title-avatar">
+  </ion-toolbar>
+  <ion-navbar class="white-section more-padding">
+    <ion-title>
+      Your receipts
+    </ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
-<ion-content padding>
-
+<ion-content>
+  <ion-item *ngFor="let bunch of receiptParts">
+    {{bunch.year}}
+  </ion-item>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <button ion-button full clear icon-end (click)="goToCards()">
+      Your cards
+      <img src="http://placehold.it/50" class="spaced-image"/>
+      <ion-icon name="play"></ion-icon>
+    </button>
+  </ion-toolbar>
+</ion-footer>

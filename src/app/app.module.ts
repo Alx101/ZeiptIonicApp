@@ -11,6 +11,7 @@ import { LandingPage } from '../pages/landing/landing';
 import { NewCardPage } from '../pages/new-card/new-card';
 import { ReceiptsPage } from '../pages/receipts/receipts';
 import { ResourcesProvider } from '../providers/resources/resources';
+import { ExpandableComponent } from '../components/expandable/expandable';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ResourcesProvider } from '../providers/resources/resources';
     HomePage,
     LandingPage,
     NewCardPage,
-    ReceiptsPage
+    ReceiptsPage,
+    ExpandableComponent
   ],
   imports: [
     BrowserModule,

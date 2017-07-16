@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { ResourcesProvider } from '../../providers/resources/resources';
 import { ReceiptsPage } from '../receipts/receipts';
+import { NewCardPage } from '../new-card/new-card';
 
 /**
  * Generated class for the LandingPage page.
@@ -75,7 +76,12 @@ export class LandingPage {
 
   goToReceipts()
   {
-    this.navCtrl.push(ReceiptsPage, {});
+    this.navCtrl.setRoot(ReceiptsPage, {}, {animate: true, direction: 'forward'});
+  }
+
+  newCard()
+  {
+    this.navCtrl.push(NewCardPage, {});
   }
 
 }
