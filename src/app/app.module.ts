@@ -11,7 +11,7 @@ import { LandingPage } from '../pages/landing/landing';
 import { NewCardPage } from '../pages/new-card/new-card';
 import { ReceiptsPage } from '../pages/receipts/receipts';
 import { ResourcesProvider } from '../providers/resources/resources';
-import { ExpandableComponent } from '../components/expandable/expandable';
+import { YearPopoverPage } from '../pages/year-popover/year-popover';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,7 @@ import { ExpandableComponent } from '../components/expandable/expandable';
     LandingPage,
     NewCardPage,
     ReceiptsPage,
-    ExpandableComponent
+    YearPopoverPage
   ],
   imports: [
     BrowserModule,
@@ -33,7 +33,8 @@ import { ExpandableComponent } from '../components/expandable/expandable';
     HomePage,
     LandingPage,
     NewCardPage,
-    ReceiptsPage
+    ReceiptsPage,
+    YearPopoverPage
   ],
   providers: [
     StatusBar,

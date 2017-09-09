@@ -7,19 +7,25 @@
 <ion-header>
   <ion-toolbar class="blue-section">
     <img src="/assets/img/zeipt.png" height="40px">
-    <img src="http://placehold.it/60" alt="" class="title-avatar">
   </ion-toolbar>
-  <ion-navbar class="white-section more-padding">
+  <ion-navbar class="white-section">
     <ion-title>
-      Your receipts
+      Select month
     </ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="presentPopover($event)">
+        {{curYear.year}}
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-item *ngFor="let bunch of receiptParts">
-    {{bunch.year}}
-  </ion-item>
+  <ion-list>
+    <ion-item *ngFor="let bunch of curYear.months">
+      {{bunch.month}}
+    </ion-item>
+  </ion-list>
 </ion-content>
 
 <ion-footer>

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, PopoverController } from 'ionic-angular';
 import { ResourcesProvider } from '../../providers/resources/resources';
 import { LandingPage } from '../landing/landing';
+import { YearPopoverPage } from '../year-popover/year-popover';
 
 /**
  * Generated class for the ReceiptsPage page.
@@ -18,12 +19,14 @@ export class ReceiptsPage {
 
   receiptParts: any = [];
   loading:any;
+  curYear:any;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public resProvider: ResourcesProvider,
-    public loadCtrl: LoadingController
+    public loadCtrl: LoadingController,
+    public popoverCtrl: PopoverController
   ) {
     this.loading = loadCtrl.create({
       content: 'Please wait, loading...'
@@ -32,6 +35,7 @@ export class ReceiptsPage {
 
     resProvider.loadReceiptParts().then((c) => {
         this.receiptParts = c;
+        this.curYear = c[0];
         this.loading.dismiss();
     });
   }
@@ -43,5 +47,22 @@ export class ReceiptsPage {
   {
     this.navCtrl.setRoot(LandingPage, {}, {animate: true, direction: 'forward'});
   }
+
+  presentPopover(ev) {
+
+    let popover = this.popoverCtrl.create(YearPopoverPage, {
+      dataSet: this.receiptParts,
+      currentSet: this.curYear
+    });
+
+    popover.present({
+      ev: ev
+    });
+
+    popover.onDidDismiss((popoverData) => {
+      this.curYear = popoverData;
+    })
+  }
+
 
 }

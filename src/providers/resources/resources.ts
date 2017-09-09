@@ -17,88 +17,106 @@ export class ResourcesProvider {
 
   public loadCards() {
     return new Promise((resolve, reject) => {
-        let cards = [
-          {
-            type:'MasterCard',
-            token: '6a284f27a0e5627bd9ad746a3bf2c46f',
-            last4: '1234'
-          },
-          {
-            type:'Visa',
-            token: '88d12d742f24998b3884bf775b2c7f17',
-            last4: '5678'
-          }
-        ];
+      let cards = [
+        {
+          type: 'MasterCard',
+          token: '6a284f27a0e5627bd9ad746a3bf2c46f',
+          last4: '1234'
+        },
+        {
+          type: 'Visa',
+          token: '88d12d742f24998b3884bf775b2c7f17',
+          last4: '5678'
+        }
+      ];
 
-        resolve(cards);
+      resolve(cards);
 
     });
   }
 
   public loadReceiptParts() {
     return new Promise((resolve, reject) => {
-        let receiptParts = [
-          {
-            year: '2017',
-            months: [
-              {
-                month: 'June',
-                weeks: [
-                  {
-                    nr: '28',
-                    days: [
-                      {
-                        date:'8',
-                        weekday: 'Tuesday',
-                        receipts: [
-                          {
-                            id:'1',
-                            name: 'Bohus',
-                            city: 'Ås',
-                            time: '14:39',
-                            sum: '12 000,00',
-                            currency: 'NOK'
-                          }
-                        ]
-                      }
-                    ]
+      let receiptParts = [
+        {
+          year: '2016',
+          months: [
+            {
+              month: 'January',
+              receipts: [
+                {
+                  header: {
+                    org_nr: '830',
+                    adress: 'Bauhausgatan 3, Västerås 72468',
+                    name: 'Bauhaus',
+                    employee: 'Lena Törnqvist',
+                    time: '01:39',
+                    sum_without_vat: '10.00',
+                    sum_with_vat: '12.00',
+                    date: '2016-01-01'
+                  },
+                  body: {
+                    '23': {
+                      art_name: 'Flaska',
+                      art_quantity: '1',
+                      art_sum: '12.00',
+                      art_vat: '2.00',
+                      art_price: '12.00'
+                    }
+                  },
+                  footer: {
+                    payment_id: '1',
+                    currency: 'SEK',
+                    payment_nr: '2', //(National referens number)
+                    bax_number: '1', //(Terminal nr)
+                    national_merchant_nr: '8' //(Vi får dessa av terminalen)
                   }
-                ]
-              }
-            ]
-          },
-          {
-            year: '2016',
-            months: [
-              {
-                month: 'January',
-                weeks: [
-                  {
-                    nr: '1',
-                    days: [
-                      {
-                        date:'1',
-                        weekday: 'Monday',
-                        receipts: [
-                          {
-                            id:'3',
-                            name: 'Starbucks',
-                            city: 'Oslo',
-                            time: '13:37',
-                            sum: '200,00',
-                            currency: 'NOK'
-                          }
-                        ]
-                      }
-                    ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          year: '2015',
+          months: [
+            {
+              month: 'June',
+              receipts: [
+                {
+                  header: {
+                    org_nr: '830',
+                    adress: 'Bauhausgatan 3, Västerås 72468',
+                    name: 'Bauhaus',
+                    employee: 'Lena Törnqvist',
+                    time: '01:39',
+                    sum_without_vat: '10.00',
+                    sum_with_vat: '12.00',
+                    date: '2016-07-01'
+                  },
+                  body: {
+                    '23': {
+                      art_name: 'Flaska',
+                      art_quantity: '1',
+                      art_sum: '12.00',
+                      art_vat: '2.00',
+                      art_price: '12.00'
+                    }
+                  },
+                  footer: {
+                    payment_id: '1',
+                    currency: 'SEK',
+                    payment_nr: '2', //(National referens number)
+                    bax_number: '1', //(Terminal nr)
+                    national_merchant_nr: '8' //(Vi får dessa av terminalen)
                   }
-                ]
-              }
-            ]
-          }
-        ];
+                }
+              ]
+            }
+          ]
+        }
+      ];
 
-        resolve(receiptParts);
+      resolve(receiptParts);
 
     });
   }
