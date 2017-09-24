@@ -13,6 +13,8 @@ import { ReceiptsPage } from '../pages/receipts/receipts';
 import { ResourcesProvider } from '../providers/resources/resources';
 import { YearPopoverPage } from '../pages/year-popover/year-popover';
 
+import { ShrinkingSegmentHeader } from '../components/shrinking-segment-header/shrinking-segment-header';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -20,7 +22,8 @@ import { YearPopoverPage } from '../pages/year-popover/year-popover';
     LandingPage,
     NewCardPage,
     ReceiptsPage,
-    YearPopoverPage
+    YearPopoverPage,
+    ShrinkingSegmentHeader
   ],
   imports: [
     BrowserModule,

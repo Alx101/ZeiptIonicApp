@@ -36,5 +36,43 @@
         ]
       }
     ]
+  },
+  {
+    year: '2015',
+    months: [
+      {
+        month: 'June',
+        receipts: [
+          {
+            header: {
+              org_nr: '830',
+              adress: 'Bauhausgatan 3, Västerås 72468',
+              name: 'Bauhaus',
+              employee: 'Lena Törnqvist',
+              time: '01:39',
+              sum_without_vat: '10.00',
+              sum_with_vat: '12.00',
+              date: '2016-07-01'
+            },
+            body: {
+              '23': {
+                art_name: 'Flaska',
+                art_quantity: '1',
+                art_sum: '12.00',
+                art_vat: '2.00',
+                art_price: '12.00'
+              }
+            },
+            footer: {
+              payment_id: '1',
+              currency: 'SEK',
+              payment_nr: '2', //(National referens number)
+              bax_number: '1', //(Terminal nr)
+              national_merchant_nr: '8' //(Vi får dessa av terminalen)
+            }
+          }
+        ]
+      }
+    ]
   }
 ];
