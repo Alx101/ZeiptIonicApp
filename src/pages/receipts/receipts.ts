@@ -78,6 +78,8 @@ export class ReceiptsPage {
             parts: set
         });
     }
-
-
+    
+    logReceipt(){
+        console.log('hei');
+    }
 }

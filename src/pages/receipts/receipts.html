@@ -10,7 +10,7 @@
     </shrinking-segment-header>
     <ion-navbar>
         <ion-title>
-            Select set
+            Select year
         </ion-title>
         <ion-buttons end>
             <button ion-button (click)="presentPopover($event)">
@@ -23,8 +23,8 @@
 <ion-content fullscreen #content>
     <br>
     <ion-list>
-        <ion-item *ngFor="let bunch of curDatePart.months">
-            {{bunch.name}}
+        <ion-item *ngFor="let bunch of curDatePart.months" (click)="logReceipt()">
+            {{bunch.name}} JHALLA
         </ion-item>
     </ion-list>
 </ion-content>
