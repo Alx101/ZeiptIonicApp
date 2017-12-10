@@ -10,22 +10,17 @@
     </shrinking-segment-header>
     <ion-navbar>
         <ion-title>
-            Select set
+            Receipts
         </ion-title>
-        <ion-buttons end>
-            <button ion-button (click)="presentPopover($event)">
-                {{curDatePart.name}}
-            </button>
-        </ion-buttons>
     </ion-navbar>
 </ion-header>
 
 <ion-content fullscreen #content>
     <br>
     <ion-list>
-        <ion-item *ngFor="let bunch of curDatePart.months">
-            {{bunch.name}}
-        </ion-item>
+        <button ion-item *ngFor="let receipt of receiptParts" (click)="goToReceipt(receipt)">
+            {{receipt.merchant_factors.address}} {{receipt.merchant_factors.city}} - {{receipt.payments.payment_amount}} {{receipt.payments.currency}}
+        </button>
     </ion-list>
 </ion-content>
 
