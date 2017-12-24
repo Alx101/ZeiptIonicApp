@@ -8,22 +8,21 @@ import { HttpModule } from '@angular/http';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LandingPage } from '../pages/landing/landing';
-import { NewCardPage } from '../pages/new-card/new-card';
 import { ReceiptsPage } from '../pages/receipts/receipts';
 import { ResourcesProvider } from '../providers/resources/resources';
-import { YearPopoverPage } from '../pages/year-popover/year-popover';
+import { ReceiptDetailPage } from "../pages/receipt-detail/receipt-detail";
 
 import { ShrinkingSegmentHeader } from '../components/shrinking-segment-header/shrinking-segment-header';
+import { InAppBrowser } from "@ionic-native/in-app-browser";
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     LandingPage,
-    NewCardPage,
     ReceiptsPage,
-    YearPopoverPage,
-    ShrinkingSegmentHeader
+    ShrinkingSegmentHeader,
+    ReceiptDetailPage
   ],
   imports: [
     BrowserModule,
@@ -35,15 +34,15 @@ import { ShrinkingSegmentHeader } from '../components/shrinking-segment-header/s
     MyApp,
     HomePage,
     LandingPage,
-    NewCardPage,
     ReceiptsPage,
-    YearPopoverPage
+    ReceiptDetailPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ResourcesProvider
+    ResourcesProvider,
+    InAppBrowser
   ]
 })
 export class AppModule {}

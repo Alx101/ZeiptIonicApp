@@ -24,20 +24,21 @@
 .blue-section
 {
   text-align: center;
+
   .toolbar-background-ios
   {
-    background-color: #0F2841;
+    background-color: color($colors, danger);
   }
 
-  .toolbar-title-ios
+.toolbar-title-ios
   {
-    color:white;
+    background-color:white;
   }
 }
 
 .content-ios
 {
-  background-color:#F1F5FA !important;
+  background-color: color($colors, light);
 }
 
 .more-padding
@@ -55,7 +56,6 @@
 
   .title-avatar
   {
-  	box-shadow: 0 -3px 20px 0 rgba(60,191,113,0.7);
     position: absolute;
     left:calc(50% - 30px);
     bottom:-30px;
@@ -66,16 +66,10 @@
   }
 }
 
-.white-section
-{
-}
-
-ion-navbar
-{
+ion-navbar {
   .toolbar-title, h6
   {
     font-weight: normal;
-    //padding-top:1.5em;
   }
 }
 
@@ -92,7 +86,6 @@ ion-navbar
   margin-bottom:5px;
 }
 
-
 .spaced-image
 {
   margin:5px;
@@ -101,6 +94,5 @@ ion-navbar
 ion-input {
   padding:.5em;
   background-color:white;
-  box-shadow:1px 1px 1px 1px rgba(0, 0, 0, 0.2);
   font-size:18px;
 }

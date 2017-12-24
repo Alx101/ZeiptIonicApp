@@ -4,36 +4,63 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
-    <shrinking-segment-header [scrollArea]="content" headerHeight="100" minHeaderHeight="50">
-        <img src="/assets/img/zeipt.png" height="40px">
-    </shrinking-segment-header>
-    <ion-navbar>
-        <ion-title>
-            Select year
-        </ion-title>
-        <ion-buttons end>
-            <button ion-button (click)="presentPopover($event)">
-                {{curDatePart.name}}
-            </button>
-        </ion-buttons>
-    </ion-navbar>
-</ion-header>
-
 <ion-content fullscreen #content>
-    <br>
-    <ion-list>
-        <ion-item *ngFor="let bunch of curDatePart.months" (click)="logReceipt()">
-            {{bunch.name}} JHALLA
-        </ion-item>
-    </ion-list>
+    <div *ngFor="let year of years" class="year" id="{{year}}">
+        <div class="ddbutton yearbtn">
+            <p>{{year}}</p>
+        </div>
+        <div *ngFor="let receiptMap of mappedReceipts">
+            <div *ngFor="let receiptYear of receiptMap[year]">
+
+                <div *ngFor="let month of months" class="month" id="{{month}}">
+                    <div *ngIf="receiptYear[month]">
+                        <div class="monthbtn ddbutton">
+                            <p>{{month}}</p>
+                        </div>
+                        <div *ngFor="let receiptMonth of receiptYear[month]">
+                            
+                            <div *ngFor="let day of days">
+                                <div class="day" *ngIf="receiptMonth[day]">
+                                    <p class="dayname">{{day}}</p>
+                                    <div *ngFor="let receipt of receiptMonth[day]">
+                                        <button class="receiptbtn" (click)="goToReceipt(receipt)">
+
+                                            <div class="merchant half">
+                                                <p class="name">
+                                                    {{receipt.merchant.name}}
+                                                </p>
+                                                <p class="city">
+                                                    {{receipt.merchant.city}}
+                                                </p>
+                                            </div>
+                                            <div class="info half">
+                                                <div class="sum">
+                                                    <p class="total">
+                                                        {{receipt.sum.total.toLocaleString(undefined, {useGrouping: true, minimumFractionDigits: 2, maximumFractionDigits: 2}) }}
+                                                    </p>
+                                                    <p class="currency">
+                                                        {{receipt.sum.currency}}
+                                                    </p>
+                                                </div>
+                                                <p class="time">{{receipt.receipt.time.slice(0,-3)}}</p>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </ion-content>
 
 <ion-footer>
     <ion-toolbar>
         <button ion-button full clear icon-end (click)="goToCards()">
             Your cards
-            <img src="http://placehold.it/50" class="spaced-image"/>
             <ion-icon name="play"></ion-icon>
         </button>
     </ion-toolbar>

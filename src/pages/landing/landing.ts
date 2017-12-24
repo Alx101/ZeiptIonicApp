@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { ResourcesProvider } from '../../providers/resources/resources';
 import { ReceiptsPage } from '../receipts/receipts';
-import { NewCardPage } from '../new-card/new-card';
+import { InAppBrowser } from "@ionic-native/in-app-browser";
 
 /**
  * Generated class for the LandingPage page.
@@ -28,7 +28,8 @@ export class LandingPage {
     public navParams: NavParams,
     public resProvider: ResourcesProvider,
     public loadCtrl: LoadingController,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public iab: InAppBrowser
   ) {
 
     this.loading = loadCtrl.create({
@@ -44,6 +45,7 @@ export class LandingPage {
   }
 
   ionViewDidLoad() {
+
   }
 
   popCard(index)
@@ -81,7 +83,7 @@ export class LandingPage {
 
   newCard()
   {
-    this.navCtrl.push(NewCardPage, {});
+    const browser = this.iab.create('http://localhost:8000/registercard/1234');
   }
 
 }
