@@ -1,0 +1,24 @@
+accordion {
+
+    .month{
+        max-height: 0px;
+    }
+    .accordion-btn {
+        background-color: #f7faff;
+        padding: 0 10px;
+        margin: 0 0px 8px 0;
+        display: table;
+        width: 100%;
+        -webkit-box-shadow: 0 2px 4px rgba(194, 217, 236, 0.5);
+        box-shadow: 0 2px 4px rgba(194, 217, 236, 0.5);
+    }
+    .btn-wrapper{
+
+        display: table;
+    }
+    .btn-wrapper p {
+        text-align: right;
+        display: table-cell;
+        vertical-align: middle;
+    }
+}

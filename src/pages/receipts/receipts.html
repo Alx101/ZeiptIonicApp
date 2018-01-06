@@ -5,58 +5,70 @@
   Ionic pages and navigation.
 -->
 <ion-content fullscreen #content>
-    <div *ngFor="let year of years" class="year" id="{{year}}">
-        <div class="ddbutton yearbtn">
-            <p>{{year}}</p>
-        </div>
+
+    <ion-list *ngFor="let year of years">
+        <ion-item-group>
+
+            <div class="year">
+               
+                <p>{{ year }}</p>
+               
+            </div>
+
+        </ion-item-group>
+
         <div *ngFor="let receiptMap of mappedReceipts">
             <div *ngFor="let receiptYear of receiptMap[year]">
+                <div *ngFor="let month of months; let i = index" id="{{month}}">
+                    <div *ngIf="receiptYear[month] ">
+                        <accordion [monthTitle]="month">
+                            <div *ngFor="let receiptMonth of receiptYear[month]">
 
-                <div *ngFor="let month of months" class="month" id="{{month}}">
-                    <div *ngIf="receiptYear[month]">
-                        <div class="monthbtn ddbutton">
-                            <p>{{month}}</p>
-                        </div>
-                        <div *ngFor="let receiptMonth of receiptYear[month]">
-                            
-                            <div *ngFor="let day of days">
-                                <div class="day" *ngIf="receiptMonth[day]">
-                                    <p class="dayname">{{day}}</p>
-                                    <div *ngFor="let receipt of receiptMonth[day]">
-                                        <button class="receiptbtn" (click)="goToReceipt(receipt)">
+                                <div *ngFor="let day of days">
+                                    <div *ngIf="receiptMonth[day]">
+                                        <p class="dayname">{{day}}</p>
+                                        <div class="day">
+                                            <div *ngFor="let receipt of receiptMonth[day]">
+                                                <button class="receiptbtn" (click)="goToReceipt(receipt)">
 
-                                            <div class="merchant half">
-                                                <p class="name">
-                                                    {{receipt.merchant.name}}
-                                                </p>
-                                                <p class="city">
-                                                    {{receipt.merchant.city}}
-                                                </p>
+                                                    <div class="merchant half">
+                                                        <p class="name">
+                                                            {{receipt.merchant.name}}
+                                                        </p>
+                                                        <p class="city">
+                                                            {{receipt.merchant.city}}
+                                                        </p>
+                                                    </div>
+                                                    <div class="info half">
+                                                        <div class="sum">
+                                                            <p class="total">
+                                                                {{receipt.sum.total.toLocaleString(undefined, {useGrouping: true, minimumFractionDigits: 2, maximumFractionDigits: 2}) }}
+                                                            </p>
+                                                            <p class="currency">
+                                                                {{receipt.sum.currency}}
+                                                            </p>
+                                                        </div>
+                                                        <p class="time">{{receipt.receipt.time.slice(0,-3)}}</p>
+                                                    </div>
+                                                </button>
                                             </div>
-                                            <div class="info half">
-                                                <div class="sum">
-                                                    <p class="total">
-                                                        {{receipt.sum.total.toLocaleString(undefined, {useGrouping: true, minimumFractionDigits: 2, maximumFractionDigits: 2}) }}
-                                                    </p>
-                                                    <p class="currency">
-                                                        {{receipt.sum.currency}}
-                                                    </p>
-                                                </div>
-                                                <p class="time">{{receipt.receipt.time.slice(0,-3)}}</p>
-                                            </div>
-                                        </button>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </accordion>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
+    </ion-list>
+    
+    
 
 </ion-content>
-
+<!--
 <ion-footer>
     <ion-toolbar>
         <button ion-button full clear icon-end (click)="goToCards()">
@@ -64,4 +76,4 @@
             <ion-icon name="play"></ion-icon>
         </button>
     </ion-toolbar>
-</ion-footer>
+</ion-footer>-->

@@ -14,6 +14,7 @@ import { ReceiptDetailPage } from "../pages/receipt-detail/receipt-detail";
 
 import { ShrinkingSegmentHeader } from '../components/shrinking-segment-header/shrinking-segment-header';
 import { InAppBrowser } from "@ionic-native/in-app-browser";
+import { AccordionComponent } from '../components/accordion/accordion';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { InAppBrowser } from "@ionic-native/in-app-browser";
     LandingPage,
     ReceiptsPage,
     ShrinkingSegmentHeader,
+    AccordionComponent,
     ReceiptDetailPage
   ],
   imports: [

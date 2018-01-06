@@ -73,7 +73,6 @@ export class ReceiptsPage {
                         date = new Date(y, m, d, hour, minute, second),
                         mName = monthNames[date.getMonth()],
                         dName = d + ", " + dayNames[date.getDay()];
-                        //console.log([y, mName, dName, receipt, {"date": date}]);
                     return [y, mName, dName, receipt, {"date": date}];
                 }).reduce((accumulator, [year, month, day, receipt]) => {
 
@@ -84,41 +83,6 @@ export class ReceiptsPage {
                     return accumulator;
                 }, {})
 
-                //console.log(mappedReceipts);
-                //this.mappedReceipts = mappedReceipts;
-
-                /*
-                "years":[{ 
-                    "year": "2016",
-                    "months": [{
-                        "month": "october",
-                        "days": [{
-                            "day": "monday",
-                            "receipts": [{receipt}]
-                        }]
-
-                    }]
-                }, {
-                    "year": "2017",
-                    "months": [{
-                        "month": "january",
-                        "days": [{
-                            "day": "friday",
-                            "receipts": [{receipt}]
-                        }, {
-                            "day": "wednesday",
-                            "receipts": [{receipt}]
-                        }]
-                    }, {
-                        "month": "september",
-                        "days": [{
-                            "day": "saturday",
-                            "receipts": [{receipt}, {receipt}]
-                        }]
-                    }]
-                }]
-                
-                */
                 function wrapInArrays(data) {
                     return Array.isArray(data)
                         ? data
@@ -151,8 +115,6 @@ export class ReceiptsPage {
                 console.log(this.mappedReceipts);
                 console.log(this.years)
                 console.log(this.months)
-                /*console.log(this.days)
-                */
 
                 
                 this
@@ -178,5 +140,16 @@ export class ReceiptsPage {
         this
             .navCtrl
             .push(ReceiptDetailPage, {receipt: clickedReceipt});
+    }
+    closeYear(yearToClose){
+        console.log(yearToClose);
+        var yearContainer = document.getElementById(yearToClose);
+
+        if(yearContainer.style.height == "41px"){
+            yearContainer.style.height = "auto";
+        }else{
+            yearContainer.style.height = "41px";
+        }
+        
     }
 }

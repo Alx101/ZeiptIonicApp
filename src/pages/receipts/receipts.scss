@@ -13,19 +13,63 @@ p{
 }
 .ddbutton.yearbtn {
     bottom: 0;
-    background-color: #277098;
+    background-color: color($colors, primary);
     color: white;
+}
+.year{
+    overflow: hidden;
+}
+.year{
+    background-color: transparent;
+    padding: 0px;
+    margin: 0px;
+}
+.year {
+    background-color: color($colors, light);
+    margin: 0px;
+}
+.year>p  {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 5px;
+    position: relative;
+    color: #277098;
+    background-color: none;
+}
+.year > p:before{
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 40%;
+    height: 1px;
+    width: 40%;
+    background-color: color($colors, blues);
+}
+.year > p:after{
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 40%;
+    height: 1px;
+    width: 40%;
+    background-color: color($colors, blues);
 }
 .day {
     border-left: 1px solid #277098;
-    margin-left: 10px;
-    margin-top: 10px;
+    padding: 0px 10px;
+    margin-left: 8px;
 }
-.day:last-child {
-    margin-bottom: 10px;
+.day:after {
+    content: "";
+    display: table;
+    clear: both;
 }
-.dayname {
-    margin-left: 10px;
+p.dayname {
+    font-size: 12px;
+    margin-left: 8px;
+    color: #277098;
+    margin-top: 4px;
+    padding-top: 4px;
 }
 .receiptbtn {
     width: 100%;
@@ -38,6 +82,9 @@ p{
     box-shadow: 0 2px 5px rgba(39, 112, 152, 0.1);
     border-radius: 0;
     margin: 5px 0px;
+}
+.receiptbtn p {
+    color: black;
 }
 .half{
     display: inline-block;
@@ -66,7 +113,31 @@ p.name, p.total{
 .sum p{
     display: inline-block;
 }
+p.time {
+    font-size: 12px;
+}
 .currency {
     vertical-align: super;
-    font-size: 10px;
+    font-size: 10px !important;
+}
+
+.item-ios{
+    padding: 0px;
+    margin:0; 
+    background-color: transparent;
+}
+
+.label-ios {
+    margin: 0;
+}
+.list-ios .item-block .item-inner{
+    border: none;
+    padding: 0; 
+    margin: 0;
+}
+.item-block{
+    min-height: 0;
+}
+.list-ios {
+    margin: 0;
 }

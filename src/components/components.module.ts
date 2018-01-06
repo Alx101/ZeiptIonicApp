@@ -3,6 +3,6 @@ import { ShrinkingSegmentHeader } from './shrinking-segment-header/shrinking-seg
 @NgModule({
 	declarations: [ShrinkingSegmentHeader],
 	imports: [],
-	exports: [ShrinkingSegmentHeader]
+	exports: [ShrinkingSegmentHeader,]
 })
 export class ComponentsModule {}
