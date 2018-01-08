@@ -1,20 +1,19 @@
+<ion-item-divider color="light" sticky>
+  <div class="accordion-btn" (click)="toggleAccordion()">
+    <div class="btn-wrapper">
 
-    <ion-item-divider color="light" sticky>
-      <div class="accordion-btn" (click)="toggleAccordion()">
-        <div class="btn-wrapper">
 
+      <p>{{ monthTitle }}</p>
 
-          <p>{{ monthTitle }}</p>
+      <button ion-button clear small icon-only item-left>
+        <ion-icon [name]="icon"></ion-icon>
+      </button>
+    </div>
+  </div>
+</ion-item-divider>
 
-          <button ion-button clear small icon-only item-left>
-            <ion-icon [name]="icon"></ion-icon>
-          </button>
-        </div>
-      </div>
-    </ion-item-divider>
-
-    <ion-item>
-      <div #cc class="month">
-        <ng-content></ng-content>
-      </div>
-    </ion-item>
+<ion-item>
+  <div #cc class="month">
+    <ng-content></ng-content>
+  </div>
+</ion-item>

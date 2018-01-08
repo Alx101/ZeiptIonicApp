@@ -11,6 +11,8 @@ export class AccordionComponent implements OnInit {
   @Input("yearTitle") yearTitle: string;
   @Input("monthTitle") monthTitle: string;
 
+  @Input("firstAccordion") firstAccordion: any;
+
   icon: string = "arrow-down";
 
   constructor(public renderer: Renderer2) {
@@ -19,7 +21,11 @@ export class AccordionComponent implements OnInit {
 
   ngOnInit(){
     this.renderer.setStyle(this.cardContent.nativeElement, "webkitTransition", "max-height 200ms");
-    console.log(this);
+    console.log(this.firstAccordion);
+    if(this.firstAccordion == true){
+      this.toggleAccordion();
+      this.renderer.setStyle(this.cardContent.nativeElement, "max-height", "5000px");
+    }
   }
 
   toggleAccordion(){
@@ -32,6 +38,5 @@ export class AccordionComponent implements OnInit {
     
     this.accordionExpanded = !this.accordionExpanded;
     this.icon = this.icon == "arrow-down" ? "arrow-up" : "arrow-down"
-    console.log(this);
   }
 }
