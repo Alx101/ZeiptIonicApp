@@ -58,7 +58,7 @@ export class ReceiptsPage {
                     "September",
                     "October",
                     "November",
-                    "Desember"
+                    "December"
                 ];
 
                 var mappedReceipts = receipts.map((receipt) => {
@@ -73,7 +73,14 @@ export class ReceiptsPage {
                         date = new Date(y, m, d, hour, minute, second),
                         mName = monthNames[date.getMonth()],
                         dName = d + ", " + dayNames[date.getDay()];
-                    return [y, mName, dName, receipt, {"date": date}];
+                    return [
+                        y,
+                        mName,
+                        dName,
+                        receipt, {
+                            "date": date
+                        }
+                    ];
                 }).reduce((accumulator, [year, month, day, receipt]) => {
 
                     let current = accumulator[year] = accumulator[year] || {};
@@ -92,22 +99,34 @@ export class ReceiptsPage {
                                 return {[key]: wrapInArrays(value)};
                             });
                 }
-                
+
                 this.years = Object.keys(mappedReceipts);
 
                 //TODO: SORT BETTER
-                this.years.sort().reverse().forEach(year => {
-                    Object.keys(mappedReceipts[year]).sort((a,b)=>{
-                        return monthNames.indexOf(a)
-                        - monthNames.indexOf(b);
-                    }).forEach(month => {
-                        this.months.push(month);
-                        mappedReceipts[year][month];
-                        Object.keys(mappedReceipts[year][month]).forEach(day => {
-                            this.days.push(day);
-                        })
+                this
+                    .years
+                    .sort()
+                    .reverse()
+                    .forEach(year => {
+                        Object
+                            .keys(mappedReceipts[year])
+                            .sort((a, b) => {
+                                return monthNames.indexOf(a) - monthNames.indexOf(b);
+                            })
+                            .forEach(month => {
+                                this
+                                    .months
+                                    .push(month);
+                                mappedReceipts[year][month];
+                                Object
+                                    .keys(mappedReceipts[year][month])
+                                    .forEach(day => {
+                                        this
+                                            .days
+                                            .push(day);
+                                    })
+                            });
                     });
-                });
 
                 const wrapped = wrapInArrays(mappedReceipts);
                 this.mappedReceipts = wrapped;
@@ -116,15 +135,13 @@ export class ReceiptsPage {
                 console.log(this.years)
                 console.log(this.months)
 
-                
                 this
                     .loading
                     .dismiss();
             });
     }
 
-    ionViewDidLoad() {
-    }
+    ionViewDidLoad() {}
 
     goToCards()
     {
@@ -135,21 +152,21 @@ export class ReceiptsPage {
                 direction: 'forward'
             });
     }
-
+    
     goToReceipt(clickedReceipt) {
         this
             .navCtrl
             .push(ReceiptDetailPage, {receipt: clickedReceipt});
     }
-    closeYear(yearToClose){
+    closeYear(yearToClose) {
         console.log(yearToClose);
         var yearContainer = document.getElementById(yearToClose);
 
-        if(yearContainer.style.height == "41px"){
+        if (yearContainer.style.height == "41px") {
             yearContainer.style.height = "auto";
-        }else{
+        } else {
             yearContainer.style.height = "41px";
         }
-        
+
     }
 }

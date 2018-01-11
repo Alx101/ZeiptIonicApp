@@ -1,34 +1,31 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
-
+import {ReceiptsPage} from '../receipts/receipts';
 /**
- * Generated class for the ReceiptDetailPage page.
+ * Generated class for the OnboardingPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
 
-
-
-
-
 @IonicPage()
-@Component({selector: 'page-receipt-detail', templateUrl: 'receipt-detail.html'})
-export class ReceiptDetailPage {
-  receipt = this
-    .navParams
-    .get("receipt");
+@Component({selector: 'page-onboarding', templateUrl: 'onboarding.html'})
+export class OnboardingPage {
 
   constructor(public navCtrl : NavController, public navParams : NavParams) {}
 
   ionViewDidLoad() {
-    console.log(this.navParams.get("receipt"))
+    console.log('ionViewDidLoad OnboardingPage');
   }
 
-  goBack() {
+  goToReceipts()
+  {
     this
       .navCtrl
-      .pop();
+      .setRoot(ReceiptsPage, {}, {
+        animate: true,
+        direction: 'forward'
+      });
   }
 
 }

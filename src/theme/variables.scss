@@ -39,6 +39,7 @@ $colors: (
   secondary:  #3CBF71,
   danger:     #aa0000,
   light:      #F1F5FA,
+  bright:     #FFFFF8,
   blues:      #277098
 );
 
@@ -71,7 +72,7 @@ $colors: (
 // so that the above variables are used and Ionic's
 // default are overridden.
 
-@import "ionic.theme.default";
+//@import "ionic.theme.default";
 //@import "zeipt";
 
 

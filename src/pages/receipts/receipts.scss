@@ -1,34 +1,36 @@
-p{
-    margin: auto;
-}
 .ddbutton {
     width: 100%;
     height: 40px;
     text-align: center;
     line-height: 40px;
 }
-.monthbtn p{
+
+.monthbtn p {
     font-weight: 400;
     border-top: 1px solid #277098;
 }
+
+.item-ios [item-left],
+.item-ios [item-start] {
+    margin: 0;
+}
+
 .ddbutton.yearbtn {
     bottom: 0;
     background-color: color($colors, primary);
     color: white;
 }
-.year{
+
+.year {
     overflow: hidden;
 }
-.year{
-    background-color: transparent;
-    padding: 0px;
-    margin: 0px;
-}
+
 .year {
     background-color: color($colors, light);
-    margin: 0px;
+    margin-bottom: 5px;
 }
-.year>p  {
+
+.year>p {
     text-align: center;
     font-size: 12px;
     margin-top: 5px;
@@ -36,7 +38,8 @@ p{
     color: #277098;
     background-color: none;
 }
-.year > p:before{
+
+.year>p:before {
     content: '';
     position: absolute;
     left: 0;
@@ -45,7 +48,8 @@ p{
     width: 40%;
     background-color: color($colors, blues);
 }
-.year > p:after{
+
+.year>p:after {
     content: '';
     position: absolute;
     right: 0;
@@ -54,90 +58,119 @@ p{
     width: 40%;
     background-color: color($colors, blues);
 }
+.month>div:last-child {
+    padding-bottom: 10px;
+}
+
 .day {
     border-left: 1px solid #277098;
-    padding: 0px 10px;
-    margin-left: 8px;
+    padding: 0 0 0 10px;
 }
+
 .day:after {
     content: "";
     display: table;
     clear: both;
 }
+
 p.dayname {
     font-size: 12px;
-    margin-left: 8px;
     color: #277098;
-    margin-top: 4px;
-    padding-top: 4px;
 }
+
 .receiptbtn {
     width: 100%;
     display: flex;
     background-color: white;
     box-sizing: border-box;
     text-align: left;
-    padding: 10px;
+    padding: 5px 10px;
     margin: auto;
     box-shadow: 0 2px 5px rgba(39, 112, 152, 0.1);
     border-radius: 0;
     margin: 5px 0px;
+    position: relative;
 }
-.receiptbtn p {
-    color: black;
+
+.receiptbtn img {
+    margin-right: 10px;
 }
-.half{
+
+.receiptbtn .btn-icon {
+    position: absolute;
+    right: 10px;
+}
+
+.receiptbtn .btn-icon ion-icon {
+    font-size: 30px;
+}
+
+.half {
     display: inline-block;
     width: 50%;
 }
-.info{
+
+.info {
     border-left: 1px solid color($colors, light);
     padding-left: 10px;
     width: 50%;
 }
-.merchant{
+
+.merchant {
     width: 50%;
 }
+
 .receiptbtn p {
     margin: auto;
 }
-.name, .sum{
+
+.name,
+.sum {
     margin-bottom: 4px !important;
 }
-p.name, p.total{
-    font-size: 16px !important;   
+
+p.name,
+p.total {
+    font-size: 14px;
+    color: black;
 }
-.city, time{
-    font-size: 12px !important;
-}
-.sum p{
-    display: inline-block;
-}
+
+p.city,
 p.time {
     font-size: 12px;
 }
-.currency {
-    vertical-align: super;
-    font-size: 10px !important;
+
+.sum p {
+    display: inline-block;
 }
 
-.item-ios{
+.currency {
+    font-size: 10px !important;
+    position: absolute;
+    padding-left: 4px;
+    padding-top: 1px;
+}
+
+.item-ios {
     padding: 0px;
-    margin:0; 
+    margin: 0;
     background-color: transparent;
 }
 
 .label-ios {
     margin: 0;
 }
-.list-ios .item-block .item-inner{
+
+.list-ios .item-block .item-inner {
     border: none;
-    padding: 0; 
+    padding: 0;
     margin: 0;
 }
-.item-block{
+
+.item-block {
     min-height: 0;
 }
+
 .list-ios {
     margin: 0;
 }

@@ -9,6 +9,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LandingPage } from '../pages/landing/landing';
 import { ReceiptsPage } from '../pages/receipts/receipts';
+import { OnboardingPage } from '../pages/onboarding/onboarding';
 import { ResourcesProvider } from '../providers/resources/resources';
 import { ReceiptDetailPage } from "../pages/receipt-detail/receipt-detail";
 
@@ -22,6 +23,7 @@ import { AccordionComponent } from '../components/accordion/accordion';
     HomePage,
     LandingPage,
     ReceiptsPage,
+    OnboardingPage,
     ShrinkingSegmentHeader,
     AccordionComponent,
     ReceiptDetailPage
@@ -37,6 +39,7 @@ import { AccordionComponent } from '../components/accordion/accordion';
     HomePage,
     LandingPage,
     ReceiptsPage,
+    OnboardingPage,
     ReceiptDetailPage
   ],
   providers: [

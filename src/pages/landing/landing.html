@@ -1,51 +1,38 @@
-<!--
-  Generated template for the LandingPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-  <shrinking-segment-header [scrollArea]="content" headerHeight="100" minHeaderHeight="50">
-    <img src="/assets/img/zeipt.png" height="40px">
-  </shrinking-segment-header>
-  <ion-navbar>
-    <h6>User:</h6>
-    <ion-title>
-      {{user.name}}
-    </ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
 <ion-content fullscreen #content>
-  <h5 padding>Your active cards</h5>
-  <ion-list no-lines>
-    <ion-item *ngFor="let card of cards; let idx = index">
-      <button ion-button icon-only clear item-end large (click)="popCard(idx)">
-        <ion-icon name="trash"></ion-icon>
-      </button>
-      <ion-label>
-        <h2>XXXX XXXX XXXX {{card.lastfour}}</h2>
-      </ion-label>
-      <!--ion-thumbnail item-start-->
-      <ion-icon name='card' item-start large></ion-icon>
-      <!--/ion-thumbnail-->
-    </ion-item>
-    <ion-item>
-      <button ion-button icon-end block clear large (click)="newCard()">
-        Add card
-        <ion-icon name="md-add"></ion-icon>
-      </button>
-    </ion-item>
-  </ion-list>
-</ion-content>
 
-<ion-footer>
-  <ion-toolbar>
-    <button ion-button full clear icon-end (click)="goToReceipts()">
-      Your receipts
-      <ion-icon name="play"></ion-icon>
-    </button>
-  </ion-toolbar>
-</ion-footer>
+  <div class="header">
+    <div class="header-row">
+      <div class="column left"></div>
+      <div class="column center">
+        <img class="receiptguy small" src="../assets/img/receiptguy.svg" alt="">
+      </div>
+      <div class="column right" (click)="goToReceipts()">Your receipts</div>
+    </div>
+  </div>
+
+  <div class="padding-top padding-width">
+    <div *ngFor="let card of cards; let idx = index">
+      <p class="dayname">
+        Added: Mon 7. June 17'
+      </p>
+      <div class="day">
+        <button class="receiptbtn">
+          <img src="../assets/img/visa.svg" alt="">
+          <div>
+            <p class="name">
+              **** **** **** {{card.lastfour}}
+            </p>
+            <p class="city">
+              Exp: 08/21
+            </p>
+          </div>
+          <div class="btn-icon" (click)="popCard(idx)">
+            <ion-icon name="trash" ></ion-icon>
+          </div>
+        </button>
+      </div>
+      <button class="primary" (click)="newCard()">
+        <ion-icon name="md-add"></ion-icon>Add card</button>
+    </div>
+  </div>
+</ion-content>

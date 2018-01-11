@@ -1,57 +1,57 @@
-<!--
-  Generated template for the ReceiptDetailPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-
-    <ion-navbar>
-        <ion-title>ReceiptDetail</ion-title>
-    </ion-navbar>
-
-</ion-header>
-
-
 <ion-content>
-    <div class="the-receipt">
-        <div class="receipt-header">
-            <img class="merchant-logo" src="{{receipt.merchant.logo}}" onerror="this.src='https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/15337500_1229929917042979_4587037429803146535_n.png?oh=d1eee7bb2fe2e5b9c89adcf8de4203f9&oe=5ACABF83'"
-                alt="">
-            <div class="merchant-info">
-                <p class="merchant-name">{{receipt.merchant.name}}</p>
-                <p>Org.nr: {{receipt.merchant.org_nr}}</p>
-                <p>{{receipt.merchant.address}}</p>
-                <p>{{receipt.merchant.zip_code}}, {{receipt.merchant.city}}</p>
+    <div class="header">
+        <div class="header-row">
+            <div class="column left" (click)="goBack()">Back</div>
+            <div class="column center">
+                <img class="receiptguy small" src="../assets/img/receiptguy.svg" alt="">
             </div>
+            <div class="column right"></div>
         </div>
-        <div class="receipt-time">
-            <div class="half left">
-                <p>{{receipt.receipt.time}}</p>
-                <p>{{receipt.receipt.date}}</p>
-            </div><div class="half right">
-                <p>Receipt nr:</p>
-                <p>{{receipt.receipt.receipt_nr}}</p>
-            </div>
-        </div>
-        <table class="articles">
-            <tr class="article-header">
-                <th class="article-name">Name</th>
-                <th class="article-quantity">Qty</th>
-                <th class="article-sum">Sum</th>
-            </tr>
-            <tr *ngFor="let article of receipt.articles">
-                <td class="article-name">
-                    <p>{{article.name}}</p>
-                    <p class="article-nr">Art. nr: {{article.number}}</p>
-                </td>
-                <td class="article-quantity">{{article.quantity}} {{article.quantity_type}}</td>
-                <td class="article-sum">{{article.sum_total.toLocaleString(undefined, {useGrouping: true, minimumFractionDigits: 2, maximumFractionDigits: 2}) }}</td>
-            </tr>
-            <tr class="total">
-                <td>Total</td>
-                <td class="article-sum">{{receipt.sum.total.toLocaleString(undefined, {useGrouping: true, minimumFractionDigits: 2, maximumFractionDigits: 2}) }}</td>
-            </tr>
-        </table>
     </div>
+    <div class="padding-top">
+        <div class="the-receipt ">
+            <div class="receipt-header">
+                <img class="merchant-logo" src="{{receipt.merchant.logo}}" onerror="this.src='https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/15337500_1229929917042979_4587037429803146535_n.png?oh=d1eee7bb2fe2e5b9c89adcf8de4203f9&oe=5ACABF83'"
+                    alt="">
+                <div class="merchant-info">
+                    <p class="merchant-name">{{receipt.merchant.name}}</p>
+                    <p>Org.nr: {{receipt.merchant.org_nr}}</p>
+                    <p>{{receipt.merchant.address}}</p>
+                    <p>{{receipt.merchant.zip_code}}, {{receipt.merchant.city}}</p>
+                </div>
+            </div>
+            <div class="receipt-time">
+                <div class="half left">
+                    <p>{{receipt.receipt.time}}</p>
+                    <p>{{receipt.receipt.date}}</p>
+                </div>
+                <div class="half right">
+                    <p>Receipt nr:</p>
+                    <p>{{receipt.receipt.receipt_nr}}</p>
+                </div>
+            </div>
+            <table class="articles">
+                <tr class="article-header">
+                    <th class="article-name">Name</th>
+                    <th class="article-quantity">Qty</th>
+                    <th class="article-sum">Sum</th>
+                </tr>
+                <tr *ngFor="let article of receipt.articles">
+                    <td class="article-name">
+                        <p>{{article.name}}</p>
+                        <p class="article-nr">Art. nr: {{article.number}}</p>
+                    </td>
+                    <td class="article-quantity">{{article.quantity}} {{article.quantity_type}}</td>
+                    <td class="article-sum">{{article.sum_total.toLocaleString(undefined, {useGrouping: true, minimumFractionDigits: 2, maximumFractionDigits:
+                        2}) }}</td>
+                </tr>
+                <tr class="total">
+                    <td>Total</td>
+                    <td class="article-sum">{{receipt.sum.total.toLocaleString(undefined, {useGrouping: true, minimumFractionDigits: 2, maximumFractionDigits:
+                        2}) }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
 </ion-content>
