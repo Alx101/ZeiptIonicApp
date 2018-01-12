@@ -3,6 +3,7 @@ import {IonicPage, NavController, NavParams, LoadingController} from 'ionic-angu
 import {ResourcesProvider} from '../../providers/resources/resources';
 import {LandingPage} from '../landing/landing';
 import {ReceiptDetailPage} from "../receipt-detail/receipt-detail";
+import {InAppBrowser} from "@ionic-native/in-app-browser";
 
 /**
  * Generated class for the ReceiptsPage page.
@@ -15,6 +16,7 @@ import {ReceiptDetailPage} from "../receipt-detail/receipt-detail";
 export class ReceiptsPage {
 
     receiptParts : any = [];
+    cards : any = [];
     mappedReceipts : any = [];
     loading : any;
     curDatePart : any;
@@ -22,12 +24,18 @@ export class ReceiptsPage {
     months : any = [];
     days : any = [];
 
-    constructor(public navCtrl : NavController, public navParams : NavParams, public resProvider : ResourcesProvider, public loadCtrl : LoadingController) {
+    constructor(public navCtrl : NavController, public navParams : NavParams, public resProvider : ResourcesProvider, public loadCtrl : LoadingController, public iab : InAppBrowser) {
         this.loading = loadCtrl.create({content: 'Please wait, loading...'});
         this
             .loading
             .present();
 
+        resProvider
+            .loadCards()
+            .then((c) => {
+                this.cards = c;
+                console.log("CARDS: ", this.cards)
+            });
         resProvider
             .loadReceiptParts()
             .then((c) => {
@@ -142,6 +150,12 @@ export class ReceiptsPage {
     }
 
     ionViewDidLoad() {}
+    newCard()
+    {
+        const browser = this
+            .iab
+            .create('http://localhost:8000/registercard/1234');
+    }
 
     goToCards()
     {
@@ -152,7 +166,7 @@ export class ReceiptsPage {
                 direction: 'forward'
             });
     }
-    
+
     goToReceipt(clickedReceipt) {
         this
             .navCtrl

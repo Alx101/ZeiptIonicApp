@@ -20,9 +20,14 @@ HEADER */
         display: table-cell;
         width: 33.33%;
         vertical-align: middle;
+        position: relative;
     }
     .right {
         text-align: right;
+    }
+    .right p {
+        position: relative;
+        float: right;
     }
     .left {
         text-align: left;
@@ -96,6 +101,20 @@ button.secondary {
 
 p {
     margin: auto;
+}
+
+p.notify{
+    color: color($colors, danger);
+}
+.notify:after {
+    content: '';
+    position: absolute;
+    background-color: #dd0000;
+    height: 4px;
+    width: 4px;
+    left: -10px;
+    top: 0;
+    border-radius: 100px;
 }
 
 .padding-top {

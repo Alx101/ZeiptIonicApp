@@ -6,24 +6,29 @@
             <div class="column center">
                 <img class="receiptguy small" src="../assets/img/receiptguy.svg" alt="">
             </div>
-            <div class="column right" (click)="goToCards()">Your cards</div>
+
+            <div *ngIf="cards.length == 0" class="column right" (click)="newCard()"><p class="notify">Add card</p></div>
+            <div *ngIf="cards.length > 0" class="column right" (click)="goToCards()">Your cards</div>
+
         </div>
     </div>
 
     <div class="padding-top">
-        
-        <div *ngIf="mappedReceipts.length == 0">
-            <div class="info-content">
-                <div class="centered">
-                    <div class="centered-cell">
-                        <img class="receiptguy big" src="../assets/img/zeiptreceipt.svg" alt="">
-                        <p>This page will shortly be filled with your digital receipts.</p>
-                        <br>
-                        <p>Just stay tuned!</p>
-                    </div>
+
+
+        <div *ngIf="mappedReceipts.length == 0" class="info-content">
+            <div class="centered">
+                <div class="centered-cell">
+                    <img class="receiptguy big" src="../assets/img/zeiptreceipt.svg" alt="">
+                    <p>This page will shortly be filled with your digital receipts.</p>
+                    <br>
+                    <p *ngIf="cards.length > 0">Just stay tuned!</p>
+                    <p *ngIf="cards.length == 0">Start by adding your card:</p>
+                    <button *ngIf="cards.length == 0" class="primary" (click)="newCard()">Add card</button>
                 </div>
             </div>
         </div>
+
 
         <ion-list *ngFor="let year of years">
             <ion-item-group>

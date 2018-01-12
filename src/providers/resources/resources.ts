@@ -22,13 +22,15 @@ export class ResourcesProvider {
     return new Promise((resolve, reject) => {
       console.log("getting cards...");
       if (this.workoffline) {
+        
         let cards = [
           {
             'lastfour': '1111',
             'type': 'Visa'
-          }
+          } 
         ];
         resolve(cards);
+         
       } else {
         this
           .http
@@ -1822,8 +1824,7 @@ export class ResourcesProvider {
             "version": 2
           }
         ]
-      }
-       
+      } 
 
       ];
 
