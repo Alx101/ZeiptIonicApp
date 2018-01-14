@@ -22,7 +22,7 @@ export class OnboardingPage {
   {
     const browser = this
       .iab
-      .create('http://localhost:8000/registercard/1234');
+      .create('http://demo.zeipt.se/public/registercard/1234');
   }
 
   goToReceipts()

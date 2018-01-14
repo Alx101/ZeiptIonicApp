@@ -17,6 +17,8 @@ import { ShrinkingSegmentHeader } from '../components/shrinking-segment-header/s
 import { InAppBrowser } from "@ionic-native/in-app-browser";
 import { AccordionComponent } from '../components/accordion/accordion';
 
+import { IonicStorageModule } from '@ionic/storage';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -31,7 +33,8 @@ import { AccordionComponent } from '../components/accordion/accordion';
   imports: [
     BrowserModule,
     HttpModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

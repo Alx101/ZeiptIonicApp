@@ -146,7 +146,10 @@ export class ReceiptsPage {
                 this
                     .loading
                     .dismiss();
-            });
+            }).catch(() => {
+              this.loading.dismiss();
+              this.receiptParts = [];
+        });
     }
 
     ionViewDidLoad() {}

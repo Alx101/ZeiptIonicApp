@@ -16,26 +16,32 @@ export class MyApp {
   loading : any;
 
   constructor(platform : Platform, statusBar : StatusBar, splashScreen : SplashScreen, public resProvider : ResourcesProvider, public loadCtrl : LoadingController) {
-    resProvider
-      .loadCards()
-      .then((c) => {
-        this.cards = c;
-      });
 
     platform
       .ready()
       .then(() => {
         // Okay, so the platform is ready and our plugins are available. Here you can do
         // any higher level native things you might need.
-
-        if (this.cards.length == 0) {
-
-          this.rootPage = OnboardingPage;
-        } else {
-          this.rootPage = ReceiptsPage;
-        }
-        statusBar.styleDefault();
-        splashScreen.hide();
+        resProvider
+          .loadCards()
+          .then((c) => {
+            this.cards = c;
+            if (this.cards.length == 0) {
+              console.log(this.cards.length);
+              this.rootPage = OnboardingPage;
+            } else {
+              this.rootPage = ReceiptsPage;
+            }
+            statusBar.styleDefault();
+            splashScreen.hide();
+          }).catch(() => {
+            if (this.cards.length == 0) {
+              console.log(this.cards.length);
+              this.rootPage = OnboardingPage;
+            } else {
+              this.rootPage = ReceiptsPage;
+            }
+          });
       });
 
   }
