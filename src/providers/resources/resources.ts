@@ -24,10 +24,11 @@ export class ResourcesProvider {
       if (this.workoffline) {
         
         let cards = [
+          
           {
             'lastfour': '1111',
             'type': 'Visa'
-          } 
+          }
         ];
         resolve(cards);
          
@@ -53,6 +54,7 @@ export class ResourcesProvider {
   public loadReceiptParts() {
 
     let receiptParts = [
+      
       //30 sept 2017 14:20 NoeAnnet Bergen 199.00,-
       {
 
@@ -1825,7 +1827,7 @@ export class ResourcesProvider {
           }
         ]
       } 
-
+ 
       ];
 
     return new Promise((resolve, reject) => {
