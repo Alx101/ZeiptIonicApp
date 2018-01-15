@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
+import { Storage } from '@ionic/storage';
 
 /*
   Generated class for the ResourcesProvider provider.
@@ -14,15 +15,14 @@ export class ResourcesProvider {
   backendURL : string;
   workoffline : boolean = true;
 
-  constructor(public http : Http) {
-    this.backendURL = "http://localhost:8000";
+  constructor(public http : Http, private storage : Storage) {
+    this.backendURL = "http://demo.zeipt.se/public";
   }
 
   public loadCards() {
     return new Promise((resolve, reject) => {
-      console.log("getting cards...");
       if (this.workoffline) {
-        
+
         let cards = [
           
           {
@@ -31,20 +31,35 @@ export class ResourcesProvider {
           }
         ];
         resolve(cards);
-         
+
       } else {
         this
           .http
           .get(this.backendURL + "/cards/1234")
           .map(res => res.json())
           .subscribe(data => {
-            console.log(data);
-            resolve(data.cards);
+            if(data.success == 0) {
+              this.storage.get('cards').then((cards) => {
+                resolve(cards);
+              }).catch(() => {
+                reject();
+              });
+            } else {
+              this.storage.set('cards', data.cards).then((val) => {
+                console.log("Stored cards for offline use");
+              });
+              resolve(data.cards);
+            }
           }, err => {
             //TODO: Fetch from cache
-            reject();
+            this.storage.get('cards').then((cards) => {
+              resolve(cards);
+            }).catch(() => {
+              reject();
+            });
           });
       }
+      console.log("getting cards...");
 
     });
   }
@@ -52,7 +67,6 @@ export class ResourcesProvider {
   // Fetch receipts. Should be fetched from backend though, so this is temporary.
   // Todo: connect to backend
   public loadReceiptParts() {
-
     let receiptParts = [
       
       //30 sept 2017 14:20 NoeAnnet Bergen 199.00,-
@@ -1834,15 +1848,37 @@ export class ResourcesProvider {
       if (this.workoffline) {
         resolve(receiptParts);
       } else {
-        let receipts = this
+        this
           .http
           .get(this.backendURL + "/receipts/1234")
           .map(res => res.json())
           .subscribe(data => {
-            resolve(receipts);
+            if(data) {
+              this.storage.set('receipts', data.receipts).then((val) => {
+                console.log("Stored receipts for offline use");
+              });
+              resolve(data.receipts);
+            } else {
+              this.storage.get('receipts').then((receipts) => {
+                if(receipts) {
+                  resolve(receipts);
+                } else {
+                  reject();
+                }
+              }).catch(() => {
+                reject();
+              });
+            }
           }, err => {
-            //TODO: Fetch from cache
-            reject();
+            this.storage.get('receipts').then((receipts) => {
+              if(receipts) {
+                resolve(receipts);
+              } else {
+                reject();
+              }
+            }).catch(() => {
+              reject();
+            });
           });
       }
     });
