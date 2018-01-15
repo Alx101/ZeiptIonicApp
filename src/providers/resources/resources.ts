@@ -13,7 +13,7 @@ import { Storage } from '@ionic/storage';
 export class ResourcesProvider {
   cards : any;
   backendURL : string;
-  workoffline : boolean = false;
+  workoffline : boolean = true;
 
   constructor(public http : Http, private storage : Storage) {
     this.backendURL = "http://demo.zeipt.se/public";
