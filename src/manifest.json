@@ -1,13 +1,13 @@
 {
-  "name": "Ionic",
-  "short_name": "Ionic",
+  "name": "Zeipt – Digital receipts demo web app",
+  "short_name": "Zeipt Receipts",
   "start_url": "index.html",
-  "display": "standalone",
+  "display": "fullscreen",
   "icons": [{
-    "src": "assets/imgs/logo.png",
+    "src": "assets/img/logo.png",
     "sizes": "512x512",
     "type": "image/png"
   }],
-  "background_color": "#4e8ef7",
-  "theme_color": "#4e8ef7"
+  "background_color": "#0F2841",
+  "theme_color": "#0F2841"
 }

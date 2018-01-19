@@ -1,11 +1,10 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams, LoadingController, AlertController} from 'ionic-angular';
+import {NavController, NavParams, LoadingController, AlertController} from 'ionic-angular';
 import {ResourcesProvider} from '../../providers/resources/resources';
 import {ReceiptsPage} from '../receipts/receipts';
 import {OnboardingPage} from '../onboarding/onboarding';
 import {InAppBrowser} from "@ionic-native/in-app-browser";
 
-@IonicPage()
 @Component({selector: 'page-landing', templateUrl: 'landing.html'})
 export class LandingPage {
 

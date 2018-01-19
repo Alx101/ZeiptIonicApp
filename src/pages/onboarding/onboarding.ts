@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {NavController, NavParams} from 'ionic-angular';
 import {ReceiptsPage} from '../receipts/receipts';
 import {InAppBrowser} from "@ionic-native/in-app-browser";
 /**
@@ -9,7 +9,6 @@ import {InAppBrowser} from "@ionic-native/in-app-browser";
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({selector: 'page-onboarding', templateUrl: 'onboarding.html'})
 export class OnboardingPage {
 

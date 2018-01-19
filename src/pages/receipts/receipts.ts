@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams, LoadingController} from 'ionic-angular';
+import {NavController, NavParams, LoadingController} from 'ionic-angular';
 import {ResourcesProvider} from '../../providers/resources/resources';
 import {LandingPage} from '../landing/landing';
 import {ReceiptDetailPage} from "../receipt-detail/receipt-detail";
@@ -11,7 +11,6 @@ import {InAppBrowser} from "@ionic-native/in-app-browser";
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-@IonicPage()
 @Component({selector: 'page-receipts', templateUrl: 'receipts.html'})
 export class ReceiptsPage {
 

@@ -1,17 +1,15 @@
-<ion-content fullscreen #content>
-
-  <div class="header">
-    <div class="header-row">
-      <div class="column left"></div>
-      <div class="column center">
-        <img class="receiptguy small" src="../assets/img/receiptguy.svg" alt="">
-      </div>
-      <div class="column right" (click)="goToReceipts()">Your receipts</div>
+<ion-header class="header">
+  <div class="header-row">
+    <div class="column left"></div>
+    <div class="column center">
+      <img class="receiptguy small" src="../assets/img/receiptguy.svg" alt="">
     </div>
+    <div class="column right" (click)="goToReceipts()">Your receipts</div>
   </div>
-
-  <div class="padding-top padding-width">
-    <div *ngFor="let card of cards; let idx = index">
+</ion-header>
+<ion-content fullscreen #content>
+  <div class="padding-width">
+    <div class="card" *ngFor="let card of cards; let idx = index">
       <p class="dayname">
         Added: Mon 7. June 17'
       </p>

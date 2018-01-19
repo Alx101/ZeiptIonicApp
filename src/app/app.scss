@@ -3,9 +3,7 @@ HEADER */
 
 .header {
     z-index: 1000;
-    position: fixed;
     width: 100%;
-    height: 44px;
     display: table;
     text-align: center;
     padding: 5px 10px;
@@ -103,9 +101,10 @@ p {
     margin: auto;
 }
 
-p.notify{
+p.notify {
     color: color($colors, danger);
 }
+
 .notify:after {
     content: '';
     position: absolute;
@@ -117,87 +116,39 @@ p.notify{
     border-radius: 100px;
 }
 
-.padding-top {
-    margin-top: 50px;
-}
-
 .padding-width {
     padding: 0 10px;
 }
 
-ion-item-divider[sticky] {
-    top: 44px;
+ion-app {
+    max-width: 500px;
+    right: 0;
+    margin: auto;
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.2);
 }
 
 ion-content {
     background-color: color($colors, light) !important;
 }
 
-
-/*
-.toolbar-background-ios {
-    background-color: white;
-    border-color: transparent !important;
+.item-md {
+    padding: 0;
+    margin: auto;
+    background-color: transparent;
+}
+.item-md [item-left], .item-md [item-right], .item-md [item-start], .item-md [item-end] {
+    margin: 2px 0 4px 0;
 }
 
-.blue-section {
-    text-align: center;
-    .toolbar-background-ios {
-        background-color: color($colors, danger);
-    }
-    .toolbar-title-ios {
-        background-color: white;
-    }
+.list-md .item-block .item-inner {
+    border: none;
 }
 
-.content-ios {
-    background-color: color($colors, light);
+.label-md {
+    margin: auto;
 }
 
-.more-padding {
-    padding-top: 2.5em;
-    padding-bottom: 2.5em;
+.item-divider-md {
+    padding: 0;
+    border: none;
 }
-
-.blue-section {
-    position: relative;
-    padding-bottom: 3em;
-    padding-top: 1em;
-    overflow: visible;
-    .title-avatar {
-        position: absolute;
-        left: calc(50% - 30px);
-        bottom: -30px;
-        width: 60px;
-        height: 60px;
-        border-radius: 30px;
-        z-index: 99;
-    }
-}
-
-ion-navbar {
-    .toolbar-title,
-    h6 {
-        font-weight: normal;
-    }
-}
-
-.scroll-content {
-    h5 {
-        padding-bottom: 0 !important;
-    }
-}
-
-.item-ios {
-    margin-bottom: 5px;
-}
-
-.spaced-image {
-    margin: 5px;
-}
-
-ion-input {
-    padding: .5em;
-    background-color: white;
-    font-size: 18px;
-}*/
