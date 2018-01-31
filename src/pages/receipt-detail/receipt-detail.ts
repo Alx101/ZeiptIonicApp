@@ -17,7 +17,6 @@ export class ReceiptDetailPage {
   constructor(public navCtrl : NavController, public navParams : NavParams) {}
 
   ionViewDidLoad() {
-    console.log(this.navParams.get("receipt"))
   }
 
   goBack() {

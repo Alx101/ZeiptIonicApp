@@ -6,12 +6,12 @@ import { Component, ViewChild, OnInit, Renderer2, Input } from '@angular/core';
 })
 export class AccordionComponent implements OnInit {
 
-  accordionExpanded = false;
+  accordionExpanded = true;
   @ViewChild("cc") cardContent: any;
   @Input("yearTitle") yearTitle: string;
   @Input("monthTitle") monthTitle: string;
 
-  @Input("firstAccordion") firstAccordion: any;
+  //@Input("firstAccordion") firstAccordion: any;
 
   icon: string = "arrow-down";
 
@@ -21,11 +21,9 @@ export class AccordionComponent implements OnInit {
 
   ngOnInit(){
     this.renderer.setStyle(this.cardContent.nativeElement, "webkitTransition", "max-height 200ms");
-    console.log(this.firstAccordion);
-    if(this.firstAccordion == true){
-      this.toggleAccordion();
-      this.renderer.setStyle(this.cardContent.nativeElement, "max-height", "5000px");
-    }
+    
+    //this.toggleAccordion();
+    this.renderer.setStyle(this.cardContent.nativeElement, "max-height", "5000px");
   }
 
   toggleAccordion(){

@@ -1,66 +1,132 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
-import { Storage } from '@ionic/storage';
+import {Storage} from '@ionic/storage';
 
-/*
-  Generated class for the ResourcesProvider provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular DI.
-*/
 @Injectable()
 export class ResourcesProvider {
   cards : any;
+  user : any;
   backendURL : string;
-  workoffline : boolean = true;
+  workoffline : boolean = false;
 
-  constructor(public http : Http, private storage : Storage) {
+  constructor(public http : Http, public storage : Storage) {
     this.backendURL = "http://demo.zeipt.se/public";
+  }
+  public clearStorage() {
+    this
+      .storage
+      .clear();
+  }
+  public loginUser(username) {
+    return new Promise((resolve, reject) => {
+      if (this.workoffline) {
+        let offlineuser = "offlineuser";
+        this
+          .storage
+          .set("user", offlineuser);
+        resolve(offlineuser);
+      } else {
+        this
+          .http
+          .get(this.backendURL + "/login")
+      }
+    })
+  }
+  public registerUser(username) {
+    return new Promise((resolve, reject) => {
+      if (this.workoffline) {
+        let offlineuser = "offlineuser";
+        this
+          .storage
+          .set("user", offlineuser);
+        resolve(offlineuser);
+      } else {
+        this
+          .http
+          .get(this.backendURL + "/registercustomer/" + username)
+          .map(res => res.json())
+          .subscribe(data => {
+            console.log(data);
+            if (data.success == 0) {} else {
+              this
+                .storage
+                .set("user", data.cid)
+                .then((val) => {
+                  console.log("Stored user for offline use");
+                });
+              resolve(data.cid);
+            }
+          }, err => {
+            console.log(err);
+          });
+      }
+    })
+  }
+
+  public loadUser() {
+    return new Promise((resolve, reject) => {
+      this
+        .storage
+        .get("user")
+        .then((user) => {
+          resolve(user);
+        })
+        .catch(() => {
+          reject();
+        })
+    });
   }
 
   public loadCards() {
     return new Promise((resolve, reject) => {
       if (this.workoffline) {
-
         let cards = [
-          
-          {
+          /*{
             'lastfour': '1111',
             'type': 'Visa'
-          }
+          }*/
         ];
         resolve(cards);
-
       } else {
         this
           .http
           .get(this.backendURL + "/cards/1234")
           .map(res => res.json())
           .subscribe(data => {
-            if(data.success == 0) {
-              this.storage.get('cards').then((cards) => {
-                resolve(cards);
-              }).catch(() => {
-                reject();
-              });
+            if (data.success == 0) {
+              this
+                .storage
+                .get('cards')
+                .then((cards) => {
+                  resolve(cards);
+                })
+                .catch(() => {
+                  reject();
+                });
             } else {
-              this.storage.set('cards', data.cards).then((val) => {
-                console.log("Stored cards for offline use");
-              });
+              this
+                .storage
+                .set('cards', data.cards)
+                .then((val) => {
+                  console.log("Stored cards for offline use");
+                });
               resolve(data.cards);
             }
           }, err => {
             //TODO: Fetch from cache
-            this.storage.get('cards').then((cards) => {
-              resolve(cards);
-            }).catch(() => {
-              reject();
-            });
+            this
+              .storage
+              .get('cards')
+              .then((cards) => {
+                resolve(cards);
+              })
+              .catch(() => {
+                reject();
+              });
           });
       }
       console.log("getting cards...");
-
     });
   }
 
@@ -68,7 +134,7 @@ export class ResourcesProvider {
   // Todo: connect to backend
   public loadReceiptParts() {
     let receiptParts = [
-      
+
       //30 sept 2017 14:20 NoeAnnet Bergen 199.00,-
       {
 
@@ -76,7 +142,8 @@ export class ResourcesProvider {
           // These lines can be flexible and might include a range of objects. Despite
           // this we see just some of them to be mandatory for the UI. Some examples could
           // be the following:
-          "zeipt_receipt_v": "0.86.0", // The version of the file in semantic versioning to keep overview of it compatibility through the update history.
+          "zeipt_token": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "zeipt_receipt_v": "0.87.0", // The version of the file in semantic versioning to keep overview of it compatibility through the update history.
           "reference_of_origin": "", // The hash created between the POS, Zeipt and UI when transmitting the receipt from/to Zeipt as a certifier that this is the legal receipt.
           "reference_of_origin_old": "", // Used to start event for UI that something has happened with the original receipt transfered to them. For example, the user has went back to the store and changed one of the article lines to another article (UI takes the old receipt and compare it to the new, and does the necassary update for the view).
           "pos_org_nr": "", // The org number given to the POS provider producing this receipt.
@@ -85,7 +152,7 @@ export class ResourcesProvider {
           "pos_v": "" // The version of the POS provider (POS system) sending this receipt.
         },
         "merchant": {
-          "name": "Gullfunn", // Name of the merchant
+          "name": "Høyer", // Name of the merchant
           "org_nr": "918542653", // The org number of the merchant that is operating the store. Not necessarily the owner.
           "vat_nr": "MVA", // The VAT number from the country the operating org number is registred in (if it is VAT registred).
           "country_code": "4", // The country where the org number of the operator of the store is registred.
@@ -95,7 +162,7 @@ export class ResourcesProvider {
           "phone": "004792539720", // The phone number to contact the store with, written in (00:landcode:number) format.
           "email": "Sebastian@zeipt.com", // The email address where the store wants to be reached.
           "website": "https://zeipt.com", // The website address that the operating merchant wants to display on the receipt.
-          "logo": "",
+          "logo": ""
         },
         "receipt": {
           "receipt_nr": "445768", // The receipt number given by the POS for the receipt.
@@ -1840,9 +1907,9 @@ export class ResourcesProvider {
             "version": 2
           }
         ]
-      } 
- 
-      ];
+      }
+
+    ];
 
     return new Promise((resolve, reject) => {
       if (this.workoffline) {
@@ -1853,32 +1920,43 @@ export class ResourcesProvider {
           .get(this.backendURL + "/receipts/1234")
           .map(res => res.json())
           .subscribe(data => {
-            if(data) {
-              this.storage.set('receipts', data.receipts).then((val) => {
-                console.log("Stored receipts for offline use");
-              });
+            if (data) {
+              this
+                .storage
+                .set('receipts', data.receipts)
+                .then((val) => {
+                  console.log("Stored receipts for offline use");
+                });
               resolve(data.receipts);
             } else {
-              this.storage.get('receipts').then((receipts) => {
-                if(receipts) {
+              this
+                .storage
+                .get('receipts')
+                .then((receipts) => {
+                  if (receipts) {
+                    resolve(receipts);
+                  } else {
+                    reject();
+                  }
+                })
+                .catch(() => {
+                  reject();
+                });
+            }
+          }, err => {
+            this
+              .storage
+              .get('receipts')
+              .then((receipts) => {
+                if (receipts) {
                   resolve(receipts);
                 } else {
                   reject();
                 }
-              }).catch(() => {
+              })
+              .catch(() => {
                 reject();
               });
-            }
-          }, err => {
-            this.storage.get('receipts').then((receipts) => {
-              if(receipts) {
-                resolve(receipts);
-              } else {
-                reject();
-              }
-            }).catch(() => {
-              reject();
-            });
           });
       }
     });

@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {NavController, NavParams, LoadingController} from 'ionic-angular';
 import {ResourcesProvider} from '../../providers/resources/resources';
 import {LandingPage} from '../landing/landing';
+import {LoginPage} from '../login/login';
 import {ReceiptDetailPage} from "../receipt-detail/receipt-detail";
 import {InAppBrowser} from "@ionic-native/in-app-browser";
 
@@ -33,7 +34,6 @@ export class ReceiptsPage {
             .loadCards()
             .then((c) => {
                 this.cards = c;
-                console.log("CARDS: ", this.cards)
             });
         resProvider
             .loadReceiptParts()
@@ -138,17 +138,16 @@ export class ReceiptsPage {
                 const wrapped = wrapInArrays(mappedReceipts);
                 this.mappedReceipts = wrapped;
 
-                console.log(this.mappedReceipts);
-                console.log(this.years)
-                console.log(this.months)
-
                 this
                     .loading
                     .dismiss();
-            }).catch(() => {
-              this.loading.dismiss();
-              this.receiptParts = [];
-        });
+            })
+            .catch(() => {
+                this
+                    .loading
+                    .dismiss();
+                this.receiptParts = [];
+            });
     }
 
     ionViewDidLoad() {}
@@ -175,7 +174,6 @@ export class ReceiptsPage {
             .push(ReceiptDetailPage, {receipt: clickedReceipt});
     }
     closeYear(yearToClose) {
-        console.log(yearToClose);
         var yearContainer = document.getElementById(yearToClose);
 
         if (yearContainer.style.height == "41px") {
@@ -183,6 +181,16 @@ export class ReceiptsPage {
         } else {
             yearContainer.style.height = "41px";
         }
-
+    }
+    logout() {
+        this
+            .resProvider
+            .clearStorage();
+        this
+            .navCtrl
+            .setRoot(LoginPage, {}, {
+                animate: true,
+                direction: 'forward'
+            });
     }
 }

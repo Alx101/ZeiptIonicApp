@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 import {ReceiptsPage} from '../receipts/receipts';
 import {InAppBrowser} from "@ionic-native/in-app-browser";
+
+import {ResourcesProvider} from '../../providers/resources/resources';
 /**
  * Generated class for the OnboardingPage page.
  *
@@ -11,11 +13,22 @@ import {InAppBrowser} from "@ionic-native/in-app-browser";
 
 @Component({selector: 'page-onboarding', templateUrl: 'onboarding.html'})
 export class OnboardingPage {
+  cards : any = [];
 
-  constructor(public navCtrl : NavController, public navParams : NavParams, public iab : InAppBrowser) {}
+  constructor(public resProvider : ResourcesProvider, public navCtrl : NavController, public navParams : NavParams, public iab : InAppBrowser) {
+    resProvider
+      .loadCards()
+      .then((c) => {
+        this.cards = c;
+        if (this.cards.length > 0) {
+          this.navCtrl.setRoot(ReceiptsPage)
+        } else {
+          console.log("no cards");
+        }
+      })
+  }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad OnboardingPage');
   }
   newCard()
   {
@@ -33,5 +46,4 @@ export class OnboardingPage {
         direction: 'forward'
       });
   }
-
 }

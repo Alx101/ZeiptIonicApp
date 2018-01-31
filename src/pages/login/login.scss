@@ -1,0 +1,21 @@
+page-login {
+    .profile {
+        padding: 40px 0;
+        p {
+            text-align: center;
+            display: block;
+            margin: auto;
+            margin-top: 8px;
+        }
+    }
+    .header{
+        position: relative;
+    }
+    .item-input {
+        margin-bottom: 5px;
+    }
+    .error-txt{
+        color: color($colors, danger);
+        margin-bottom: 10px;
+    }
+}

@@ -1,6 +1,6 @@
 <ion-header class="header">
     <div class="header-row">
-        <div class="column left"></div>
+        <div class="column left" (click)="logout()">Log out</div>
         <div class="column center">
             <img class="receiptguy small" src="../assets/img/receiptguy.svg" alt="">
         </div>
@@ -36,46 +36,9 @@
         <div *ngFor="let receiptMap of mappedReceipts">
             <div *ngFor="let receiptYear of receiptMap[year]; let i = index">
                 <div *ngFor="let month of months" id="{{month}}">
-                    <div *ngIf="receiptYear[month] && i == 0">
-                        <accordion [monthTitle]="month" [firstAccordion]="true">
-                            <div *ngFor="let receiptMonth of receiptYear[month]">
-
-                                <div *ngFor="let day of days">
-                                    <div *ngIf="receiptMonth[day]">
-                                        <p class="dayname">{{day}}</p>
-                                        <div class="day">
-                                            <div *ngFor="let receipt of receiptMonth[day]">
-                                                <button class="receiptbtn" (click)="goToReceipt(receipt)">
-
-                                                    <div class="merchant half">
-                                                        <p class="name">
-                                                            {{receipt.merchant.name}}
-                                                        </p>
-                                                        <p class="city">
-                                                            {{receipt.merchant.city}}
-                                                        </p>
-                                                    </div>
-                                                    <div class="info half">
-                                                        <div class="sum">
-                                                            <p class="total">
-                                                                {{receipt.sum.total.toLocaleString(undefined, {useGrouping: true, minimumFractionDigits: 2, maximumFractionDigits: 2}) }}
-                                                            </p>
-                                                            <p class="currency">
-                                                                {{receipt.sum.currency}}
-                                                            </p>
-                                                        </div>
-                                                        <p class="time">{{receipt.receipt.time.slice(0,-3)}}</p>
-                                                    </div>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </accordion>
-                    </div>
-                    <div *ngIf="receiptYear[month] && i > 0">
+                    <!--<div *ngIf="receiptYear[month] && i == 0">-->
+                        <div *ngIf="receiptYear[month]">
+                        <!--<accordion [monthTitle]="month" [firstAccordion]="true">-->
                         <accordion [monthTitle]="month">
                             <div *ngFor="let receiptMonth of receiptYear[month]">
 
@@ -114,6 +77,46 @@
                             </div>
                         </accordion>
                     </div>
+                    <!--
+                    <div *ngIf="receiptYear[month] && i > 0">
+                        <accordion [monthTitle]="month">
+                            <div *ngFor="let receiptMonth of receiptYear[month]">
+
+                                <div *ngFor="let day of days">
+                                    <div *ngIf="receiptMonth[day]">
+                                        <p class="dayname">{{day}}</p>
+                                        <div class="day">
+                                            <div *ngFor="let receipt of receiptMonth[day]">
+                                                <button class="receiptbtn" (click)="goToReceipt(receipt)">
+
+                                                    <div class="merchant half">
+                                                        <p class="name">
+                                                            {{receipt.merchant.name}}
+                                                        </p>
+                                                        <p class="city">
+                                                            {{receipt.merchant.city}}
+                                                        </p>
+                                                    </div>
+                                                    <div class="info half">
+                                                        <div class="sum">
+                                                            <p class="total">
+                                                                {{receipt.sum.total.toLocaleString(undefined, {useGrouping: true, minimumFractionDigits: 2, maximumFractionDigits: 2}) }}
+                                                            </p>
+                                                            <p class="currency">
+                                                                {{receipt.sum.currency}}
+                                                            </p>
+                                                        </div>
+                                                        <p class="time">{{receipt.receipt.time.slice(0,-3)}}</p>
+                                                    </div>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </accordion>
+                    </div>-->
                 </div>
             </div>
         </div>
