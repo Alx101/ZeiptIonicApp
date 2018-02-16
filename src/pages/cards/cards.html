@@ -1,12 +1,16 @@
+<!-- HEADER -->
 <ion-header class="header">
-  <div class="header-row">
-    <div class="column left"></div>
+  <ion-navbar>
+
+    <div class="column left" (click)="logout()">Log out</div>
     <div class="column center">
       <img class="receiptguy small" src="../assets/img/receiptguy.svg" alt="">
     </div>
     <div class="column right" (click)="goToReceipts()">Your receipts</div>
-  </div>
+
+  </ion-navbar>
 </ion-header>
+
 <ion-content fullscreen #content>
   <div class="padding-width">
     <div class="card" *ngFor="let card of cards; let idx = index">

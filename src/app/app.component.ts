@@ -9,20 +9,31 @@ import {ResourcesProvider} from '../providers/resources/resources';
 @Component({templateUrl: 'app.html'})
 export class MyApp {
   user : any;
+  cards : any = [];
   rootPage : any;
   loading : any;
 
-  constructor(public resProvider : ResourcesProvider) {
-    resProvider
+  constructor(public resProvider : ResourcesProvider) {}
+  ngOnInit() {
+    this
+      .resProvider
       .loadUser()
       .then((user) => {
-        if (user) {
-          this.rootPage = OnboardingPage; 
-        } else {
-          this.rootPage = LoginPage;
-        }
-      }).catch((err) => {
-        this.rootPage = LoginPage;
+        this.user = user;
+        this
+          .resProvider
+          .loadCards()
+          .then((c) => {
+            this.cards = c;
+            if (this.user && (this.cards.length > 0)) {
+              this.rootPage = ReceiptsPage;
+            } else if (this.user && (this.cards.length == 0)) {
+              this.rootPage = OnboardingPage;
+            } else {
+              this.rootPage = LoginPage;
+            }
+          })
       })
   }
+
 }

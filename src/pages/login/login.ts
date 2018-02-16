@@ -5,18 +5,18 @@ import {ResourcesProvider} from '../../providers/resources/resources';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {PasswordValidation} from './password-validation';
 import {OnboardingPage} from '../onboarding/onboarding';
+import {ReceiptsPage} from '../receipts/receipts';
 
 @Component({selector: 'page-login', templateUrl: 'login.html'})
 export class LoginPage {
 
   user : any = {};
+  cards : any = [];
   registerUserView : boolean = false;
   loginUserView : boolean = false;
 
   registerForm : FormGroup;
   loginForm : FormGroup;
-
-  submitAttempt : boolean = false;
 
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
 
@@ -29,6 +29,7 @@ export class LoginPage {
           Validators.required
         ])
       ],
+      fake_password: [],
       password: [
         '', Validators.compose([Validators.required])
       ]
@@ -41,6 +42,7 @@ export class LoginPage {
           Validators.required
         ])
       ],
+      fake_password: [],
       password: [
         '', Validators.compose([Validators.required])
       ],
@@ -65,15 +67,30 @@ export class LoginPage {
       .loginUser(this.loginForm.value.username)
       .then(data => {
         this.user = data;
-        this
-          .navCtrl
-          .setRoot(OnboardingPage, {}, {
-            animate: true,
-            direction: 'forward'
-          });
       })
       .catch((err) => {
         console.log(err)
+      });
+    this
+      .resProvider
+      .loadCards()
+      .then((c) => {
+        this.cards = c;
+        if (this.cards.length > 0) {
+          this
+            .navCtrl
+            .setRoot(ReceiptsPage, {}, {
+              animate: true,
+              direction: 'forward'
+            })
+        } else {
+          this
+            .navCtrl
+            .setRoot(OnboardingPage, {}, {
+              animate: true,
+              direction: 'forward'
+            });
+        }
       })
   }
 

@@ -4,8 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpModule } from '@angular/http';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-import { LandingPage } from '../pages/landing/landing';
+import { CardsPage } from '../pages/cards/cards';
 import { LoginPage } from '../pages/login/login';
 import { ReceiptsPage } from '../pages/receipts/receipts';
 import { OnboardingPage } from '../pages/onboarding/onboarding';
@@ -20,8 +19,7 @@ import { IonicStorageModule } from '@ionic/storage';
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    LandingPage,
+    CardsPage,
     LoginPage,
     ReceiptsPage,
     OnboardingPage,
@@ -37,8 +35,7 @@ import { IonicStorageModule } from '@ionic/storage';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
-    LandingPage,
+    CardsPage,
     LoginPage,
     ReceiptsPage,
     OnboardingPage,

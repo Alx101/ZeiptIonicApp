@@ -2,11 +2,12 @@ import {Component} from '@angular/core';
 import {NavController, NavParams, LoadingController, AlertController} from 'ionic-angular';
 import {ResourcesProvider} from '../../providers/resources/resources';
 import {ReceiptsPage} from '../receipts/receipts';
+import {LoginPage} from '../login/login';
 import {OnboardingPage} from '../onboarding/onboarding';
 import {InAppBrowser} from "@ionic-native/in-app-browser";
 
-@Component({selector: 'page-landing', templateUrl: 'landing.html'})
-export class LandingPage {
+@Component({selector: 'page-cards', templateUrl: 'cards.html'})
+export class CardsPage {
 
   cards : any = [];
   user : any = {
@@ -81,4 +82,15 @@ export class LandingPage {
       .create('http://demo.zeipt.se/public/registercard/1234');
   }
 
+  logout() {
+    this
+      .resProvider
+      .clearStorage();
+    this
+      .navCtrl
+      .setRoot(LoginPage, {}, {
+        animate: true,
+        direction: 'forward'
+      });
+  }
 }

@@ -1,87 +1,92 @@
-
-.the-receipt {
-    margin: 10px;
-    padding: 10px;
-    background-color: rgba(255, 255, 248, 0.9);
-    box-shadow: 0 5px 5px rgba(39, 112, 152, 0.1);
-    position: relative;
-}
-.the-receipt:after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    height: 10px;
-    width: 100%;
-    left: 0;
-    right: 0;
-    background-image: url(/assets/img/receipt-bottom.png);
-    background-size: 6px;
-    background-repeat-y: no-repeat;
-}
-.receipt-header {
-    display: table;
-    margin-bottom: 10px;
-}
-.merchant-info {
-    display: table-cell;
-    padding-left: 10px;
-    padding-top: 0px;
-    vertical-align: top;
-}
-.merchant-logo {
-    width: 80px;
-    display: table-cell;
-}
-.merchant-info p {
-    margin-bottom: 4px;
-}
-.merchant-name {
-    font-size: 18px;
-    font-weight: bold;
-}
-.receipt-time {
-    display: flex;
-}
-.right {
-    text-align: right;
-}
-.articles {
-    margin-top: 10px;
-}
-.article-header {
-    border-bottom: 1px dotted rgba(39, 112, 152, 0.2);
-}
-tr {
-    width: 100%;
-    display: inline-table;
-    position: relative;
-    margin-bottom: 10px;
-    border-bottom: 1px solid rgba(39, 112, 152, 0.05);
-}
-.article-name {
-    text-align: left;
-    width: 50%;
-    position: relative;
-}
-.article-quantity {
-    text-align: right;
-    width: 20%;
-    position: relative;
-}
-.article-sum {
-    width: 30%;
-    position: relative;
-    text-align: right;
-}
-td.article-sum {
-    font-size: 16px;
-}
-.article-nr{
-    font-size: 12px;
-}
-tr.total {
-    border-bottom: 1px solid #277098;
-    padding-bottom: 10px;
-    height: 30px;
-    font-weight: bold;
+page-receipt-detail {
+    .back-button{
+        display: none !important;
+    }
+    .the-receipt {
+        margin: 10px;
+        padding: 10px;
+        background-color: rgba(255, 255, 255, 1);
+        box-shadow: 0 4px 12px rgba(194, 217, 236, 1);
+        position: relative;
+    }
+    .the-receipt:after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        height: 10px;
+        width: 100%;
+        left: 0;
+        right: 0;
+        background-image: url(/assets/img/receipt-bottom.png);
+        background-size: contain;
+        background-repeat-y: no-repeat;
+    }
+    .receipt-header {
+        display: table;
+        margin-bottom: 10px;
+    }
+    .merchant-info {
+        display: table-cell;
+        padding-left: 10px;
+        padding-top: 0px;
+        vertical-align: top;
+    }
+    .merchant-logo {
+        width: 80px;
+        display: table-cell;
+    }
+    .merchant-info p {
+        margin-bottom: 4px;
+    }
+    .merchant-name {
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .receipt-time {
+        justify-content: space-between;
+        display: flex;
+    }
+    .right {
+        text-align: right;
+    }
+    .articles {
+        margin-top: 10px;
+    }
+    .article-header {
+        border-bottom: 1px dotted rgba(39, 112, 152, 0.2);
+    }
+    tr {
+        width: 100%;
+        display: inline-table;
+        position: relative;
+        margin-bottom: 10px;
+        border-bottom: 1px solid rgba(39, 112, 152, 0.05);
+    }
+    .article-name {
+        text-align: left;
+        width: 50%;
+        position: relative;
+    }
+    .article-quantity {
+        text-align: right;
+        width: 20%;
+        position: relative;
+    }
+    .article-sum {
+        width: 30%;
+        position: relative;
+        text-align: right;
+    }
+    td.article-sum {
+        font-size: 16px;
+    }
+    .article-nr {
+        font-size: 12px;
+    }
+    tr.total {
+        border-bottom: 1px solid #277098;
+        padding-bottom: 10px;
+        height: 30px;
+        font-weight: bold;
+    }
 }

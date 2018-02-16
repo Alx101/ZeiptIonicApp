@@ -8,14 +8,18 @@ page-login {
             margin-top: 8px;
         }
     }
-    .header{
+    .header {
         position: relative;
+        min-height: 167px;
     }
     .item-input {
         margin-bottom: 5px;
     }
-    .error-txt{
+    .error-txt {
         color: color($colors, danger);
         margin-bottom: 10px;
+    }
+    .buttons {
+        display: flex;
     }
 }

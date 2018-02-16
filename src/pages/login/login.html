@@ -1,50 +1,76 @@
 <ion-header class="header">
-  <div class="profile">
-    <img class="receiptguy big" src="../assets/img/receiptguy.svg" alt="">
-    <p>Log in or Register</p>
-  </div>
+  <ion-navbar>
+    <div class="profile">
+      <img class="receiptguy big" src="../assets/img/receiptguy.svg" alt="">
+      <p *ngIf="!registerUserView">Log in</p>
+      <p *ngIf="registerUserView">Register</p>
+    </div>
+  </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content no-bounce>
   <div class="info-content">
 
     <!-- LOGIN -->
     <form *ngIf="!registerUserView" [formGroup]="loginForm">
+
+      <!-- disable autofill -->
+      <input id="fake_user_name" name="fake_user[name]" style="position:absolute; top:-100px; display:none;" type="text" value="Safari Autofill Me">
+
       <ion-item>
         <ion-label color="primary" floating>Email</ion-label>
         <ion-input formControlName="username" type="email"></ion-input>
       </ion-item>
+      <div class="error-txt" *ngIf="loginForm.controls.username.errors && loginForm.controls.username.touched">Must be a valid email</div>
+
+      <!-- disable autofill -->
+      <input id="password" formControlName="fake_password" name="fake_password[password]" style="position:absolute; top:-100px; display:none;"
+        type="password" value="Safari Autofill Me">
+
       <ion-item>
         <ion-label color="primary" floating>Password</ion-label>
         <ion-input formControlName="password" type="password"></ion-input>
       </ion-item>
+      <div class="error-txt" *ngIf="loginForm.controls.password.errors && loginForm.controls.password.touched">Password is required</div>
 
-      <button *ngIf="!loginForm.valid" type="button" class="secondary">Login</button>
-      <button *ngIf="loginForm.valid" type="button" class="primary" (click)="loginUser()">Login</button>
-      <button class="primary" type="button" (click)="registerView()">Register</button>
+      <div class="buttons">
+        <button *ngIf="!loginForm.valid" type="button" class="secondary disabled">Login</button>
+        <button *ngIf="loginForm.valid" type="button" class="primary" (click)="loginUser()">Login</button>
+        <button class="secondary" type="button" (click)="registerView()">Register</button>
+      </div>
     </form>
 
     <!-- REGISTER -->
     <form *ngIf="registerUserView" [formGroup]="registerForm">
+
+      <!-- disable autofill -->
+      <input id="fake_user_name" name="fake_user[name]" style="position:absolute; top:-100px; display:none;" type="text" value="Safari Autofill Me">
+
       <ion-item>
         <ion-label color="primary" floating>Email</ion-label>
         <ion-input formControlName="username" type="email"></ion-input>
       </ion-item>
-      <div class="error-txt" *ngIf="registerForm.controls.username.errors">Must be a valid email</div>
+      <div class="error-txt" *ngIf="registerForm.controls.username.errors && registerForm.controls.username.touched">Must be a valid email</div>
+
+      <!-- disable autofill -->
+      <input id="password" formControlName="fake_password" name="fake_password[password]" style="position:absolute; top:-100px; display:none;"
+        type="password" value="Safari Autofill Me">
+
       <ion-item>
         <ion-label color="primary" floating>Password</ion-label>
         <ion-input formControlName="password" type="password"></ion-input>
       </ion-item>
-      <div class="error-txt" *ngIf="registerForm.controls.username.errors">Password is required</div>
+      <div class="error-txt" *ngIf="registerForm.controls.password.errors && registerForm.controls.password.touched">Password is required</div>
       <ion-item>
         <ion-label color="primary" floating>Confirm password</ion-label>
         <ion-input formControlName="confirmPassword" type="password"></ion-input>
       </ion-item>
-      <div class="error-txt" *ngIf="registerForm.controls.confirmPassword.errors?.MatchPassword">Password not match</div>
-      <button *ngIf="!registerForm.valid" type="button" class="secondary" >Register</button>
-      <button *ngIf="registerForm.valid" type="button" class="primary" (click)="registerUser()">Register</button>
-      <p type="button" (click)="loginView()">Cancel</p>
+      <div class="error-txt" *ngIf="registerForm.controls.confirmPassword.errors?.MatchPassword  && registerForm.controls.confirmPassword.touched">Passwords doesn't match</div>
+      <div class="buttons">
+        <button class="secondary" type="button" (click)="loginView()">Login</button>
+        <button *ngIf="!registerForm.valid" type="button" class="secondary disabled">Register</button>
+        <button *ngIf="registerForm.valid" type="button" class="primary" (click)="registerUser()">Register</button>
+      </div>
     </form>
-
   </div>
 </ion-content>

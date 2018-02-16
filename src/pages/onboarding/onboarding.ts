@@ -16,16 +16,6 @@ export class OnboardingPage {
   cards : any = [];
 
   constructor(public resProvider : ResourcesProvider, public navCtrl : NavController, public navParams : NavParams, public iab : InAppBrowser) {
-    resProvider
-      .loadCards()
-      .then((c) => {
-        this.cards = c;
-        if (this.cards.length > 0) {
-          this.navCtrl.setRoot(ReceiptsPage)
-        } else {
-          console.log("no cards");
-        }
-      })
   }
 
   ionViewDidLoad() {
