@@ -3,6 +3,7 @@ import {Component} from '@angular/core';
 import {LoginPage} from '../pages/login/login';
 import {OnboardingPage} from '../pages/onboarding/onboarding';
 import {ReceiptsPage} from '../pages/receipts/receipts';
+import {CardsPage} from '../pages/cards/cards';
 
 import {ResourcesProvider} from '../providers/resources/resources';
 

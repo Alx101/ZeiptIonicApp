@@ -1,8 +1,94 @@
 page-cards {
-    button .ion-md-add {
-        margin-right: 5px;
+    .scroll-content {
+        padding: 10px;
     }
-    .card{
-        margin-top: 10px;
+    .datenr {
+        margin-bottom: 2px;
+        >p {
+            font-size: 14px;
+            color: #277098;
+        }
+    }
+    .cardcontainer {
+        margin-bottom: 10px;
+    }
+    .realcardcontainer {
+        display: flex;
+        border-radius: 7px 0px 0px 7px;
+        justify-content: end;
+        align-items: center;
+    }
+    .realcardcontainer .btn-icon{
+        font-size: 30px;
+        margin-left: 10px;
+    }
+    .realcard {
+        position: relative;
+        width: calc(100% - 40px);
+        display: inline-block;
+    }
+    .realcard img {
+        position: relative;
+        width: 100%;
+    }
+    .realcard .cardinfo {
+        z-index: 10;
+        margin: auto;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        top: 0;
+        right: 0;
+        color: white;
+        text-shadow: 0 1px 0 black;
+        font-family: helvetica-neue, helvetica;
+        text-transform: uppercase;
+    }
+    .realcard .cardnumber p {
+        top: 0;
+        bottom: 0;
+        left: 0;
+        display: table;
+        right: 0;
+        text-align: center;
+        position: absolute;
+        width: 100%;
+        font-weight: 300;
+        font-size: 20px;
+        letter-spacing: 1px;
+        @media screen and (min-width: 330px) {
+            font-size: 24px;
+          }
+    }
+    
+    .realcard .cardholder {
+        position: absolute;
+        bottom: 20px;
+        left: 15px;
+    }
+    .realcard .small{
+        font-size: 9px;
+        font-weight: 100;
+        margin-bottom: 5px;
+    }
+    .realcard .expires {
+        position: absolute;
+        bottom: 20px;
+        right: 15px;
+    }
+    .card {
+        background-color: white;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .card .btn-icon {
+        font-size: 26px;
+    }
+    .cardinfo {
+        text-align: left;
+        width: 100%;
+        margin-left: 20px;
     }
 }

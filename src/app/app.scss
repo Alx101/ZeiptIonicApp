@@ -70,7 +70,10 @@ button {
     width: 100%;
     margin: 10px 0;
     display: block;
-    box-shadow: 0 2px 4px rgba(194, 217, 236, 0.5)
+    box-shadow: 0 2px 4px rgba(194, 217, 236, 0.5);
+    .icon {
+        margin-right: 10px;
+    }
 }
 
 button.primary {
