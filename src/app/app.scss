@@ -8,7 +8,7 @@ HEADER */
     text-align: center;
     background-color: color($colors, primary);
     color: white;
-    .toolbar{
+    .toolbar {
         padding: 0;
         margin: 0;
         min-height: 43px;
@@ -51,7 +51,7 @@ HEADER */
     .receiptguy {
         margin: auto;
         border-radius: 100px;
-        box-shadow: 0 0 30px color($colors, secondary);
+        box-shadow: 0 0 15px color($colors, secondary);
     }
     .receiptguy.big {
         width: 50px;
@@ -80,9 +80,14 @@ button.primary {
     background-color: color($colors, secondary);
     color: white;
 }
-.disabled{
+button.navbtn{
+    background-color: #f1f5fa;
+    color: #0F2841;
+}
+.disabled {
     opacity: 0.5;
 }
+
 button.secondary {
     background-color: color($colors, bright);
     color: color($colors, primary);
@@ -119,8 +124,8 @@ p {
     margin: auto;
 }
 
-p.notify {
-    color: color($colors, danger);
+.notify {
+    position: relative;
 }
 
 .notify:after {
@@ -129,9 +134,16 @@ p.notify {
     background-color: #dd0000;
     height: 4px;
     width: 4px;
-    left: -10px;
-    top: 0;
     border-radius: 100px;
+    top: -1px;
+}
+
+.right .notify:after {
+    left: -8px;
+}
+
+.left .notify:after {
+    right: -8px;
 }
 
 .padding-width {
@@ -154,7 +166,11 @@ ion-content {
     margin: auto;
     background-color: transparent;
 }
-.item-md [item-left], .item-md [item-right], .item-md [item-start], .item-md [item-end] {
+
+.item-md [item-left],
+.item-md [item-right],
+.item-md [item-start],
+.item-md [item-end] {
     margin: 2px 0 4px 0;
 }
 
@@ -170,6 +186,7 @@ ion-content {
     padding: 0;
     border: none;
 }
+
 form p {
     text-align: right;
     margin-top: 20px;
@@ -178,25 +195,31 @@ form p {
 .column.left ion-icon {
     margin-right: 5px;
 }
+
 .item-input {
     margin-bottom: 20px;
 }
+
 .item-ios {
     padding: 0px;
     margin: 0;
     background-color: transparent;
 }
+
 .label-ios {
     margin: 0;
 }
+
 .list-ios .item-block .item-inner {
     border: none;
     padding: 0;
     margin: 0;
 }
+
 .item-block {
     min-height: 0;
 }
+
 .list-ios {
     margin: 0;
 }

@@ -27,6 +27,7 @@ page-receipts {
         background-size: cover;
         z-index: 0;
         opacity: 0.4;
+        mix-blend-mode: multiply;
     }
     #fade {
         transition: opacity 0.2s;
@@ -39,6 +40,7 @@ page-receipts {
     }
     #fixedbtn {
         background-color: #f1f5fa;
+        color: #ff006a;
         box-shadow: 0 2px 4px rgba(194, 217, 236, .5);
         width: 100%;
         text-align: center;
@@ -54,6 +56,12 @@ page-receipts {
         }
         >p {
             display: inline;
+        }
+        #fixedbtnyear {
+            color: #277098;
+            font-size: 12px;
+            font-weight: bold;
+            font-style: italic;
         }
     }
     .year,
@@ -141,7 +149,7 @@ page-receipts {
         text-align: left;
         padding: 5px 10px;
         margin: auto;
-        box-shadow: 0 2px 5px rgba(39, 112, 152, 0.1);
+        box-shadow: 0 3px 10px rgba(39, 112, 152, 0.2);
         border-radius: 0;
         margin: 5px 0px;
         position: relative;

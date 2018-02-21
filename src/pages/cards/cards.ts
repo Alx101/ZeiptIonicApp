@@ -16,21 +16,20 @@ export class CardsPage {
   loading : any;
 
   constructor(public navCtrl : NavController, public navParams : NavParams, public resProvider : ResourcesProvider, public loadCtrl : LoadingController, public alertCtrl : AlertController, public iab : InAppBrowser) {
-
-    this.loading = loadCtrl.create({content: 'Please wait, loading...'});
+    
+    /*this.loading = loadCtrl.create({content: 'Please wait, loading...'});
     this
       .loading
       .present();
-
+    */
     resProvider
       .loadCards()
       .then((c) => {
         this.cards = c;
-        this
+        /*this
           .loading
-          .dismiss();
+          .dismiss();*/
       });
-
   }
 
   ionViewDidLoad() {}

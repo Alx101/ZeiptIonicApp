@@ -2,6 +2,20 @@ page-cards {
     .scroll-content {
         padding: 10px;
     }
+    .toolbar-background {
+        border: none !important;
+        overflow: unset !important;
+    }
+    .scroll-content {
+        padding-top: 40px;
+    }
+    .fixedbanner {
+        background-color: color($colors, primary);
+        width: 100%;
+        text-align: center;
+        padding-bottom: 8px;
+        color: color($colors, secondary);
+    }
     .datenr {
         margin-bottom: 2px;
         >p {
@@ -18,7 +32,7 @@ page-cards {
         justify-content: end;
         align-items: center;
     }
-    .realcardcontainer .btn-icon{
+    .realcardcontainer .btn-icon {
         font-size: 30px;
         margin-left: 10px;
     }
@@ -58,15 +72,14 @@ page-cards {
         letter-spacing: 1px;
         @media screen and (min-width: 330px) {
             font-size: 24px;
-          }
+        }
     }
-    
     .realcard .cardholder {
         position: absolute;
         bottom: 20px;
         left: 15px;
     }
-    .realcard .small{
+    .realcard .small {
         font-size: 9px;
         font-weight: 100;
         margin-bottom: 5px;

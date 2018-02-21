@@ -4,7 +4,7 @@ import {NavController, NavParams} from 'ionic-angular';
 import {ResourcesProvider} from '../../providers/resources/resources';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {PasswordValidation} from './password-validation';
-import {OnboardingPage} from '../onboarding/onboarding';
+import {CardsPage} from '../cards/cards';
 import {ReceiptsPage} from '../receipts/receipts';
 
 @Component({selector: 'page-login', templateUrl: 'login.html'})
@@ -12,13 +12,14 @@ export class LoginPage {
 
   user : any = {};
   cards : any = [];
+  receipts : any = [];
   registerUserView : boolean = false;
   loginUserView : boolean = false;
 
   registerForm : FormGroup;
   loginForm : FormGroup;
 
-  emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
+  emailPattern = /^\S+@\S+\.\S+$/;
 
   constructor(public navCtrl : NavController, public navParams : NavParams, public resProvider : ResourcesProvider, public formBuilder : FormBuilder) {
 
@@ -67,31 +68,38 @@ export class LoginPage {
       .loginUser(this.loginForm.value.username)
       .then(data => {
         this.user = data;
+
+        this
+          .resProvider
+          .loadCards()
+          .then((c) => {
+            this.cards = c;
+            this
+              .resProvider
+              .loadReceiptJson()
+              .then((receipts) => {
+                this.receipts = receipts
+                if (this.cards.length == 0 && this.receipts.length == 0) {
+                  this
+                    .navCtrl
+                    .setRoot(CardsPage, {}, {
+                      animate: true,
+                      direction: 'forward'
+                    })
+                } else {
+                  this
+                    .navCtrl
+                    .setRoot(ReceiptsPage, {}, {
+                      animate: true,
+                      direction: 'forward'
+                    })
+                }
+              })
+          })
       })
       .catch((err) => {
         console.log(err)
       });
-    this
-      .resProvider
-      .loadCards()
-      .then((c) => {
-        this.cards = c;
-        if (this.cards.length > 0) {
-          this
-            .navCtrl
-            .setRoot(ReceiptsPage, {}, {
-              animate: true,
-              direction: 'forward'
-            })
-        } else {
-          this
-            .navCtrl
-            .setRoot(OnboardingPage, {}, {
-              animate: true,
-              direction: 'forward'
-            });
-        }
-      })
   }
 
   registerUser() {
@@ -102,7 +110,7 @@ export class LoginPage {
         this.user = data;
         this
           .navCtrl
-          .setRoot(OnboardingPage, {}, {
+          .setRoot(CardsPage, {}, {
             animate: true,
             direction: 'forward'
           });

@@ -2,17 +2,17 @@
 <ion-header class="header">
     <ion-navbar>
         <div class="header-row">
-            <div class="column left" (click)="search()">
-                <ion-icon id="search" name="search"></ion-icon>
-                <span id="searchtxt">Search</span>
+            <div *ngIf="cards.length == 0" class="column left" (click)="goToCards()">
+                <p class="notify">Your cards</p>
             </div>
+            <div *ngIf="cards.length > 0" class="column left" (click)="goToCards()">Your cards</div>
             <div class="column center">
                 <img class="receiptguy small" src="../assets/img/receiptguy.svg" alt="">
             </div>
-            <div *ngIf="cards.length == 0" class="column right" (click)="goToCards()">
-                <p class="notify">Add card</p>
+            <div class="column right" (click)="search()">
+                <ion-icon id="search" name="search"></ion-icon>
+                <span id="searchtxt">Search</span>
             </div>
-            <div *ngIf="cards.length > 0" class="column right" (click)="goToCards()">Your cards</div>
         </div>
     </ion-navbar>
 </ion-header>
@@ -39,7 +39,7 @@
         <ion-icon id="arrow" name="arrow-down"></ion-icon>
     </div>
 
-    <ion-searchbar ion-fixed placeholder="Search for date, merchant, city or price" id="searchbar" (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-searchbar ion-fixed placeholder="Search for month, merchant, city or price" id="searchbar" (ionInput)="getItems($event)"></ion-searchbar>
 
     <!-- IF NO RECEIPTS – Show message -->
     <div *ngIf="structuredReceipts.length == 0" class="info-content">
@@ -50,13 +50,10 @@
                 <br>
                 <p *ngIf="cards.length > 0">Just stay tuned!</p>
                 <p *ngIf="cards.length == 0">Start by adding your card:</p>
-                <button *ngIf="cards.length == 0" class="primary" (click)="newCard()">Add card</button>
+                <button *ngIf="cards.length == 0" class="navbtn" (click)="goToCards()">Your cards</button>
             </div>
         </div>
     </div>
-
-
-
     <ion-list *ngFor="let receiptObject of structuredReceipts; let i = index">
 
         <div id="{{receiptObject.year}}" class="year" *ngIf="receiptObject == structuredReceipts[0] || receiptObject.year != structuredReceipts[i-1].year">

@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-
 import {LoginPage} from '../pages/login/login';
 import {OnboardingPage} from '../pages/onboarding/onboarding';
 import {ReceiptsPage} from '../pages/receipts/receipts';
@@ -11,30 +10,40 @@ import {ResourcesProvider} from '../providers/resources/resources';
 export class MyApp {
   user : any;
   cards : any = [];
+  receipts : any = [];
   rootPage : any;
   loading : any;
 
   constructor(public resProvider : ResourcesProvider) {}
   ngOnInit() {
+
     this
       .resProvider
       .loadUser()
       .then((user) => {
         this.user = user;
-        this
-          .resProvider
-          .loadCards()
-          .then((c) => {
-            this.cards = c;
-            if (this.user && (this.cards.length > 0)) {
-              this.rootPage = ReceiptsPage;
-            } else if (this.user && (this.cards.length == 0)) {
-              this.rootPage = OnboardingPage;
-            } else {
-              this.rootPage = LoginPage;
-            }
-          })
+        if (!this.user) {
+          this.rootPage = LoginPage;
+        } else {
+          this
+            .resProvider
+            .loadCards()
+            .then((cards) => {
+              this.cards = cards;
+
+              this
+                .resProvider
+                .loadReceiptJson()
+                .then((receipts) => {
+                  this.receipts = receipts
+                  if (this.cards.length == 0 && this.receipts.length == 0) {
+                    this.rootPage = CardsPage;
+                  } else {
+                    this.rootPage = ReceiptsPage;
+                  }
+                })
+            })
+        }
       })
   }
-
 }

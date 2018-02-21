@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 import {ReceiptsPage} from '../receipts/receipts';
+import {CardsPage} from '../cards/cards';
 import {InAppBrowser} from "@ionic-native/in-app-browser";
 
 import {ResourcesProvider} from '../../providers/resources/resources';
@@ -15,11 +16,9 @@ import {ResourcesProvider} from '../../providers/resources/resources';
 export class OnboardingPage {
   cards : any = [];
 
-  constructor(public resProvider : ResourcesProvider, public navCtrl : NavController, public navParams : NavParams, public iab : InAppBrowser) {
-  }
+  constructor(public resProvider : ResourcesProvider, public navCtrl : NavController, public navParams : NavParams, public iab : InAppBrowser) {}
 
-  ionViewDidLoad() {
-  }
+  ionViewDidLoad() {}
   newCard()
   {
     const browser = this
@@ -32,6 +31,15 @@ export class OnboardingPage {
     this
       .navCtrl
       .setRoot(ReceiptsPage, {}, {
+        animate: true,
+        direction: 'forward'
+      });
+  }
+  goToCards()
+  {
+    this
+      .navCtrl
+      .setRoot(CardsPage, {}, {
         animate: true,
         direction: 'forward'
       });

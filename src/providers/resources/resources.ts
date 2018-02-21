@@ -81,7 +81,7 @@ export class ResourcesProvider {
     public loadCards() {
         return new Promise((resolve, reject) => {
             if (this.workoffline) {
-                let cards = [
+                let cards = [ 
                     {
                         'lastfour': '1111',
                         'type': 'Visa',

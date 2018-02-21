@@ -69,11 +69,6 @@ export class ReceiptsPage {
     }
 
     constructor(public navCtrl : NavController, public navParams : NavParams, public resProvider : ResourcesProvider, public loadCtrl : LoadingController, public iab : InAppBrowser) {
-        this.loading = loadCtrl.create({content: 'Please wait, loading...'});
-        this
-            .loading
-            .present();
-
         resProvider
             .loadCards()
             .then((c) => {
@@ -85,14 +80,8 @@ export class ReceiptsPage {
             .then((receipts) => {
                 this.structure(receipts);
 
-                this
-                    .loading
-                    .dismiss();
             })
             .catch(() => {
-                this
-                    .loading
-                    .dismiss();
                 this.receiptJson = [];
             });
     }
@@ -150,7 +139,6 @@ export class ReceiptsPage {
         this.structure(this.receiptJson);
         let value = event.target.value;
         if (value && value.trim() != '') {
-
             this.structuredReceipts = this
                 .structuredReceipts
                 .filter((item) => {
@@ -272,16 +260,10 @@ export class ReceiptsPage {
             .offsetTop;
         this
             .content
-            .scrollTo(0, yOffset - 40, 1000)
+            .scrollTo(0, yOffset - 48, 1000)
     }
 
     ionViewDidLoad() {}
-    newCard()
-    {
-        const browser = this
-            .iab
-            .create('http://localhost:8000/registercard/1234');
-    }
 
     goToCards()
     {
@@ -289,7 +271,7 @@ export class ReceiptsPage {
             .navCtrl
             .setRoot(CardsPage, {}, {
                 animate: true,
-                direction: 'forward'
+                direction: 'back'
             });
     }
 
