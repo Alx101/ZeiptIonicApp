@@ -1,10 +1,10 @@
 page-receipts {
     .overflow-scroll {
-        overflow-y: scroll!important;
+        overflow-y: scroll !important;
     }
     .overflow-scroll.hideScroll {
         overflow: hidden;
-        overflow-y: hidden!important;
+        overflow-y: hidden !important;
     }
     ion-content {
         overflow-x: hidden;
@@ -12,55 +12,45 @@ page-receipts {
     .searchbar {
         min-height: 46px;
         transition: top .2s;
-        top: -46px;
+        top: -56px;
         margin-bottom: -20px;
-        background: color($colors, light);
+        background-color: #0f2841;
     }
     .scroll-content {
         padding-top: 30px;
         padding-bottom: 10vh;
-    }
-    #fixedbg {
-        width: 100%;
-        height: 100%;
-        background-image: url(../../../assets/img/zeiptbg.jpg);
-        background-size: cover;
-        z-index: 0;
-        opacity: 0.4;
-        mix-blend-mode: multiply;
     }
     #fade {
         transition: opacity 0.2s;
         opacity: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(39, 112, 152, 0.3);
+        background-color: rgba(15, 40, 65, 0.5);
         z-index: 2;
         pointer-events: none;
     }
     #fixedbtn {
-        background-color: #f1f5fa;
-        color: #ff006a;
-        box-shadow: 0 2px 4px rgba(194, 217, 236, .5);
+        background-color: #0f2841;
+        color: white;
         width: 100%;
-        text-align: center;
+        text-align: left;
         z-index: 100;
-        padding: 15px;
+        padding: 15px 10px;
         #arrow {
-            right: 20px;
+            right: 10px;
             font-size: 20px;
             transform: scaleY(1);
             position: absolute;
-            top: 13px;
+            top: 16px;
             transition: transform .2s;
         }
         >p {
             display: inline;
+            font-size: 16px;
+            font-weight: bold;
         }
         #fixedbtnyear {
-            color: #277098;
             font-size: 12px;
-            font-weight: bold;
             font-style: italic;
         }
     }
@@ -68,13 +58,13 @@ page-receipts {
     .navyear {
         overflow: hidden;
         margin-top: 20px;
-        box-shadow: 0 -6px 10px rgba(194, 217, 236, .2);
+        margin-bottom: -20px;
         >p {
             text-align: center;
             font-size: 12px;
             margin-top: 5px;
             position: relative;
-            color: #277098;
+            color: #0f2841;
             font-style: italic;
             font-weight: 600;
             &:before,
@@ -84,7 +74,7 @@ page-receipts {
                 top: 40%;
                 width: 40%;
                 height: 1px;
-                background-color: rgba(39, 112, 152, 0.3);
+                background-color: rgba(15, 40, 65, 0.1);
             }
             &:before {
                 left: 0;
@@ -96,30 +86,32 @@ page-receipts {
         .navyear>p {
             margin-top: 20px;
         }
+        & + .month:after {
+            display: none;
+        }
     }
     .month {
+        position: relative;
+        &:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            top: -15px;
+            left: 0;
+            margin: auto; 
+            right: 0;
+            border-top: 2px dashed;
+        }
         >p {
-            text-align: center;
-            font-size: 14px;
-            margin-top: 10px;
+            text-align: left;
+            font-weight: bold;
+            font-size: 16px;
+            padding-top: 5px;
+            padding-left: 10px;
+            margin: 30px 0px 0px;
             position: relative;
-            color: #ff006a;
-            background-color: none;
-            &:before,
-            &:after {
-                background-color: rgba(255, 0, 106, 0.3);
-                content: '';
-                position: absolute;
-                top: 40%;
-                height: 1px;
-                width: 33%;
-            }
-            &:before {
-                left: 10px;
-            }
-            &:after {
-                right: 10px;
-            }
+            color: #0f2841;
+            box-shadow: 0 -10px 30px -10px rgba(39, 112, 152, 0.2);
         }
     }
     .datenr {
@@ -142,14 +134,14 @@ page-receipts {
         }
     }
     .receiptbtn {
+        box-shadow: 0 1px 10px -4px #277098;
         width: 100%;
         display: flex;
-        background-color: white;
+        background-color: rgba(255, 255, 255, 0.9);
         box-sizing: border-box;
         text-align: left;
         padding: 5px 10px;
         margin: auto;
-        box-shadow: 0 3px 10px rgba(39, 112, 152, 0.2);
         border-radius: 0;
         margin: 5px 0px;
         position: relative;
@@ -157,7 +149,7 @@ page-receipts {
             width: 50%;
         }
         .info {
-            border-left: 1px solid color($colors, light);
+            border-left: 1px solid rgba(15, 40, 65, 0.1);
             padding-left: 10px;
         }
         p.name,
@@ -185,12 +177,11 @@ page-receipts {
         }
     }
     #monthList {
-        padding-top: 15px;
-        box-shadow: -5px 2px 10px rgba(39, 112, 152, 0.1);
+        padding-top: 30px;
         overflow: scroll;
         -webkit-overflow-scrolling: touch;
         position: absolute;
-        background-color: #f1f5fa;
+        background-color: #0F2841;
         height: calc(100vh - 58px);
         top: calc(-100vh + 58px);
         z-index: 10;
@@ -199,20 +190,27 @@ page-receipts {
         transition: top 0.2s ease-out, opacity 0.2s;
         z-index: 10;
         .quickselect {
-            box-shadow: 0 2px 5px rgba(39, 112, 152, 0.1);
-            background-color: white;
-            color: #ff006a;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #0F2841;
             padding: 15px 20px;
             margin: 10px;
             text-align: center;
         }
+        .navyear {
+            margin: auto;
+            p {
+                color: white !important;
+            }
+        }
         .navyear>p:before,
         .navyear>p:after {
             width: 30%;
+            color: white;
         }
     }
     .endofreceipts {
-        color: #277098;
+        color: #0f2841;
+        font-style: italic;
         text-align: center;
         margin-top: 50px;
     }

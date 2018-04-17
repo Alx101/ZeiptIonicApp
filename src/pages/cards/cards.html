@@ -11,10 +11,12 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
+    <div ion-fixed id="fixedbg">
+      </div>
   <div ion-fixed class="fixedbanner">
     The Receipt Guy
   </div>
-  <div *ngIf="cards.length == 0" class="info-content">
+  <div *ngIf="!cards" class="info-content">
     <div class="centered">
       <div class="centered-cell">
         <p>Add your card to get a digital receipt the next time you make a purchase</p>
@@ -23,34 +25,16 @@
     <button class="primary" (click)="newCard()"><ion-icon name="md-add"></ion-icon>Add card</button>
   </div>
 
-  <div *ngIf="cards.length > 0">
+  <div *ngIf="cards">
     <div class="cardcontainer" *ngFor="let card of cards; let idx = index">
-      <div class="datenr">
-        <p>
-          Added: {{card.added.split(" ").splice(0, 4)}}
-        </p>
-      </div>
-      <div class="realcardcontainer">
-        <div class="realcard">
-          <div class="cardinfo">
-            <div class="cardnumber">
+      <div class="card">
+          <img src="assets/img/{{card.type.toLowerCase()}}.jpg" alt="">
+          <div class="cardnumber">
               <p>XXXX XXXX XXXX {{card.lastfour}}</p>
             </div>
-            <div class="cardholder">
-              <p class="small">Card holder</p>
-              <p>{{card.name}}</p>
-            </div>
-            <div class="expires">
-              <p class="small">Expires</p>
-              <p>{{card.expires}}</p>
-            </div>
-
-          </div>
-          <img src="assets/img/{{card.type.toLowerCase()}}.png" alt="">
-        </div>
-        <div class="btn-icon" (click)="popCard(idx)">
-          <ion-icon name="trash"></ion-icon>
-        </div>
+            <div class="btn-icon" (click)="popCard(idx)">
+                <ion-icon name="trash"></ion-icon>
+              </div>
       </div>
 
 

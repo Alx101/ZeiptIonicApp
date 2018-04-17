@@ -1,24 +1,36 @@
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http'
 import 'rxjs/add/operator/map';
 import {Storage} from '@ionic/storage';
 
 @Injectable()
 export class ResourcesProvider {
-    cards : any;
-    user : any;
+    public cards : any = [];
+    public receipts : any = [];
+    public user : any;
+    private token : any;
+    private cid : any;
     backendURL : string;
-    workoffline : boolean = true;
+    proxyURL : string;
+    workoffline : boolean = false;
 
-    constructor(public http : Http, public storage : Storage) {
-        this.backendURL = "http://demo.zeipt.se/public";
+    constructor(public storage : Storage, private httpClient : HttpClient) {
+        this.backendURL = "https://demo.zeipt.se/public";
     }
+
     public clearStorage() {
         this
             .storage
-            .clear();
+            .set("token", "");
+        this
+            .storage
+            .set("cid", "");
+
+        this.token = null;
+        this.cid = null;
     }
-    public loginUser(username) {
+
+    public loginUser(username, password) {
         return new Promise((resolve, reject) => {
             if (this.workoffline) {
                 let offlineuser = "offlineuser";
@@ -27,13 +39,33 @@ export class ResourcesProvider {
                     .set("user", offlineuser);
                 resolve(offlineuser);
             } else {
+
                 this
-                    .http
-                    .get(this.backendURL + "/login")
+                    .httpClient
+                    .post(this.backendURL + "/login/", {
+                        name: username,
+                        password: password
+                    })
+                    .subscribe((data : any) => {
+
+                        if (data.success == 1) {
+                            this.token = data.session_token;
+                            this.cid = data.CID;
+                            this
+                                .storage
+                                .set("token", data.session_token)
+                            this
+                                .storage
+                                .set("cid", data.CID)
+                        }
+                        resolve(data);
+                    }, err => {
+                        console.log(err);
+                    })
             }
         })
     }
-    public registerUser(username) {
+    public registerUser(username, password) {
         return new Promise((resolve, reject) => {
             if (this.workoffline) {
                 let offlineuser = "offlineuser";
@@ -43,23 +75,24 @@ export class ResourcesProvider {
                 resolve(offlineuser);
             } else {
                 this
-                    .http
-                    .get(this.backendURL + "/registercustomer/" + username)
-                    .map(res => res.json())
-                    .subscribe(data => {
-                        console.log(data);
-                        if (data.success == 0) {} else {
+                    .httpClient
+                    .post(this.backendURL + "/registercustomer/", {
+                        name: username,
+                        pass: password
+                    })
+                    .subscribe((data : any) => {
+                        if (data.success == 1) {
                             this
                                 .storage
-                                .set("user", data.cid)
-                                .then((val) => {
-                                    console.log("Stored user for offline use");
-                                });
-                            resolve(data.cid);
+                                .set("token", data.session_token)
+                            this
+                                .storage
+                                .set("cid", data.CID)
+                            resolve(data);
                         }
                     }, err => {
                         console.log(err);
-                    });
+                    })
             }
         })
     }
@@ -68,72 +101,92 @@ export class ResourcesProvider {
         return new Promise((resolve, reject) => {
             this
                 .storage
-                .get("user")
-                .then((user) => {
-                    resolve(user);
+                .get('token')
+                .then((token) => {
+                    this
+                        .storage
+                        .get('cid')
+                        .then((cid) => {
+                            resolve({'token': token, 'cid': cid});
+                            this.token = token;
+                            this.cid = cid;
+                        })
+                        
+                        .catch(() => {
+                            reject();
+                        });
                 })
                 .catch(() => {
                     reject();
-                })
+                });
         });
     }
 
     public loadCards() {
         return new Promise((resolve, reject) => {
             if (this.workoffline) {
-                let cards = [ 
+                let cards = [
                     {
                         'lastfour': '1111',
-                        'type': 'Visa',
-                        'added': 'Thu Aug 03 2017 06:10:10 GMT+0200 (CEST)',
-                        'expires': '08/21',
-                        'name': 'Bjørn Johannessen'
+                        'type': 'Visa'
                     }, {
                         'lastfour': '1234',
-                        'type': 'Mastercard',
-                        'added': 'Sat Aug 19 2017 04:19:48 GMT+0200 (CEST)',
-                        'expires': '02/23',
-                        'name': 'Bjørn Johannessen'
+                        'type': 'Mastercard'
                     }
                 ];
                 resolve(cards);
             } else {
                 this
-                    .http
-                    .get(this.backendURL + "/cards/1234")
-                    .map(res => res.json())
-                    .subscribe(data => {
+                    .httpClient
+                    .get(this.backendURL + "/cards/" + this.cid, {
+                        params: {
+                            token: this.token
+                        }
+                    })
+                    .subscribe((data : any) => {
                         if (data.success == 0) {
-                            this
-                                .storage
-                                .get('cards')
-                                .then((cards) => {
-                                    resolve(cards);
-                                })
-                                .catch(() => {
-                                    reject();
-                                });
+                            console.log("No success..", data);
+                            this.cards = null;
+                            resolve();
                         } else {
+                            console.log("Success!!", data);
                             this
                                 .storage
                                 .set('cards', data.cards)
                                 .then((val) => {
                                     console.log("Stored cards for offline use");
                                 });
+                            this.cards = data.cards;
                             resolve(data.cards);
                         }
                     }, err => {
-                        //TODO: Fetch from cache
-                        this
-                            .storage
-                            .get('cards')
-                            .then((cards) => {
-                                resolve(cards);
-                            })
-                            .catch(() => {
-                                reject();
-                            });
+                        console.log(err);
+                        resolve('no cards');
                     });
+            }
+        });
+    }
+
+    public addCard() {
+        return new Promise((resolve, reject) => {
+            if (this.workoffline) {
+                console.log('offline');
+            } else {
+                this
+                    .httpClient
+                    .post(this.backendURL + "/tempregcard/" + this.cid, {
+                        'token': this.token,
+                        'lastfour': '9999',
+                        'expires': '06/21',
+                        'type': 'Visa'
+                    })
+                    .subscribe((data : any) => {
+                        console.log(data);
+                        resolve(data);
+                    }, err => {
+                        console.log(err);
+                        resolve('ERRORRRRR');
+                    })
             }
         });
     }
@@ -141,7 +194,7 @@ export class ResourcesProvider {
     // Fetch receipts. Should be fetched from backend though, so this is temporary.
     // Todo: connect to backend
     public loadReceiptJson() {
-        let receiptJson = [
+        this.receipts = [/*
             {
                 "reference": {
                     "zeipt_token": "5a736fed6449f3f55076b09a",
@@ -5542,15 +5595,17 @@ export class ResourcesProvider {
                         "version": 2
                     }
                 ]
-            }
+            }*/
         ];
 
         return new Promise((resolve, reject) => {
+            resolve(this.receipts);
+            /*
             if (this.workoffline) {
                 resolve(receiptJson);
             } else {
                 this
-                    .http
+                    .authHttp
                     .get(this.backendURL + "/receipts/1234")
                     .map(res => res.json())
                     .subscribe(data => {
@@ -5592,7 +5647,7 @@ export class ResourcesProvider {
                                 reject();
                             });
                     });
-            }
+            }*/
         });
 
     }

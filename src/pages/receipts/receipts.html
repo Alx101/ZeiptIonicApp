@@ -2,10 +2,10 @@
 <ion-header class="header">
     <ion-navbar>
         <div class="header-row">
-            <div *ngIf="cards.length == 0" class="column left" (click)="goToCards()">
+            <div *ngIf="!resProvider.cards.length" class="column left" (click)="goToCards()">
                 <p class="notify">Your cards</p>
             </div>
-            <div *ngIf="cards.length > 0" class="column left" (click)="goToCards()">Your cards</div>
+            <div *ngIf="resProvider.cards.length" class="column left" (click)="goToCards()">Your cards</div>
             <div class="column center">
                 <img class="receiptguy small" src="../assets/img/receiptguy.svg" alt="">
             </div>
@@ -33,7 +33,7 @@
     </div>
     <div (click)="toggleList()" ion-fixed id="fade">
     </div>
-    <div (click)="toggleList()" *ngIf="structuredReceipts.length != 0" ion-fixed id="fixedbtn">
+    <div (click)="toggleList()" *ngIf="resProvider.receipts.length" ion-fixed id="fixedbtn">
         <p id="fixedbtnmonth">Get list of months</p>
         <p id="fixedbtnyear"></p>
         <ion-icon id="arrow" name="arrow-down"></ion-icon>
@@ -42,15 +42,15 @@
     <ion-searchbar ion-fixed placeholder="Search for month, merchant, city or price" id="searchbar" (ionInput)="getItems($event)"></ion-searchbar>
 
     <!-- IF NO RECEIPTS – Show message -->
-    <div *ngIf="structuredReceipts.length == 0" class="info-content">
+    <div *ngIf="!resProvider.receipts.length" class="info-content">
         <div class="centered">
             <div class="centered-cell">
                 <img class="receiptguy big" src="../assets/img/zeiptreceipt.svg" alt="">
                 <p>This page will shortly be filled with your digital receipts.</p>
                 <br>
-                <p *ngIf="cards.length > 0">Just stay tuned!</p>
-                <p *ngIf="cards.length == 0">Start by adding your card:</p>
-                <button *ngIf="cards.length == 0" class="navbtn" (click)="goToCards()">Your cards</button>
+                <p *ngIf="resProvider.cards.length">Just stay tuned!</p>
+                <p *ngIf="!resProvider.cards.length">Start by adding your card:</p>
+                <button *ngIf="!resProvider.cards.length" class="navbtn" (click)="goToCards()">Your cards</button>
             </div>
         </div>
     </div>
@@ -96,5 +96,5 @@
     </ion-list>
 
 
-    <p *ngIf="structuredReceipts.length != 0" class="endofreceipts">That's all folks!</p>
+    <p *ngIf="resProvider.receipts.length" class="endofreceipts">That's all folks!</p>
 </ion-content>

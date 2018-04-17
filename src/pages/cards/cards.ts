@@ -5,38 +5,25 @@ import {ReceiptsPage} from '../receipts/receipts';
 import {LoginPage} from '../login/login';
 import {OnboardingPage} from '../onboarding/onboarding';
 import {InAppBrowser} from "@ionic-native/in-app-browser";
+import {Storage} from '@ionic/storage';
 
 @Component({selector: 'page-cards', templateUrl: 'cards.html'})
 export class CardsPage {
 
-  cards : any = [];
-  user : any = {
-    name: 'the get-receipt guy'
-  };
   loading : any;
 
-  constructor(public navCtrl : NavController, public navParams : NavParams, public resProvider : ResourcesProvider, public loadCtrl : LoadingController, public alertCtrl : AlertController, public iab : InAppBrowser) {
-    
+  constructor(public navCtrl : NavController, public navParams : NavParams, public resProvider : ResourcesProvider, public loadCtrl : LoadingController, public alertCtrl : AlertController, public iab : InAppBrowser, public storage : Storage) {
+
     /*this.loading = loadCtrl.create({content: 'Please wait, loading...'});
     this
       .loading
       .present();
     */
-    resProvider
-      .loadCards()
-      .then((c) => {
-        this.cards = c;
-        /*this
-          .loading
-          .dismiss();*/
-      });
   }
-
-  ionViewDidLoad() {}
 
   popCard(index)
   {
-    if (index <= this.cards.length) {
+    if (index <= this.resProvider.cards.length) {
       let alert = this
         .alertCtrl
         .create({
@@ -47,6 +34,7 @@ export class CardsPage {
               text: 'Yes',
               handler: () => {
                 this
+                  .resProvider
                   .cards
                   .splice(index, 1);
               }
@@ -76,9 +64,18 @@ export class CardsPage {
 
   newCard()
   {
+    this
+      .resProvider
+      .addCard()
+      .then((c) => {
+        console.log(c);
+      })
+    /* 
+    console.log(this.resProvider.user);
     const browser = this
       .iab
-      .create('http://demo.zeipt.se/public/registercard/1234');
+      .create('https://demo.zeipt.se/public/registercard/' + this.resProvider.user);
+    */
   }
 
   logout() {

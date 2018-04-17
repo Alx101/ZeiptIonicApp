@@ -10,64 +10,81 @@ import {ReceiptsPage} from '../receipts/receipts';
 @Component({selector: 'page-login', templateUrl: 'login.html'})
 export class LoginPage {
 
-  user : any = {};
-  cards : any = [];
-  receipts : any = [];
-  registerUserView : boolean = false;
-  loginUserView : boolean = false;
+    registerUserView : boolean = false;
+    loginUserView : boolean = false;
 
-  registerForm : FormGroup;
-  loginForm : FormGroup;
+    registerForm : FormGroup;
+    loginForm : FormGroup;
 
-  emailPattern = /^\S+@\S+\.\S+$/;
+    emailPattern = /^\S+@\S+\.\S+$/;
 
-  constructor(public navCtrl : NavController, public navParams : NavParams, public resProvider : ResourcesProvider, public formBuilder : FormBuilder) {
+    constructor(public navCtrl : NavController, public navParams : NavParams, public resProvider : ResourcesProvider, public formBuilder : FormBuilder) {
 
-    this.loginForm = formBuilder.group({
-      username: [
-        '', Validators.compose([
-          Validators.pattern(this.emailPattern),
-          Validators.required
-        ])
-      ],
-      fake_password: [],
-      password: [
-        '', Validators.compose([Validators.required])
-      ]
-    });
+        this.loginForm = formBuilder.group({
+            username: [
+                '', Validators.compose([
+                    Validators.pattern(this.emailPattern),
+                    Validators.required
+                ])
+            ],
+            fake_password: [],
+            password: [
+                '', Validators.compose([Validators.required])
+            ]
+        });
 
-    this.registerForm = formBuilder.group({
-      username: [
-        '', Validators.compose([
-          Validators.pattern(this.emailPattern),
-          Validators.required
-        ])
-      ],
-      fake_password: [],
-      password: [
-        '', Validators.compose([Validators.required])
-      ],
-      confirmPassword: [
-        '', Validators.compose([Validators.required])
-      ]
-    }, {validator: PasswordValidation.MatchPassword});
-  }
+        this.registerForm = formBuilder.group({
+            username: [
+                '', Validators.compose([
+                    Validators.pattern(this.emailPattern),
+                    Validators.required
+                ])
+            ],
+            fake_password: [],
+            password: [
+                '', Validators.compose([Validators.required])
+            ],
+            confirmPassword: [
+                '', Validators.compose([Validators.required])
+            ]
+        }, {validator: PasswordValidation.MatchPassword});
+    }
 
-  loginView() {
-    this.registerUserView = false;
-    this.loginUserView = true;
-  }
-  registerView() {
-    this.loginUserView = false;
-    this.registerUserView = true;
-  }
+    loginView() {
+        this.registerUserView = false;
+        this.loginUserView = true;
+    }
+    registerView() {
+        this.loginUserView = false;
+        this.registerUserView = true;
+    }
 
-  loginUser() {
-    this
-      .resProvider
-      .loginUser(this.loginForm.value.username)
-      .then(data => {
-        this.user = data;
+    loginUser() {
+        this
+            .resProvider
+            .loginUser(this.loginForm.value.username, this.loginForm.value.password)
+            .then((data : any) => {
+                if (data.success == 1) {
+                    console.log('correct username/password');
+                    console.log(data);
+                    this
+                        .resProvider
+                        .loadCards()
+                        .then((cardsExist) => {
+                            if (cardsExist == 'no cards') {
+                                this
+                                    .navCtrl
+                                    .setRoot(CardsPage, {}, {
+                                        animate: true,
+                                        direction: 'forward'
+                                    })
+                            }
+                        })
+                } else {
+                    console.log('wrong username/password');
+                }
+
+                /*
 
         this
           .resProvider
@@ -79,7 +96,7 @@ export class LoginPage {
               .loadReceiptJson()
               .then((receipts) => {
                 this.receipts = receipts
-                if (this.cards.length == 0 && this.receipts.length == 0) {
+                if (!this.cards && !this.receipts) {
                   this
                     .navCtrl
                     .setRoot(CardsPage, {}, {
@@ -96,27 +113,29 @@ export class LoginPage {
                 }
               })
           })
-      })
-      .catch((err) => {
-        console.log(err)
-      });
-  }
+          */
+            })
+            .catch((err) => {
+                console.log(err)
+            });
+    }
 
-  registerUser() {
-    this
-      .resProvider
-      .registerUser(this.registerForm.value.username)
-      .then(data => {
-        this.user = data;
+    registerUser() {
         this
-          .navCtrl
-          .setRoot(CardsPage, {}, {
-            animate: true,
-            direction: 'forward'
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+            .resProvider
+            .registerUser(this.registerForm.value.username, this.registerForm.value.password)
+            .then(data => {
+                console.log(data);
+                //this.user = data;
+                this
+                    .navCtrl
+                    .setRoot(CardsPage, {}, {
+                        animate: true,
+                        direction: 'forward'
+                    });
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
 }

@@ -3,17 +3,18 @@ page-receipt-detail {
         display: none !important;
     }
     .the-receipt {
-        margin: 10px;
+        margin: 20px auto;
         padding: 10px;
         background-color: #FEFEF8;
         box-shadow: 0 3px 10px rgba(39, 112, 152, 0.2);
         position: relative;
+        width: calc(100% - 40px);
     }
     .the-receipt:after {
         content: '';
         position: absolute;
-        bottom: -10px;
-        height: 10px;
+        bottom: -5px;
+        height: 5px;
         width: 100%;
         left: 0;
         right: 0;

@@ -1,6 +1,5 @@
 /* 
 HEADER */
-
 .header {
     z-index: 1000;
     width: 100%;
@@ -60,19 +59,25 @@ HEADER */
         width: 30px;
     }
 }
-
+/* FIXED BG */
+#fixedbg {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    z-index: 0;
+    opacity: 1;
+}
 
 /* BUTTON */
-
 button {
     font-size: 14px;
     padding: 16px 0;
     width: 100%;
     margin: 10px 0;
     display: block;
-    box-shadow: 0 2px 4px rgba(194, 217, 236, 0.5);
     .icon {
         margin-right: 10px;
+        color: white !important;
     }
 }
 
@@ -112,7 +117,7 @@ button.secondary {
             width: 240px;
             font-size: 16px;
             line-height: 1.5;
-            color: color($colors, primary);
+            color: #0f2841;
         }
     }
 }
@@ -194,6 +199,7 @@ form p {
 
 .column.left ion-icon {
     margin-right: 5px;
+    color: #fff;
 }
 
 .item-input {

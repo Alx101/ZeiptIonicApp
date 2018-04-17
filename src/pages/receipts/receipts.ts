@@ -24,9 +24,7 @@ export class ReceiptsPage {
 
     searchQuery : string = '';
 
-    receiptJson : any = [];
     structuredReceipts : any = [];
-    cards : any = [];
     loading : any;
 
     dateString : any;
@@ -69,74 +67,54 @@ export class ReceiptsPage {
     }
 
     constructor(public navCtrl : NavController, public navParams : NavParams, public resProvider : ResourcesProvider, public loadCtrl : LoadingController, public iab : InAppBrowser) {
-        resProvider
-            .loadCards()
-            .then((c) => {
-                this.cards = c;
-            });
-
-        resProvider
-            .loadReceiptJson()
-            .then((receipts) => {
-                this.structure(receipts);
-
-            })
-            .catch(() => {
-                this.receiptJson = [];
-            });
+        this.structure(resProvider.receipts)
     }
     structure(receipts) {
-        this.receiptJson = receipts;
 
-        const structuredReceipts = this
-            .receiptJson
-            .map(receipt => {
-                const date = receipt.receipt.date,
-                    time = receipt.receipt.time,
-                    Y = parseInt(date.substr(0, 4)),
-                    M = (parseInt(date.substr(5, 2)) - 1),
-                    D = parseInt(date.substr(8, 2)),
-                    h = parseInt(time.substr(0, 2)),
-                    m = parseInt(time.substr(3, 2)),
-                    s = parseInt(time.substr(6, 2)),
-                    datetime = new Date(Y, M, D, h, m, s)
-                return {receiptDate: datetime, receiptObj: receipt}
-            })
-            .sort((a, b) => (a.receiptDate > b.receiptDate
-                ? -1
-                : 1))
-            .reduce((accumulator, obj) => {
-                let current = {
-                    "year": obj
+        const structuredReceipts = receipts.map(receipt => {
+            const date = receipt.receipt.date,
+                time = receipt.receipt.time,
+                Y = parseInt(date.substr(0, 4)),
+                M = (parseInt(date.substr(5, 2)) - 1),
+                D = parseInt(date.substr(8, 2)),
+                h = parseInt(time.substr(0, 2)),
+                m = parseInt(time.substr(3, 2)),
+                s = parseInt(time.substr(6, 2)),
+                datetime = new Date(Y, M, D, h, m, s)
+            return {receiptDate: datetime, receiptObj: receipt}
+        }).sort((a, b) => (a.receiptDate > b.receiptDate
+            ? -1
+            : 1)).reduce((accumulator, obj) => {
+            let current = {
+                "year": obj
+                    .receiptDate
+                    .getFullYear(),
+                "month": this.monthNames[
+                    obj
                         .receiptDate
-                        .getFullYear(),
-                    "month": this.monthNames[
-                        obj
-                            .receiptDate
-                            .getMonth()
-                    ],
-                    "datenr": obj
+                        .getMonth()
+                ],
+                "datenr": obj
+                    .receiptDate
+                    .getDate(),
+                "day": this.dayNames[
+                    obj
                         .receiptDate
-                        .getDate(),
-                    "day": this.dayNames[
-                        obj
-                            .receiptDate
-                            .getDay()
-                    ],
-                    "time": this.checkTime(obj.receiptDate.getHours()) + ":" + this.checkTime(obj.receiptDate.getMinutes()),
-                    "receipt": obj.receiptObj,
-                    "date": obj.receiptDate
-                }
-                accumulator.push(current) || {};
-                return accumulator;
-            }, []);
+                        .getDay()
+                ],
+                "time": this.checkTime(obj.receiptDate.getHours()) + ":" + this.checkTime(obj.receiptDate.getMinutes()),
+                "receipt": obj.receiptObj,
+                "date": obj.receiptDate
+            }
+            accumulator.push(current) || {};
+            return accumulator;
+        }, []);
 
         this.structuredReceipts = structuredReceipts;
-        console.log(structuredReceipts)
     }
 
     getItems(event : any) {
-        this.structure(this.receiptJson);
+        this.structure(this.resProvider.receipts);
         let value = event.target.value;
         if (value && value.trim() != '') {
             this.structuredReceipts = this
@@ -151,7 +129,7 @@ export class ReceiptsPage {
         var passedMonthElements = [];
         var passedYearElements = [];
         for (var i = 0; i < this.monthBreaks.length; i++) {
-            if ((this.monthBreaks[i].getBoundingClientRect().top < 100)) {
+            if ((this.monthBreaks[i].getBoundingClientRect().top < 90)) {
                 passedMonthElements.push(this.monthBreaks[i].getBoundingClientRect().top)
             }
         }
@@ -163,7 +141,7 @@ export class ReceiptsPage {
             }
         }
         for (var i = 0; i < this.yearBreaks.length; i++) {
-            if ((this.yearBreaks[i].getBoundingClientRect().top < 70)) {
+            if ((this.yearBreaks[i].getBoundingClientRect().top < 60)) {
                 passedYearElements.push(this.yearBreaks[i].getBoundingClientRect().top)
             }
         }
@@ -180,7 +158,7 @@ export class ReceiptsPage {
             document
                 .getElementById("searchbar")
                 .style
-                .top = "-46px";
+                .top = "-56px";
             document
                 .getElementById("searchtxt")
                 .textContent = "Search";
@@ -224,7 +202,7 @@ export class ReceiptsPage {
             document
                 .getElementById("fixedbtn")
                 .style
-                .backgroundColor = ("#f1f5fa");
+                .backgroundColor = ("#0f2841");
             this.listOpen = false;
         } else {
             document
@@ -247,10 +225,7 @@ export class ReceiptsPage {
                 .getElementById("arrow")
                 .style
                 .transform = "scaleY(-1)";
-            document
-                .getElementById("fixedbtn")
-                .style
-                .backgroundColor = ("#ffffff");
+
             this.listOpen = true;
         }
     }

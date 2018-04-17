@@ -13,7 +13,7 @@ page-cards {
         background-color: color($colors, primary);
         width: 100%;
         text-align: center;
-        padding-bottom: 8px;
+        padding: 4px;
         color: color($colors, secondary);
     }
     .datenr {
@@ -58,17 +58,21 @@ page-cards {
         font-family: helvetica-neue, helvetica;
         text-transform: uppercase;
     }
-    .realcard .cardnumber p {
+
+    .card img {
+        width: 40px;
+    }
+    .cardnumber p {
         top: 0;
         bottom: 0;
         left: 0;
         display: table;
         right: 0;
         text-align: center;
-        position: absolute;
+        color: #0f2841;
         width: 100%;
         font-weight: 300;
-        font-size: 20px;
+        font-size: 18px;
         letter-spacing: 1px;
         @media screen and (min-width: 330px) {
             font-size: 24px;
@@ -90,13 +94,13 @@ page-cards {
         right: 15px;
     }
     .card {
-        background-color: white;
         padding: 10px;
         display: flex;
         align-items: center;
         justify-content: space-between;
     }
     .card .btn-icon {
+        color: #0f2841;
         font-size: 26px;
     }
     .cardinfo {
