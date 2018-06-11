@@ -1,4 +1,7 @@
 page-login {
+    .scroll-content {
+        transform: translateY(-1px);
+    }
     .profile {
         padding: 40px 0;
         p {
@@ -10,7 +13,32 @@ page-login {
     }
     .header {
         position: relative;
-        min-height: 167px;
+    }
+    .userTabs {
+        display: flex;
+        background-color: #0f2841;
+        overflow: hidden;
+    }
+    .userTab {
+        transform: perspective(100px) rotateX(10deg);
+        background-color: #f2f5fb;
+        width: 50%;
+        text-align: center;
+        height: 50px;
+        p {
+            transform: perspective(100px) rotateX(-10deg) translateY(-50%);
+            top: 50%;
+            position: relative;
+            font-size: 16px;
+        }
+    }
+    .activated{
+        z-index: 10;
+        box-shadow: 0 0px 20px #0f2841;
+        background-color: #f2f5fb;
+    }
+    .notActivated {
+        background-color: rgba(242, 245, 251, 0.7);
     }
     .item-input {
         margin-bottom: 5px;
@@ -21,5 +49,41 @@ page-login {
     }
     .buttons {
         display: flex;
+    }
+    
+    .error-msg {
+        background-color: #0f2841;
+        padding: 16px;
+        text-align: center;
+        margin: auto;
+        color: white;
+        opacity: 0;
+        transform: translateY(-50px);
+        animation: .3s linear forwards;
+        @include animation-keyframes {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0px);
+            }
+        }
+    }
+    #confirm-password {
+        opacity: 0;
+        transform: translateY(-50px);
+        animation: .3s linear forwards;
+        @include animation-keyframes {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0px);
+            }
+        }
     }
 }

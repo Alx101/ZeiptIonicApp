@@ -1,51 +1,75 @@
 {
-  "name": "zeipt",
-  "version": "0.1.0",
-  "author": "Alex Örnberg",
-  "homepage": "http://alecorn.se/",
-  "private": true,
-  "scripts": {
-    "clean": "ionic-app-scripts clean",
-    "build": "ionic-app-scripts build",
-    "lint": "ionic-app-scripts lint",
-    "ionic:build": "ionic-app-scripts build",
-    "ionic:serve": "ionic-app-scripts serve"
-  },
-  "dependencies": {
-    "@angular/common": "5.0.0",
-    "@angular/compiler": "5.0.0",
-    "@angular/compiler-cli": "5.0.0",
-    "@angular/core": "5.0.0",
-    "@angular/forms": "5.0.0",
-    "@angular/http": "5.0.0",
-    "@angular/platform-browser": "5.0.0",
-    "@angular/platform-browser-dynamic": "5.0.0",
-    "@auth0/angular-jwt": "^1.1.0",
-    "@ionic-native/core": "3.10.2",
-    "@ionic-native/in-app-browser": "^4.4.2",
-    "@ionic-native/splash-screen": "3.10.2",
-    "@ionic-native/status-bar": "3.10.2",
-    "@ionic/storage": "^2.1.3",
-    "angular2-jwt": "^0.2.3",
-    "bcryptjs": "^2.4.3",
-    "cordova-plugin-inappbrowser": "^1.7.2",
-    "ionic-angular": "^3.9.2",
-    "ionic-cache": "^3.0.1",
-    "ionicons": "3.0.0",
-    "node-fetch": "^2.0.0",
-    "rxjs": "5.5.2",
-    "sw-toolbox": "3.6.0",
-    "zone.js": "0.8.18"
-  },
-  "devDependencies": {
-    "@ionic/app-scripts": "^3.1.2",
-    "@ionic/cli-plugin-ionic-angular": "1.3.2",
-    "typescript": "2.4.2"
-  },
-  "description": "An Ionic project",
-  "cordova": {
-    "plugins": {
-      "cordova-plugin-inappbrowser": {}
+    "name": "zeipt",
+    "version": "3.0.1",
+    "author": "Alex Örnberg",
+    "homepage": "http://alecorn.se/",
+    "private": true,
+    "scripts": {
+        "clean": "ionic-app-scripts clean",
+        "build": "ionic-app-scripts build",
+        "open": "http-server www -o -a localhost -p 1234",
+        "lint": "ionic-app-scripts lint",
+        "ionic:build": "ionic-app-scripts build",
+        "ionic:serve": "ionic-app-scripts serve"
+    },
+    "dependencies": {
+        "@angular/common": "5.0.0",
+        "@angular/compiler": "5.0.0",
+        "@angular/compiler-cli": "5.0.0",
+        "@angular/core": "5.0.0",
+        "@angular/forms": "5.0.0",
+        "@angular/http": "5.0.0",
+        "@angular/platform-browser": "5.0.0",
+        "@angular/platform-browser-dynamic": "5.0.0",
+        "@auth0/angular-jwt": "^1.1.0",
+        "@capacitor/cli": "^1.0.0-alpha.38",
+        "@capacitor/core": "^1.0.0-alpha.38",
+        "@ionic-native/in-app-browser": "^4.4.2",
+        "@ionic/storage": "^2.1.3",
+        "angular2-jwt": "^0.2.3",
+        "bcryptjs": "^2.4.3",
+        "cordova-android": "^6.2.3",
+        "cordova-plugin-console": "^1.0.5",
+        "cordova-plugin-device": "^1.1.4",
+        "cordova-plugin-inappbrowser": "^1.7.2",
+        "cordova-plugin-splashscreen": "^4.0.3",
+        "cordova-plugin-statusbar": "^2.2.2",
+        "cordova-plugin-whitelist": "^1.3.1",
+        "country-codes": "0.0.3",
+        "fix-orientation": "0.0.2",
+        "ionic-angular": "^3.9.2",
+        "ionic-cache": "^3.0.1",
+        "ionic-plugin-keyboard": "^2.2.1",
+        "ionic2-super-tabs": "^4.2.2",
+        "ionicons": "3.0.0",
+        "ng-intl-tel-input": "^2.0.0",
+        "ng2-tel-input": "^1.0.15",
+        "node-fetch": "^2.0.0",
+        "rxjs": "5.5.2",
+        "sw-toolbox": "^3.6.0",
+        "workbox-sw": "^3.2.0",
+        "zone.js": "0.8.18"
+    },
+    "devDependencies": {
+        "@ionic/app-scripts": "^3.1.2",
+        "@ionic/cli-plugin-ionic-angular": "1.3.2",
+        "hashmark": "^5.0.0",
+        "http-server": "^0.11.1",
+        "map-replace": "^1.0.2",
+        "shx": "^0.2.2",
+        "typescript": "2.4.2",
+        "workbox-cli": "^3.2.0"
+    },
+    "description": "An Ionic project",
+    "cordova": {
+        "plugins": {
+            "cordova-plugin-inappbrowser": {},
+            "cordova-plugin-console": {},
+            "cordova-plugin-device": {},
+            "cordova-plugin-splashscreen": {},
+            "cordova-plugin-statusbar": {},
+            "cordova-plugin-whitelist": {},
+            "ionic-plugin-keyboard": {}
+        }
     }
-  }
 }

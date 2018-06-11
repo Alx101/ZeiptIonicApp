@@ -7,8 +7,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="format-detection" content="telephone=no">
   <meta name="msapplication-tap-highlight" content="no">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="manifest" href="/manifest.json">
+
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+
+  <link href="assets/splashscreens/iphone5_splash.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"
+    rel="apple-touch-startup-image" />
+  <link href="assets/splashscreens/iphone6_splash.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)"
+    rel="apple-touch-startup-image" />
+  <link href="assets/splashscreens/iphoneplus_splash.png" media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)"
+    rel="apple-touch-startup-image" />
+  <link href="assets/splashscreens/iphonex_splash.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)"
+    rel="apple-touch-startup-image" />
+  <link href="assets/splashscreens/ipad_splash.png" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)"
+    rel="apple-touch-startup-image" />
+  <link href="assets/splashscreens/ipadpro1_splash.png" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)"
+    rel="apple-touch-startup-image" />
+  <link href="assets/splashscreens/ipadpro2_splash.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)"
+    rel="apple-touch-startup-image" />
 
   <link rel="apple-touch-icon" sizes="57x57" href="assets/icon/apple-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="assets/icon/apple-icon-60x60.png">
@@ -23,7 +39,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="96x96" href="assets/icon/favicon-96x96.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/icon/favicon-16x16.png">
-  <link rel="manifest" href="/manifest.json">
+
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
 
@@ -36,12 +52,12 @@
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js')
-        .then(() => console.log('service worker installed'))
-        .catch(err => console.error('Error', err));
+        .then((registration) => console.log('service worker installed', registration.scope))
+        .catch(err => console.log('Error', err));
     }
   </script>
 
-  <link href="build/main.css?ver=3.0" rel="stylesheet">
+  <link href="build/main.css" rel="stylesheet">
 
 </head>
 
@@ -51,14 +67,14 @@
   <ion-app></ion-app>
 
   <!-- The polyfills js is generated during the build process -->
-  <script src="build/polyfills.js?ver=2.0"></script>
+  <script src="build/polyfills.js"></script>
 
   <!-- The vendor js is generated during the build process
        and includes all files in the node_modules directory -->
-  <script src="build/vendor.js?ver=2.0"></script>
+  <script src="build/vendor.js"></script>
 
   <!-- The bundle js is generated during the build process -->
-  <script src="build/main.js?ver=2.0"></script>
+  <script src="build/main.js"></script>
 
 </body>
 <noscript>

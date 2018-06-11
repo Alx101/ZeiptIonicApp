@@ -1,0 +1,41 @@
+
+<ion-header class="headeren">
+    <ion-navbar>
+        <div class="header-row">
+            <div *ngIf="selectedTab != 1" class="column left">
+            </div>
+            <div *ngIf="selectedTab == 1 && resProvider.receiptView == false" class="column left month-button">
+                <div (click)="toggleList()" *ngIf="resProvider.user.receipts.length > 0 && resProvider.user.cards.length > 0" id="fixedbtn">
+                    <p id="fixedbtnyear">Get list of</p>
+                    <p id="fixedbtnmonth">months</p>
+                    
+                    <ion-icon id="arrow" name="arrow-down"></ion-icon>
+                </div>
+            </div>
+            <div *ngIf="selectedTab == 1 && resProvider.receiptView == true" class="column left" (click)="goBack()">Back</div>
+            <div class="column center">
+                <img class="receiptguy small" src="../assets/img/receiptguy.svg" alt="">
+            </div>
+            <div *ngIf="selectedTab == 0 || selectedTab == 3" class="column right" (click)="search()"></div>
+            <div *ngIf="selectedTab == 1" class="column right" (click)="search()">
+                <ion-icon id="search" name="search"></ion-icon>
+                <span id="searchtxt">Search</span>
+            </div>
+            <div *ngIf="selectedTab == 2" class="column right" (click)="logout()">
+                <span>Logout</span>
+            </div>
+        </div>
+
+
+    </ion-navbar>
+</ion-header>
+
+
+
+
+<ion-content #content>
+
+    <super-tabs id="st-container" tabsPlacement="bottom" [selectedTabIndex]="1" (tabSelect)="onTabSelect($event)">
+        <super-tab *ngFor="let page of pages" [root]="page.pageName" [icon]="page.icon" [id]="page.id" [title]="page.title"></super-tab>
+    </super-tabs>
+</ion-content>

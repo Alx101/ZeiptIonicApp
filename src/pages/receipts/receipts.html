@@ -1,100 +1,83 @@
-<!-- HEADER -->
-<ion-header class="header">
-    <ion-navbar>
-        <div class="header-row">
-            <div *ngIf="!resProvider.cards.length" class="column left" (click)="goToCards()">
-                <p class="notify">Your cards</p>
-            </div>
-            <div *ngIf="resProvider.cards.length" class="column left" (click)="goToCards()">Your cards</div>
-            <div class="column center">
-                <img class="receiptguy small" src="../assets/img/receiptguy.svg" alt="">
-            </div>
-            <div class="column right" (click)="search()">
-                <ion-icon id="search" name="search"></ion-icon>
-                <span id="searchtxt">Search</span>
-            </div>
-        </div>
-    </ion-navbar>
-</ion-header>
-
 <!-- CONTENT -->
 <ion-content #content (ionScroll)="scrollHandler($event)">
+    <ion-refresher (ionRefresh)="update($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <ion-searchbar ion-fixed placeholder="Search for month, merchant, city or price" id="searchbar" (ionInput)="getItems($event)"></ion-searchbar>
     <div ion-fixed id="fixedbg">
     </div>
     <div ion-fixed id="monthList">
-        <div *ngFor="let receiptObject of structuredReceipts; let i = index">
-            <div class="navyear" *ngIf="receiptObject == structuredReceipts[0] || receiptObject.year != structuredReceipts[i-1].year">
+        <div *ngFor="let receiptObject of resProvider.user.receipts; let i = index">
+            <div class="navyear" *ngIf="receiptObject == resProvider.user.receipts[0] || receiptObject.year != resProvider.user.receipts[i-1].year">
                 <p>{{receiptObject.year}}</p>
             </div>
-            <div (click)="scrollToMonth(receiptObject.month + i)" class="quickselect" *ngIf="receiptObject == structuredReceipts[0] || receiptObject.month != structuredReceipts[i-1].month">
+            <div (click)="scrollToMonth(receiptObject.month + i)" class="quickselect" *ngIf="receiptObject == resProvider.user.receipts[0] || receiptObject.month != resProvider.user.receipts[i-1].month">
                 <p>{{receiptObject.month}}</p>
             </div>
         </div>
     </div>
     <div (click)="toggleList()" ion-fixed id="fade">
     </div>
-    <div (click)="toggleList()" *ngIf="resProvider.receipts.length" ion-fixed id="fixedbtn">
-        <p id="fixedbtnmonth">Get list of months</p>
-        <p id="fixedbtnyear"></p>
-        <ion-icon id="arrow" name="arrow-down"></ion-icon>
-    </div>
 
-    <ion-searchbar ion-fixed placeholder="Search for month, merchant, city or price" id="searchbar" (ionInput)="getItems($event)"></ion-searchbar>
+
 
     <!-- IF NO RECEIPTS – Show message -->
-    <div *ngIf="!resProvider.receipts.length" class="info-content">
+    <div *ngIf="resProvider.user.receipts.length == 0 || resProvider.user.cards.length == 0" class="info-content">
         <div class="centered">
             <div class="centered-cell">
                 <img class="receiptguy big" src="../assets/img/zeiptreceipt.svg" alt="">
                 <p>This page will shortly be filled with your digital receipts.</p>
                 <br>
-                <p *ngIf="resProvider.cards.length">Just stay tuned!</p>
-                <p *ngIf="!resProvider.cards.length">Start by adding your card:</p>
-                <button *ngIf="!resProvider.cards.length" class="navbtn" (click)="goToCards()">Your cards</button>
+                <p *ngIf="resProvider.user.cards.length > 0">Just stay tuned!</p>
+                <p *ngIf="resProvider.user.cards.length == 0">Start by adding your card:</p>
+                <button *ngIf="resProvider.user.cards.length == 0" class="primary" (click)="goToCards()">Your cards</button>
             </div>
         </div>
     </div>
-    <ion-list *ngFor="let receiptObject of structuredReceipts; let i = index">
+    <div *ngIf="resProvider.user.receipts.length > 0 && resProvider.user.cards.length > 0">
+        <ion-list *ngFor="let receiptObject of resProvider.user.receipts; let i = index">
 
-        <div id="{{receiptObject.year}}" class="year" *ngIf="receiptObject == structuredReceipts[0] || receiptObject.year != structuredReceipts[i-1].year">
-            <p>{{receiptObject.year}}</p>
-        </div>
+            <div id="{{receiptObject.year}}" class="year" *ngIf="receiptObject == resProvider.user.receipts[0] || receiptObject.year != resProvider.user.receipts[i-1].year">
+                <p>{{receiptObject.year}}</p>
+            </div>
 
-        <div id="{{receiptObject.month + i}}" class="month" *ngIf="receiptObject == structuredReceipts[0] || receiptObject.month != structuredReceipts[i-1].month">
-            <p>{{receiptObject.month}}</p>
-        </div>
+            <div id="{{receiptObject.month + i}}" class="month" *ngIf="receiptObject == resProvider.user.receipts[0] || receiptObject.month != resProvider.user.receipts[i-1].month">
+                <p>{{receiptObject.month}}</p>
+            </div>
 
-        <div class="datenr" *ngIf="receiptObject == structuredReceipts[0] || receiptObject.datenr != structuredReceipts[i-1].datenr">
-            <p>{{receiptObject.datenr}}. {{receiptObject.day}}</p>
-        </div>
-        <div class="day">
-            <button class="receiptbtn" (click)="goToReceipt(receiptObject.receipt)">
-                <div class="merchant half">
-                    <p class="name">
-                        {{receiptObject.receipt.merchant.name}}
-                    </p>
-                    <p class="city">
-                        {{receiptObject.receipt.merchant.city}}
-                    </p>
-                </div>
-                <div class="info half">
-                    <div class="sum">
-                        <p class="total">
-                            {{receiptObject.receipt.sum.total.toLocaleString(undefined, { useGrouping: true, minimumFractionDigits: 2, maximumFractionDigits:
-                            2}) }}
+            <div class="datenr" *ngIf="receiptObject == resProvider.user.receipts[0] || receiptObject.datenr != resProvider.user.receipts[i-1].datenr">
+                <p>{{receiptObject.datenr}}. {{receiptObject.day}}</p>
+            </div>
+            <div class="day">
+                <button class="receiptbtn" (click)="goToReceipt(receiptObject.receipt)">
+                    <div class="merchant half">
+                        <p class="name">
+                            {{receiptObject.receipt.merchant.name}}
                         </p>
-                        <p class="currency">
-                            {{receiptObject.receipt.sum.currency}}
+                        <p class="city">
+                            {{receiptObject.receipt.merchant.city}}
                         </p>
                     </div>
-                    <p class="time">{{receiptObject.time}}</p>
-                </div>
-            </button>
-        </div>
+                    <div class="info half">
+                        <div class="sum">
+                            <p class="total">
+                                {{receiptObject.receipt.sum.total.toLocaleString(undefined, { useGrouping: true, minimumFractionDigits: 2, maximumFractionDigits:
+                                2}) }}
+                            </p>
+                            <p class="currency">
+                                {{receiptObject.receipt.sum.currency}}
+                            </p>
+                        </div>
+                        <p class="time">{{receiptObject.time}}</p>
+                    </div>
+                </button>
+            </div>
 
 
-    </ion-list>
+        </ion-list>
+    </div>
 
 
-    <p *ngIf="resProvider.receipts.length" class="endofreceipts">That's all folks!</p>
+    <p *ngIf="resProvider.user.receipts.lenght > 0 && resProvider.user.cards.length > 0" class="endofreceipts">That's all folks!</p>
+
 </ion-content>

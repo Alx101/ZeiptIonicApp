@@ -1,13 +1,14 @@
 {
-  "name": "Zeipt – Digital receipts demo web app",
-  "short_name": "Zeipt Receipts",
+  "name": "Zeipt",
+  "short_name": "Zeipt",
   "start_url": "index.html",
-  "display": "fullscreen",
+  "display": "standalone",
   "icons": [{
     "src": "assets/img/logo.png",
     "sizes": "512x512",
     "type": "image/png"
   }],
-  "background_color": "#0F2841",
+  "orientation": "portrait",
+  "background_color": "#F1F5FA",
   "theme_color": "#0F2841"
 }

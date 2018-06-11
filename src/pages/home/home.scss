@@ -1,0 +1,45 @@
+page-home {
+    super-tabs-container{
+        height: 100% !important;
+    }
+    super-tab-button {
+        height: auto !important;
+        padding-bottom: 5px !important;
+        ion-icon{
+            margin-bottom: 0px !important;
+        }
+        .title {
+            font-size: 12px;
+            color: #277098;
+            font-weight: normal;
+            text-transform: none;
+        }
+    }
+    #fixedbtn {
+        color: white;
+        width: 100%;
+        text-align: left;
+        z-index: 100;
+        position: relative;
+        #arrow {
+            right: 0px;
+            font-size: 20px;
+            transform: scaleY(1);
+            position: absolute;
+            top: 16px;
+            transition: transform .2s;
+        }
+        #fixedbtnmonth {
+            display: inline;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        #fixedbtnyear {
+            display: block;
+            left: 0;
+            top: 0;
+            font-size: 12px;
+            font-style: italic;
+        }
+    }
+}

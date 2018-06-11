@@ -1,0 +1,35 @@
+<ion-content>
+  <ion-grid>
+    <ion-row>
+
+      <div class="camera-selection">
+        <div class="camera">
+          <label for="camerabtn"><span>Capture receipt</span></label>
+          <img src="assets/img/receipt-icon.svg" alt="">
+          <input #inputcamera type="file" accept="image/*" id="camerabtn" capture="camera" />
+        </div>
+
+        <div class="camera">
+          <label for="qrbtn"><span>Scan QR-code</span></label>
+          <img src="assets/img/qr-icon.svg" alt="">
+          <input #qrcamera type="file" accept="image/*" id="qrbtn" capture="camera" />
+        </div>
+      </div>
+      
+      <ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
+
+        <ion-card *ngIf="displayCard();">
+          <img #imgresult [src]="img" />
+          <ion-card-content>
+            <ion-card-title>
+              An image for everyone
+            </ion-card-title>
+            <p>
+              This is not the image you are looking for ;-)
+            </p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

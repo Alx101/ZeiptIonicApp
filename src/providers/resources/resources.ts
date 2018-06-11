@@ -1,200 +1,500 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http'
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/interval';
+import 'rxjs/add/operator/mergeMapTo';
 import 'rxjs/add/operator/map';
 import {Storage} from '@ionic/storage';
+import * as _ from 'lodash';
+import {ReceiptDetailPage} from '../../pages/receipt-detail/receipt-detail';
+import {ToastController, ToastOptions} from 'ionic-angular';
 
 @Injectable()
 export class ResourcesProvider {
-    public cards : any = [];
-    public receipts : any = [];
-    public user : any;
-    private token : any;
-    private cid : any;
+    public user : any = {};
+    public newCards : any = [];
+    public structuredReceipts : any = {}
     backendURL : string;
-    proxyURL : string;
-    workoffline : boolean = false;
+    public refreshInterval;
+    public newArray : any = [];
+    public networkDataReceived : boolean = false;
+    public offlineToast : boolean = false;
+    
+    public showInstallMessage : boolean = false;
 
-    constructor(public storage : Storage, private httpClient : HttpClient) {
+    public navigator : any = window.navigator;
+    public listIsOpen : boolean = false;
+    public receiptView : boolean = false;
+
+    offlineToastOptions : ToastOptions
+    installToastOptions : ToastOptions
+
+    constructor(public storage : Storage, private httpClient : HttpClient, private toast : ToastController) {
         this.backendURL = "https://demo.zeipt.se/public";
+        this.user = {
+            name: '',
+            token: '',
+            gcid: '',
+            cards: [],
+            receipts: []
+        }
+        this.offlineToastOptions = {
+            message: 'No internet connection',
+            showCloseButton: true,
+            cssClass: 'toaster'
+        }
+        //Make a custom div, make it appear after 1 sec with animation
+        this.installToastOptions = {
+            message: 'Install this app:',
+            showCloseButton: true,
+            cssClass: 'addToHome',
+            position: 'bottom'
+        }
     }
 
-    public clearStorage() {
+    public clearUser() {
+        clearInterval(this.refreshInterval);
         this
             .storage
-            .set("token", "");
+            .clear();
+        this.user = {};
+    }
+
+    public isIos = () => {
+        const userAgent = window
+            .navigator
+            .userAgent
+            .toLowerCase();
+        return /iphone|ipad|ipod/.test(userAgent);
+    }
+
+    public showInstall(){
+        if(this.isIos() && !(this.navigator.standalone)){
+            this
+                .toast
+                .create(this.installToastOptions)
+                .present();
+        }
+    }
+
+    public showToast() {
+        if (!this.offlineToast) {
+            this.offlineToast = true;
+            this
+                .toast
+                .create(this.offlineToastOptions)
+                .present();
+        }
+    }
+    public loadReceiptStorage() {
         this
             .storage
-            .set("cid", "");
+            .get("receipts")
+            .then((receipts : any) => {
 
-        this.token = null;
-        this.cid = null;
+                if (!receipts) {
+                    this.user.receipts = [];
+                } else {
+                    console.log("LOAD RECEIPT STORAGE", receipts);
+                    this.user.receipts = receipts;
+                }
+            })
     }
-
-    public loginUser(username, password) {
-        return new Promise((resolve, reject) => {
-            if (this.workoffline) {
-                let offlineuser = "offlineuser";
-                this
-                    .storage
-                    .set("user", offlineuser);
-                resolve(offlineuser);
-            } else {
-
-                this
-                    .httpClient
-                    .post(this.backendURL + "/login/", {
-                        name: username,
-                        password: password
-                    })
-                    .subscribe((data : any) => {
-
-                        if (data.success == 1) {
-                            this.token = data.session_token;
-                            this.cid = data.CID;
-                            this
-                                .storage
-                                .set("token", data.session_token)
-                            this
-                                .storage
-                                .set("cid", data.CID)
-                        }
-                        resolve(data);
-                    }, err => {
-                        console.log(err);
-                    })
-            }
-        })
-    }
-    public registerUser(username, password) {
-        return new Promise((resolve, reject) => {
-            if (this.workoffline) {
-                let offlineuser = "offlineuser";
-                this
-                    .storage
-                    .set("user", offlineuser);
-                resolve(offlineuser);
-            } else {
-                this
-                    .httpClient
-                    .post(this.backendURL + "/registercustomer/", {
-                        name: username,
-                        pass: password
-                    })
-                    .subscribe((data : any) => {
-                        if (data.success == 1) {
-                            this
-                                .storage
-                                .set("token", data.session_token)
-                            this
-                                .storage
-                                .set("cid", data.CID)
-                            resolve(data);
-                        }
-                    }, err => {
-                        console.log(err);
-                    })
-            }
-        })
-    }
-
-    public loadUser() {
+    public loadUserStorage() {
         return new Promise((resolve, reject) => {
             this
                 .storage
-                .get('token')
-                .then((token) => {
-                    this
-                        .storage
-                        .get('cid')
-                        .then((cid) => {
-                            resolve({'token': token, 'cid': cid});
-                            this.token = token;
-                            this.cid = cid;
-                        })
-                        
-                        .catch(() => {
-                            reject();
-                        });
+                .get("user")
+                .then((user : any) => {
+
+                    if (!user) {
+                        this.user = {
+                            name: '',
+                            token: '',
+                            gcid: '',
+                            cards: [],
+                            receipts: []
+                        }
+                        resolve();
+                    } else {
+                        this.user = user
+                        this
+                            .storage
+                            .get("cards")
+                            .then((cards : any) => {
+
+                                if (!cards) {
+                                    this.user.cards = [];
+                                } else {
+                                    this.user.cards = cards;
+                                }
+
+                                this
+                                    .storage
+                                    .get("receipts")
+                                    .then((receipts : any) => {
+                                        console.log(receipts);
+                                        if (!receipts) {
+                                            this.user.receipts = [];
+                                        } else {
+                                            this.user.receipts = receipts;
+                                        }
+                                        resolve(this.user);
+                                    })
+                            })
+                    }
                 })
-                .catch(() => {
-                    reject();
-                });
-        });
+        })
     }
 
     public loadCards() {
         return new Promise((resolve, reject) => {
-            if (this.workoffline) {
-                let cards = [
-                    {
-                        'lastfour': '1111',
-                        'type': 'Visa'
-                    }, {
-                        'lastfour': '1234',
-                        'type': 'Mastercard'
+            this.newCards = [];
+            this
+                .httpClient
+                .get(this.backendURL + "/cards/" + this.user.gcid, {
+                    params: {
+                        'token': this.user.token
                     }
-                ];
-                resolve(cards);
-            } else {
-                this
-                    .httpClient
-                    .get(this.backendURL + "/cards/" + this.cid, {
-                        params: {
-                            token: this.token
-                        }
-                    })
-                    .subscribe((data : any) => {
-                        if (data.success == 0) {
-                            console.log("No success..", data);
-                            this.cards = null;
-                            resolve();
-                        } else {
-                            console.log("Success!!", data);
+                })
+                .subscribe((data : any) => {
+                    this.networkDataReceived = true;
+                    if (!data.cards) {
+                        resolve();
+                    } else {
+                        this.user.cards = data.cards
+                        this
+                            .storage
+                            .set('cards', data.cards)
+                        resolve();
+                    }
+
+                }, err => {
+                    console.log("Error trying to fetch cards...", err);
+                    this.showToast();
+                    this.networkDataReceived = false;
+                    resolve();
+                })
+        });
+    }
+    public loadReceipts() {
+        return new Promise((resolve, reject) => {
+            caches
+                .match("https://jsonblob.com/api/jsonBlob/2f3f86ea-4e51-11e8-ad5f-e1e2666c6bc8")
+                .then((response) => {
+
+                    if (!response) 
+                        throw Error("No data");
+                    return response.json()
+                })
+                .then((data) => {
+                    if (!this.networkDataReceived) {
+                        console.log("BUT THIS THO?");
+                        this
+                            .structure(data)
+                            .then(receipts => {
+                                this.user.receipts = receipts;
+                                this
+                                    .storage
+                                    .set('receipts', receipts);
+                                return receipts;
+                            })
+                    }
+
+                })
+                .catch(() => {
+                    return networkUpdate;
+                })
+                .catch(() => {
+                    console.log("ERROR");
+                })
+
+                var networkUpdate = this
+                .httpClient
+                .get("https://jsonblob.com/api/jsonBlob/2f3f86ea-4e51-11e8-ad5f-e1e2666c6bc8")
+                .subscribe((receipts : any) => {
+                    this.networkDataReceived = true;
+                    this
+                        .structure(receipts)
+                        .then(receipts => {
                             this
                                 .storage
-                                .set('cards', data.cards)
-                                .then((val) => {
-                                    console.log("Stored cards for offline use");
-                                });
-                            this.cards = data.cards;
-                            resolve(data.cards);
+                                .set('receipts', receipts)
+                            this.user.receipts = receipts;
+                            resolve(receipts)
+                        })
+                }, err => {
+                    console.log("Error trying to fetch receipts...", err);
+                    this.showToast();
+                    this.networkDataReceived = false;
+                    resolve();
+                })
+
+        })
+    };
+    public updateReceipts() {
+
+        this.refreshInterval = setInterval((function () {
+            var networkUpdate = this
+                .httpClient
+                .get("https://jsonblob.com/api/jsonBlob/2f3f86ea-4e51-11e8-ad5f-e1e2666c6bc8")
+                .subscribe((response : any) => {
+                    this.networkDataReceived = true;
+                    this
+                        .structure(response)
+                        .then(receipts => {
+                            if (JSON.stringify(receipts) !== JSON.stringify(this.user.receipts)) {
+                                _.pull(this.user.receipts, ..._.difference(this.user.receipts, receipts));
+
+                                this
+                                    .user
+                                    .receipts
+                                    .push(..._.difference(receipts, this.user.receipts));
+                                this
+                                    .storage
+                                    .set('receipts', receipts);
+                                return this.user.receipts;
+                            }
+                        })
+                }, err => {
+                    console.log("An error trying to fetch receipts...", err);
+                    this.showToast();
+                    this.networkDataReceived = false;
+                    clearInterval(this.refreshInterval);
+                })
+
+            caches
+                .match("https://jsonblob.com/api/jsonBlob/2f3f86ea-4e51-11e8-ad5f-e1e2666c6bc8")
+                .then((response) => {
+
+                    if (!response) 
+                        throw Error("No data");
+                    
+                    return response.json()
+                })
+                .then((data) => {
+                    if (!this.networkDataReceived) {
+                        this
+                            .structure(data)
+                            .then(receipts => {
+                                console.log("CACHED REQUEST", receipts);
+                                if (JSON.stringify(receipts) !== JSON.stringify(this.user.receipts)) {
+                                    _.pull(this.user.receipts, ..._.difference(this.user.receipts, receipts));
+
+                                    this
+                                        .user
+                                        .receipts
+                                        .push(..._.difference(receipts, this.user.receipts));
+                                    this
+                                        .storage
+                                        .set('receipts', receipts);
+                                    return receipts;
+                                }
+                            })
+                    }
+
+                })
+                .catch(() => {
+                    return networkUpdate;
+                })
+                .catch(() => {
+                    console.log("ERROR");
+                })
+
+        }).bind(this), 5000);
+
+    }
+
+    public searchReceipts(){
+        
+    }
+
+    dayNames = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+    ];
+    monthNames = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+    ];
+
+    public structure(receipts) {
+        return new Promise((resolve, reject) => {
+            receipts = receipts.map(receipt => {
+                const date = receipt.receipt.date,
+                    time = receipt.receipt.time,
+                    Y = parseInt(date.substr(0, 4)),
+                    M = (parseInt(date.substr(5, 2)) - 1),
+                    D = parseInt(date.substr(8, 2)),
+                    h = parseInt(time.substr(0, 2)),
+                    m = parseInt(time.substr(3, 2)),
+                    s = parseInt(time.substr(6, 2)),
+                    datetime = new Date(Y, M, D, h, m, s)
+                return {receiptDate: datetime, receiptObj: receipt}
+            }).sort((a, b) => (a.receiptDate > b.receiptDate
+                ? -1
+                : 1)).reduce((accumulator, obj) => {
+                let current = {
+                    "year": obj
+                        .receiptDate
+                        .getFullYear(),
+                    "month": this.monthNames[
+                        obj
+                            .receiptDate
+                            .getMonth()
+                    ],
+                    "datenr": obj
+                        .receiptDate
+                        .getDate(),
+                    "day": this.dayNames[
+                        obj
+                            .receiptDate
+                            .getDay()
+                    ],
+                    "time": this.checkTime(obj.receiptDate.getHours()) + ":" + this.checkTime(obj.receiptDate.getMinutes()),
+                    "receipt": obj.receiptObj,
+                    "date": obj.receiptDate
+                }
+                accumulator.push(current) || {};
+                return accumulator;
+            }, []);
+            resolve(receipts);
+        })
+    }
+
+    public checkTime(i) {
+        return (i < 10)
+            ? "0" + i
+            : i;
+    }
+
+    public loginUser(username, password) {
+        return new Promise((resolve, reject) => {
+            this
+                .httpClient
+                .post(this.backendURL + "/login/", {
+                    name: username,
+                    password: password
+                })
+                .subscribe((data : any) => {
+
+                    if (data.success == 1) {
+                        this.user = {
+                            name: username,
+                            token: data.session_token,
+                            gcid: data.GCID
                         }
-                    }, err => {
-                        console.log(err);
-                        resolve('no cards');
-                    });
-            }
-        });
+
+                        this
+                            .storage
+                            .set("user", this.user)
+                        this.loadCards();
+
+                    }
+                    resolve(data);
+                }, err => {
+                    console.error("Couldn't login: ", err);
+                })
+        })
+    }
+    public registerUser(username, password) {
+        return new Promise((resolve, reject) => {
+
+            this
+                .httpClient
+                .post(this.backendURL + "/registercustomer/", {
+                    name: username,
+                    pass: password
+                })
+                .subscribe((data : any) => {
+                    if (data.success == 1) {
+                        this.user = {
+                            name: username,
+                            token: data.session_token,
+                            gcid: data.cid,
+                            receipts: [],
+                            cards: []
+                        }
+                        this
+                            .storage
+                            .set("user", this.user)
+                    }
+                    console.log("register data: ", data);
+                    resolve(data);
+
+                }, err => {
+                    console.log("Couldn't register: ", err);
+                })
+
+        })
     }
 
     public addCard() {
         return new Promise((resolve, reject) => {
-            if (this.workoffline) {
-                console.log('offline');
-            } else {
-                this
-                    .httpClient
-                    .post(this.backendURL + "/tempregcard/" + this.cid, {
-                        'token': this.token,
-                        'lastfour': '9999',
-                        'expires': '06/21',
-                        'type': 'Visa'
-                    })
-                    .subscribe((data : any) => {
-                        console.log(data);
-                        resolve(data);
+            this
+                .httpClient
+                .post(this.backendURL + "/tempregcard/" + this.user.gcid, {
+                    'token': this.user.token,
+                    'lastfour': '1234',
+                    'expires': '06/21',
+                    'type': 'Visa'
+                })
+                .subscribe((data : any) => {
+                    console.log(data.card);
+                    this
+                        .user
+                        .cards
+                        .push(data.card)
+                    resolve(data);
+                }, err => {
+                    console.log(err);
+                    resolve('ERRORRRRR');
+                })
+        });
+    }
+    public popCard(id) {
+        return new Promise((resolve, reject) => {
+
+            this
+                .httpClient
+                .post(this.backendURL + "/deletecard/" + this.user.gcid + "/" + id, {'token': this.user.token})
+                .subscribe((data : any) => {
+                    console.log("REMOVE CARD", data);
+                    for (var i = 0; i < this.user.cards.length; i++) 
+                        if (this.user.cards[i].id && this.user.cards[i].id === id) {
+                            this
+                                .user
+                                .cards
+                                .splice(i, 1);
+                            break;
+                        }
                     }, err => {
-                        console.log(err);
-                        resolve('ERRORRRRR');
-                    })
-            }
+                    console.log(err);
+                    resolve('ERRORRRRR');
+                })
         });
     }
 
     // Fetch receipts. Should be fetched from backend though, so this is temporary.
     // Todo: connect to backend
+    /*
     public loadReceiptJson() {
-        this.receipts = [/*
+        this.receipts = [
             {
                 "reference": {
                     "zeipt_token": "5a736fed6449f3f55076b09a",
@@ -5595,12 +5895,13 @@ export class ResourcesProvider {
                         "version": 2
                     }
                 ]
-            }*/
+            }
         ];
 
         return new Promise((resolve, reject) => {
             resolve(this.receipts);
-            /*
+            */
+    /*
             if (this.workoffline) {
                 resolve(receiptJson);
             } else {
@@ -5648,8 +5949,6 @@ export class ResourcesProvider {
                             });
                     });
             }*/
-        });
-
-    }
-
+    /*});
+    }*/
 }

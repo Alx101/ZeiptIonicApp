@@ -1,0 +1,59 @@
+page-scan {
+    .fixed-content{
+        background-image: url(../assets/img/scanbg.jpg);
+        background-size: cover;
+    }
+    
+    input[type="file"] {
+        display: none;
+    }
+    .camera-selection {
+        border-radius: 10px;
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        right: 0;
+        width: calc(100% - 40px);
+        margin: auto;
+        background-color: white;
+        box-shadow: 0 0 30px rgba(39, 112, 152, 0.1);
+        &:after {
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 15px solid #fff;
+            content: '';
+            bottom: -15px;
+            left: 5%;
+            position: absolute;
+        }
+        .camera {
+            height: 60px;
+            position: relative;
+            padding: 0 15px;
+            label {
+                height: 100%;
+                width: calc(100% - 20px);
+                position: absolute;
+                font-size: 16px;
+                span {
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: calc(100% - 20px);
+                }
+            }
+            img {
+                height: 30px;
+                right: 15px;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+            &:not(:last-child) {
+                border-bottom: 1px solid rgba(39, 112, 152, 0.1);
+            }
+        }
+    }
+}
