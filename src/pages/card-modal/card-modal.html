@@ -1,0 +1,17 @@
+<ion-header>
+    <ion-navbar>
+        <div class="header-row">
+            <div class="column left" (click)="goBack()"><ion-icon name="arrow-down"></ion-icon>Close</div>
+            <div class="column center">
+                <img class="receiptguy small" src="../assets/img/receiptguy.svg" alt="">
+            </div>
+            <div class="column right"></div>
+        </div>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+  <button (click)="openWebpage()">open webpage</button>
+  <iframe [src]="registerUrl()" frameborder="0"></iframe>
+    <p>{{resProvider.user.gcid}}</p>
+    <p>{{resProvider.user.token}}</p>
+</ion-content>

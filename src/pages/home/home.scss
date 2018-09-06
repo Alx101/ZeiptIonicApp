@@ -1,11 +1,11 @@
 page-home {
-    super-tabs-container{
+    super-tabs-container {
         height: 100% !important;
     }
     super-tab-button {
         height: auto !important;
         padding-bottom: 5px !important;
-        ion-icon{
+        ion-icon {
             margin-bottom: 0px !important;
         }
         .title {
@@ -13,6 +13,105 @@ page-home {
             color: #277098;
             font-weight: normal;
             text-transform: none;
+        }
+    }
+    .dialogue-wrap {
+        transition: opacity .2s, transform .2s;
+        opacity: 0;
+        transform: translateY(-10px);
+        position: absolute;
+        left: 10px;
+        right: 10px;
+        top: 10px;
+        z-index: 10;
+        pointer-events: none;
+        .dialogue {
+            box-shadow: 0px 2px 40px #0F2841;
+            position: relative;
+            z-index: 10000;
+            background-color: #f2f5fb;
+            &:after {
+                width: 0px;
+                z-index: 9002;
+                display: block;
+                content: "";
+                position: absolute;
+                top: -8px;
+                left: 0;
+                right: 0;
+                margin: auto;
+                border-bottom: 8px white solid;
+                border-top: 0px transparent solid;
+                border-left: 6px transparent solid;
+                border-right: 6px transparent solid;
+            }
+            ion-searchbar{
+                background-color: #f2f5fb !important;
+            }
+            .dialogue-inner{
+                padding: 20px;
+                .liltitle{
+                    font-size: 20px;
+                    font-weight: bold;
+                    margin-bottom: 10px;
+                }
+                p{
+                    font-size: 18px;
+                    margin-bottom: 20px;
+                }
+                button.primary{
+                    margin-bottom: 0 !important;
+                }
+            }
+            .dialogue-content {
+                max-height: 64vh;
+                overflow: auto;
+                -webkit-overflow-scrolling: touch;
+                .event {
+                    padding: 8px 10px;
+                    margin: auto;
+                    margin-top: 4px;
+                    background-color: white;
+                    text-align: left;
+                    position: relative;
+                    &.new {
+                        font-weight: bold;
+                        &:after {
+                            position: absolute;
+                            content: '';
+                            width: 6px;
+                            height: 6px;
+                            background-color: #3CBF71;
+                            border-radius: 10px;
+                            right: 10px;
+                            top: 50%;
+                            transform: translateY(-50%);
+                        }
+                    }
+                    &:first-child {
+                        margin-top: 0px;
+                    }
+                    p {
+                        display: block;
+                        position: relative;
+                        line-height: 1.4;
+                    }
+                    .event-time {
+                        color: #277098;
+                        font-size: 12px;
+                        border-bottom: 1px solid #f2f5fb;
+                        display: inline-block;
+                        margin-bottom: 2px;
+                    }
+                }
+                .faqbtn{
+                    
+                    margin: auto;
+                    margin-top: 4px;
+                    background-color: white;
+                    
+                }
+            }
         }
     }
     #fixedbtn {

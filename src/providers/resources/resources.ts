@@ -1,33 +1,30 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http'
-import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/mergeMapTo';
 import 'rxjs/add/operator/map';
 import {Storage} from '@ionic/storage';
-import * as _ from 'lodash';
-import {ReceiptDetailPage} from '../../pages/receipt-detail/receipt-detail';
 import {ToastController, ToastOptions} from 'ionic-angular';
 
 @Injectable()
 export class ResourcesProvider {
     public user : any = {};
+    public loadedReceipts : any = [];
     public newCards : any = [];
     public structuredReceipts : any = {}
-    backendURL : string;
+    private backendURL : string;
     public refreshInterval;
     public newArray : any = [];
     public networkDataReceived : boolean = false;
     public offlineToast : boolean = false;
-    
+
     public showInstallMessage : boolean = false;
 
     public navigator : any = window.navigator;
     public listIsOpen : boolean = false;
     public receiptView : boolean = false;
 
-    offlineToastOptions : ToastOptions
-    installToastOptions : ToastOptions
+    offlineToastOptions : ToastOptions;
 
     constructor(public storage : Storage, private httpClient : HttpClient, private toast : ToastController) {
         this.backendURL = "https://demo.zeipt.se/public";
@@ -42,13 +39,6 @@ export class ResourcesProvider {
             message: 'No internet connection',
             showCloseButton: true,
             cssClass: 'toaster'
-        }
-        //Make a custom div, make it appear after 1 sec with animation
-        this.installToastOptions = {
-            message: 'Install this app:',
-            showCloseButton: true,
-            cssClass: 'addToHome',
-            position: 'bottom'
         }
     }
 
@@ -68,12 +58,9 @@ export class ResourcesProvider {
         return /iphone|ipad|ipod/.test(userAgent);
     }
 
-    public showInstall(){
-        if(this.isIos() && !(this.navigator.standalone)){
-            this
-                .toast
-                .create(this.installToastOptions)
-                .present();
+    public showInstall() {
+        if (this.isIos() && !(this.navigator.standalone)) {
+            this.showInstallMessage = true;
         }
     }
 
@@ -86,12 +73,12 @@ export class ResourcesProvider {
                 .present();
         }
     }
+
     public loadReceiptStorage() {
         this
             .storage
             .get("receipts")
             .then((receipts : any) => {
-
                 if (!receipts) {
                     this.user.receipts = [];
                 } else {
@@ -100,6 +87,7 @@ export class ResourcesProvider {
                 }
             })
     }
+
     public loadUserStorage() {
         return new Promise((resolve, reject) => {
             this
@@ -133,7 +121,7 @@ export class ResourcesProvider {
                                     .storage
                                     .get("receipts")
                                     .then((receipts : any) => {
-                                        console.log(receipts);
+                                        console.log("User storage receipr: ", receipts);
                                         if (!receipts) {
                                             this.user.receipts = [];
                                         } else {
@@ -144,6 +132,65 @@ export class ResourcesProvider {
                             })
                     }
                 })
+        })
+    }
+
+    public loginUser(username, password) {
+        return new Promise((resolve, reject) => {
+            this
+                .httpClient
+                .post(this.backendURL + "/login/", {
+                    name: username,
+                    password: password
+                })
+                .subscribe((data : any) => {
+
+                    if (data.success == 1) {
+                        this.user = {
+                            name: username,
+                            token: data.session_token,
+                            gcid: data.GCID
+                        }
+                        this
+                            .storage
+                            .set("user", this.user)
+                    }
+                    resolve(data);
+                }, err => {
+                    console.error("Couldn't login: ", err);
+                })
+        })
+    }
+
+    public registerUser(username, password) {
+        return new Promise((resolve, reject) => {
+
+            this
+                .httpClient
+                .post(this.backendURL + "/registercustomer/", {
+                    name: username,
+                    pass: password
+                })
+                .subscribe((data : any) => {
+                    if (data.success == 1) {
+                        this.user = {
+                            name: username,
+                            token: data.session_token,
+                            gcid: data.cid,
+                            receipts: [],
+                            cards: []
+                        }
+                        this
+                            .storage
+                            .set("user", this.user)
+                    }
+                    console.log("register data: ", data);
+                    resolve(data);
+
+                }, err => {
+                    console.log("Couldn't register: ", err);
+                })
+
         })
     }
 
@@ -162,10 +209,18 @@ export class ResourcesProvider {
                     if (!data.cards) {
                         resolve();
                     } else {
-                        this.user.cards = data.cards
+                        let registeredCards = [];
+                        data
+                            .cards
+                            .forEach(card => {
+                                if (card.lastfour) {
+                                    registeredCards.push(card)
+                                }
+                            });
+                        this.user.cards = registeredCards;
                         this
                             .storage
-                            .set('cards', data.cards)
+                            .set('cards', registeredCards)
                         resolve();
                     }
 
@@ -174,6 +229,53 @@ export class ResourcesProvider {
                     this.showToast();
                     this.networkDataReceived = false;
                     resolve();
+                })
+        });
+    }
+
+    public refreshLogin() {
+        return new Promise((resolve, reject) => {
+            this
+                .httpClient
+                .post(this.backendURL + "/refreshLogin/" + this.user.gcid, {token: this.user.token})
+                .subscribe((data : any) => {
+                    if (data.success == 1) {
+                        console.log("Refresh Login success", data);
+                        this.user.token = data.session_token;
+                        this
+                            .storage
+                            .set("user", this.user)
+                        resolve(data.session_token);
+                    } else {
+                        console.log("Refresh Login failed", data);
+                        resolve('unauthorized');
+                    }
+
+                }, err => {
+                    console.error("Couldn't refresh token: ", err);
+                })
+        })
+    }
+    public popCard(id) {
+        return new Promise((resolve, reject) => {
+
+            this
+                .httpClient
+                .post(this.backendURL + "/deletecard/" + this.user.gcid + "/" + id, {'token': this.user.token})
+                .subscribe((data : any) => {
+                    console.log("REMOVE CARD", data);
+                    for (var i = 0; i < this.user.cards.length; i++) 
+                        if (this.user.cards[i].id && this.user.cards[i].id === id) {
+                            this
+                                .user
+                                .cards
+                                .splice(i, 1);
+                            resolve();
+                            break;
+                        }
+                    }, err => {
+                    console.log(err);
+                    resolve('ERRORRRRR');
                 })
         });
     }
@@ -229,11 +331,10 @@ export class ResourcesProvider {
                     this.networkDataReceived = false;
                     resolve();
                 })
-
         })
     };
     public updateReceipts() {
-
+        /*
         this.refreshInterval = setInterval((function () {
             var networkUpdate = this
                 .httpClient
@@ -267,9 +368,9 @@ export class ResourcesProvider {
                 .match("https://jsonblob.com/api/jsonBlob/2f3f86ea-4e51-11e8-ad5f-e1e2666c6bc8")
                 .then((response) => {
 
-                    if (!response) 
+                    if (!response)
                         throw Error("No data");
-                    
+
                     return response.json()
                 })
                 .then((data) => {
@@ -302,12 +403,10 @@ export class ResourcesProvider {
                 })
 
         }).bind(this), 5000);
-
+*/
     }
 
-    public searchReceipts(){
-        
-    }
+    public searchReceipts() {}
 
     dayNames = [
         "Sunday",
@@ -383,113 +482,33 @@ export class ResourcesProvider {
             : i;
     }
 
-    public loginUser(username, password) {
-        return new Promise((resolve, reject) => {
-            this
-                .httpClient
-                .post(this.backendURL + "/login/", {
-                    name: username,
-                    password: password
-                })
-                .subscribe((data : any) => {
-
-                    if (data.success == 1) {
-                        this.user = {
+    /*
+    this
+                        .httpClient
+                        .post(this.backendURL + "/login/", {
                             name: username,
-                            token: data.session_token,
-                            gcid: data.GCID
-                        }
+                            password: password
+                        })
+                        .subscribe((data : any) => {
 
-                        this
-                            .storage
-                            .set("user", this.user)
-                        this.loadCards();
+                            if (data.success == 1) {
+                                this.user = {
+                                    name: username,
+                                    token: data.session_token,
+                                    gcid: data.GCID
+                                }
 
-                    }
-                    resolve(data);
-                }, err => {
-                    console.error("Couldn't login: ", err);
-                })
-        })
-    }
-    public registerUser(username, password) {
-        return new Promise((resolve, reject) => {
+                                this
+                                    .storage
+                                    .set("user", this.user)
+                                this.loadCards();
 
-            this
-                .httpClient
-                .post(this.backendURL + "/registercustomer/", {
-                    name: username,
-                    pass: password
-                })
-                .subscribe((data : any) => {
-                    if (data.success == 1) {
-                        this.user = {
-                            name: username,
-                            token: data.session_token,
-                            gcid: data.cid,
-                            receipts: [],
-                            cards: []
-                        }
-                        this
-                            .storage
-                            .set("user", this.user)
-                    }
-                    console.log("register data: ", data);
-                    resolve(data);
-
-                }, err => {
-                    console.log("Couldn't register: ", err);
-                })
-
-        })
-    }
-
-    public addCard() {
-        return new Promise((resolve, reject) => {
-            this
-                .httpClient
-                .post(this.backendURL + "/tempregcard/" + this.user.gcid, {
-                    'token': this.user.token,
-                    'lastfour': '1234',
-                    'expires': '06/21',
-                    'type': 'Visa'
-                })
-                .subscribe((data : any) => {
-                    console.log(data.card);
-                    this
-                        .user
-                        .cards
-                        .push(data.card)
-                    resolve(data);
-                }, err => {
-                    console.log(err);
-                    resolve('ERRORRRRR');
-                })
-        });
-    }
-    public popCard(id) {
-        return new Promise((resolve, reject) => {
-
-            this
-                .httpClient
-                .post(this.backendURL + "/deletecard/" + this.user.gcid + "/" + id, {'token': this.user.token})
-                .subscribe((data : any) => {
-                    console.log("REMOVE CARD", data);
-                    for (var i = 0; i < this.user.cards.length; i++) 
-                        if (this.user.cards[i].id && this.user.cards[i].id === id) {
-                            this
-                                .user
-                                .cards
-                                .splice(i, 1);
-                            break;
-                        }
-                    }, err => {
-                    console.log(err);
-                    resolve('ERRORRRRR');
-                })
-        });
-    }
-
+                            }
+                            resolve(data);
+                        }, err => {
+                            console.error("Couldn't login: ", err);
+                        })
+                        */
     // Fetch receipts. Should be fetched from backend though, so this is temporary.
     // Todo: connect to backend
     /*

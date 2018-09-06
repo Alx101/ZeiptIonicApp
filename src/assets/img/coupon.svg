@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="54px" height="81px" viewBox="0 0 54 81" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 10</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Zeipt-App" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="The-Receipt-Copy-2" transform="translate(-180.000000, -157.000000)">
+            <g id="Group-10" transform="translate(180.000000, 157.000000)">
+                <path d="M42.9107523,80 L53,80 L53,1 L1,1 L1,80 L11.0892477,80 C13.5559435,73.4548718 19.8494445,69 27,69 C34.1505555,69 40.4440565,73.4548718 42.9107523,80 Z" id="Combined-Shape" stroke="#277098" stroke-width="2"></path>
+                <path d="M0.98125404,55.2417582 L53.2521008,55.2417582" id="Line-Copy-3" stroke="#277098" stroke-linecap="square" stroke-dasharray="4"></path>
+                <path d="M22.0328663,21.8808849 L27,12 L31.9671337,21.8808849 L42.9691364,23.5622144 L35.0814119,31.3646997 L36.8694691,42.2702703 L27,37.1738 L17.1305309,42.2702703 L18.9185881,31.3646997 L11.0308636,23.5622144 L22.0328663,21.8808849 Z" id="Rectangle-13" fill="#277098"></path>
+            </g>
+        </g>
+    </g>
+</svg>

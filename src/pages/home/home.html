@@ -1,28 +1,39 @@
-
 <ion-header class="headeren">
     <ion-navbar>
         <div class="header-row">
-            <div *ngIf="selectedTab != 1" class="column left">
+            <div *ngIf="selectedTab == 0 || selectedTab == 3" class="column left">
+            </div>
+            <div *ngIf="selectedTab == 2" class="column left">
+                <ion-icon id="settings" name="ios-settings-outline"></ion-icon>
+                Settings
             </div>
             <div *ngIf="selectedTab == 1 && resProvider.receiptView == false" class="column left month-button">
                 <div (click)="toggleList()" *ngIf="resProvider.user.receipts.length > 0 && resProvider.user.cards.length > 0" id="fixedbtn">
                     <p id="fixedbtnyear">Get list of</p>
                     <p id="fixedbtnmonth">months</p>
-                    
+
                     <ion-icon id="arrow" name="arrow-down"></ion-icon>
                 </div>
             </div>
             <div *ngIf="selectedTab == 1 && resProvider.receiptView == true" class="column left" (click)="goBack()">Back</div>
-            <div class="column center">
+            <div class="column center" (click)="openDialogue()">
+                <div class="speech-bubble-wrap">
+                    <div class="speech-bubble">1</div>
+                </div>
+
                 <img class="receiptguy small" src="../assets/img/receiptguy.svg" alt="">
             </div>
-            <div *ngIf="selectedTab == 0 || selectedTab == 3" class="column right" (click)="search()"></div>
-            <div *ngIf="selectedTab == 1" class="column right" (click)="search()">
+            <div *ngIf="selectedTab == 0" class="column right"></div>
+            <div *ngIf="selectedTab == 1" class="column right" (click)="toggleSearch()">
                 <ion-icon id="search" name="search"></ion-icon>
                 <span id="searchtxt">Search</span>
             </div>
             <div *ngIf="selectedTab == 2" class="column right" (click)="logout()">
-                <span>Logout</span>
+                <ion-icon style="margin-right: 5px;" name="ios-log-out-outline"></ion-icon><span>Logout</span>
+            </div>
+            <div *ngIf="selectedTab == 3" class="column right">
+                <ion-icon id="search" name="search"></ion-icon>
+                <span id="searchtxt">Search apps</span>
             </div>
         </div>
 
@@ -30,12 +41,147 @@
     </ion-navbar>
 </ion-header>
 
+<ion-content #content no-bounce>
+
+    <div ion-fixed>
+        <div id="bookkeepinghelp" class="dialogue-wrap">
+            <div class="dialogue">
+                <div class="dialogue-inner">
+                    <p class="liltitle">
+                        Bookkeeping
+                    </p>
+                    <p>
+                        Integrating with bookkeeping services is a great way to automate accounting services.
+                    </p>
+                    <button class="primary" (click)="help('bookkeepinghelp')">Okay!</button>
+                </div>
+            </div>
+        </div>
+        <div id="insurancehelp" class="dialogue-wrap">
+            <div class="dialogue">
+                <div class="dialogue-inner">
+                    <p class="liltitle">
+                        Insurance
+                    </p>
+                    <p>
+                        Integrating with insurance services is a great way to automate insurance services.
+                    </p>
+                    <button class="primary" (click)="help('insurancehelp')">Okay!</button>
+                </div>
+            </div>
+        </div>
+        <div id="economyhelp" class="dialogue-wrap">
+            <div class="dialogue">
+                <div class="dialogue-inner">
+                    <p class="liltitle">
+                        Personal economy
+                    </p>
+                    <p>
+                        Integrating with personal economy services is a great way to automate personal economy services.
+                    </p>
+                    <button class="primary" (click)="help('economyhelp')">Okay!</button>
+                </div>
+            </div>
+        </div>
+        <div id="paymenthelp" class="dialogue-wrap">
+            <div class="dialogue">
+                <div class="dialogue-inner">
+                    <p class="liltitle">
+                        Payment & bill split
+                    </p>
+                    <p>
+                        Integrating with payment & bill split services is a great way to automate payment & bill split services.
+                    </p>
+                    <button class="primary" (click)="help('paymenthelp')">Okay!</button>
+                </div>
+            </div>
+        </div>
 
 
+        <div id="dialogue" class="dialogue-wrap">
+            <div class="dialogue">
 
-<ion-content #content>
+                <div class="segmentbg">
+                    <ion-segment [(ngModel)]="dialogueTabs" color="primary" (ionChange)="dialogueSegmentChanged($event)">
+                        <ion-segment-button value="events">
+                            <p>
+                                <ion-icon name="ios-alert-outline"></ion-icon>Latest events
+                            </p>
+                        </ion-segment-button>
+                        <ion-segment-button value="faq">
+                            <p>
+                                <ion-icon name="ios-help-circle-outline"></ion-icon>Most asked
+                            </p>
+                        </ion-segment-button>
+                    </ion-segment>
+                </div>
+                <ion-searchbar placeholder="Search"></ion-searchbar>
+                <div [ngSwitch]="dialogueTabs">
+                    <div class="dialogue-content" *ngSwitchCase="'events'">
 
-    <super-tabs id="st-container" tabsPlacement="bottom" [selectedTabIndex]="1" (tabSelect)="onTabSelect($event)">
-        <super-tab *ngFor="let page of pages" [root]="page.pageName" [icon]="page.icon" [id]="page.id" [title]="page.title"></super-tab>
-    </super-tabs>
+                        <button class="event new">
+                            <p class="event-time">29. June 14:03</p>
+                            <p class="event-message">You've got a new receipt</p>
+                        </button>
+
+                        <button class="event">
+                            <p class="event-time">29. June 12:00</p>
+                            <p class="event-message">You sent 4 receipts to an accounting software</p>
+                        </button>
+
+                        <button class="event">
+                            <p class="event-time">28. June 11:11</p>
+                            <p class="event-message">You've got a new message</p>
+                        </button>
+                        <button class="event">
+                            <p class="event-time">27. June 09:01</p>
+                            <p class="event-message">You've been legible for a new accounting software</p>
+                        </button>
+                        <button class="event">
+                            <p class="event-time">25. June 14:28</p>
+                            <p class="event-message">You've sent 1 receipt to a loyalty program</p>
+                        </button>
+                        <button class="event">
+                            <p class="event-time">25. June 12:03</p>
+                            <p class="event-message">You've got a new receipt</p>
+                        </button>
+                        <button class="event">
+                            <p class="event-time">24. June 14:12</p>
+                            <p class="event-message">You've got a new receipt</p>
+                        </button>
+                        <button class="event">
+                            <p class="event-time">24. June 09:03</p>
+                            <p class="event-message">You've got a new receipt</p>
+                        </button>
+                        <button class="event">
+                            <p class="event-time">24. June 08:40</p>
+                            <p class="event-message">You've got a new receipt</p>
+                        </button>
+                    </div>
+                    <div class="dialogue-content" *ngSwitchCase="'faq'">
+                        <button class="faqbtn">
+                            <p>How can I get digital receipts?</p>
+                        </button>
+                        <button class="faqbtn">
+                            <p>What is ID-page?</p>
+                        </button>
+                        <button class="faqbtn">
+                            <p>Why bankID?</p>
+                        </button>
+                        <button class="faqbtn">
+                            <p>How to use tools?</p>
+                        </button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div ion-fixed (click)="help(openHelp)" id="help-fade" class="fade"></div>
+        <div ion-fixed (click)="openDialogue()" id="home-fade" class="fade"></div>
+        <super-tabs id="st-container" tabsPlacement="bottom" [selectedTabIndex]="1" (tabSelect)="onTabSelect($event)">
+            <super-tab *ngFor="let page of pages" [root]="page.pageName" [icon]="page.icon" [id]="page.id" [title]="page.title"></super-tab>
+        </super-tabs>
+    </div>
+
 </ion-content>

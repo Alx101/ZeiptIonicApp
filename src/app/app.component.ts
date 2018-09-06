@@ -11,21 +11,17 @@ export class MyApp {
 
     constructor(public resProvider : ResourcesProvider) {}
     ngOnInit() {
-        this.resProvider.showInstall();
         this
             .resProvider
             .loadUserStorage()
             .then((user : any) => {
                 if (!user) {
                     this.rootPage = LoginPage;
-                } else {
                     this
                         .resProvider
-                        .loadUserStorage()
-                        .then(() => {
-                            this.rootPage = HomePage;
-                        })
-                    
+                        .showInstall();
+                } else {
+                    this.rootPage = HomePage;
                 }
             })
             .catch((err) => {
@@ -33,5 +29,4 @@ export class MyApp {
                 this.rootPage = LoginPage;
             })
     }
-
 }

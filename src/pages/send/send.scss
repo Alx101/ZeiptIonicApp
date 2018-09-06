@@ -1,3 +1,174 @@
 page-send {
+    .send-content {
+        padding: 20px 10px;
+    }
+    
+    ion-list {
+        padding: 0px 10px;
+        border: 1px solid rgba(39, 112, 152, 0.5);
+        border-radius: 5px;
+        position: relative;
+        margin-bottom: 30px !important;
+        margin-top: 10px !important;
+        ion-item:last-child {
+            border-bottom: none !important;
+        }
+        .item:last-child {
+            border-bottom: none !important;
+        }
+        .label {
+            margin: 15px 8px 15px 0 !important;
+        }
+        code {
+            font-size: 15px;
+        }
+        button .item-inner {
+            background-position: right 0px center !important;
+            ion-note {
+                margin-right: 20px !important;
+                .active{
+                    color: #3CBF71;
+                }
+            }
+        }
+        .item-inner {
+            padding-right: 0 !important;
+            p {
+                margin-left: 60px;
+                color: black;
+            }
+            .button-icon {
+                width: 50px;
+                height: 30px;
+                background-position: center;
+                background-size: contain;
+                background-repeat: no-repeat;
+                display: inline-block;
+                margin-right: 10px;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+        }
+        .id-title {
+            position: absolute;
+            left: 0;
+            top: -20px;
+            text-align: left;
+            button{
+                background-color: unset;
+                padding: unset;
+                color: unset;
+                margin: unset;
+            }
+            p {
+                display: inline;
+            }
+        }
+    }
+    .bookkeeping {
+        border: 1px solid rgba(184, 22, 202, 1);
+        color: rgba(184, 22, 202, 1);
+        .primary{
+            border: 1px solid rgba(184, 22, 202, 1);
+            background-color: rgba(184, 22, 202, 0.3);
+            color: #0F2841;
+        }
+    }
+    .insurance {
+        border: 1px solid rgba(0, 56, 144, 1);
+        color: rgba(0, 56, 144, 1);
+        .primary{
+            border: 1px solid rgba(0, 56, 144, 1);
+            background-color: rgba(0, 56, 144, 0.3);
+            color: #0F2841;
+        }
+    }
+    .economy{
+        border: 1px solid rgba(202, 114, 0, 1);
+        color: rgba(202, 114, 0, 1);
+        .primary{
+            border: 1px solid rgba(202, 114, 0, 1);
+            background-color: rgba(202, 114, 0, 0.3);
+            color: #0F2841;
+        }
+    }
+    .payment{
+        
+        border: 1px solid rgba(0, 121, 160, 1);
+        color: rgba(0, 121, 160, 1);
+        .primary{
+            border: 1px solid rgba(0, 121, 160, 1);
+            background-color: rgba(0, 121, 160, 0.3);
+            color: #0F2841;
+        }
+    }
+    .other{
+        .primary{
+            border: 1px solid rgba(60, 191, 113, 1);
+            background-color:rgba(60, 191, 113, 0.3);
+            color: #0F2841;
+        }
+    }
 
+    .visma .button-icon {
+        background-image: url("../assets/img/vismalogo.png")
+    }
+    .fiken .button-icon {
+        background-image: url("../assets/img/fikenlogo.png")
+    }
+    .tryg .button-icon {
+        background-image: url("../assets/img/tryglogo.png")
+    }
+    .if .button-icon {
+        background-image: url("../assets/img/iflogo.png")
+    }
+    .send-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: white;
+        border: 1px solid rgba(39, 112, 152, 0.5);
+        border-radius: 5px;
+        position: relative;
+        padding: 15px;
+        margin-bottom: 30px;
+        .logo {
+            border: 1px solid rgba(39, 112, 152, 0.1);
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            background-color: #f2f5fb;
+            border-radius: 100px;
+            background-position: center;
+            background-size: 60px;
+            background-repeat: no-repeat;
+        }
+        .company {
+            display: inline-block;
+            font-size: 20px;
+            width: 40%;
+        }
+        .sendbtn {
+            padding-left: 20px;
+            padding-right: 20px;
+            width: auto;
+        }
+    }
+    button.primary {
+        height: 30px;
+        width: calc(100% - 120px);
+        padding: unset;
+        margin-left: auto;
+        margin-right: auto;
+        p {
+            display: inline;
+            top: -2px;
+            position: relative;
+        }
+        .icon {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
 }

@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-navbar>
+    <div class="header-row">
+      <div class="column left">
+        Activate {{data}}
+      </div>
+      <div class="column center">
+
+      </div>
+      <div class="column right" (click)="goBack()">
+        <ion-icon name="arrow-down"></ion-icon>Close</div>
+    </div>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-refresher (ionRefresh)="goBack()">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div id="bgclose" (click)="goBack()"></div>
+
+  <ion-list>
+    <div class="expandcontent" *ngFor="let item of items">
+      <button (click)="expandItem(item)" ion-item [id]="item.service">
+        <div [ngStyle]="{'background-image': 'url(../assets/img/' + item.serviceimg + ')'}" class="button-icon"></div>
+        <p>{{item.service}}</p>
+        <ion-icon name="arrow-up" class="not-up"></ion-icon>
+      </button>
+      <expandable [expanded]="item.expanded" [service]="item.service">
+        <ion-item class="zeipt-mail">
+          <ion-label item-start>
+            Zeipt ID
+          </ion-label>
+          <ion-note item-end>
+            <code>0001</code>
+          </ion-note>
+          <ion-toggle checked="true"></ion-toggle>
+        </ion-item>
+        <ion-item class="zeipt-mail">
+          <ion-label item-start>
+            Zeipt-mail
+          </ion-label>
+          <ion-note item-end>
+            <code>0001@zeipt.com</code>
+          </ion-note>
+          <ion-toggle checked="true"></ion-toggle>
+        </ion-item>
+        <ion-item class="zeipt-mail">
+          <ion-label item-start>
+            Phone nr.
+          </ion-label>
+          <ion-note item-end>
+            <code>92696846</code>
+          </ion-note>
+          <ion-toggle checked="false"></ion-toggle>
+        </ion-item>
+        <ion-item class="zeipt-mail">
+          <ion-label item-start>
+            Email
+          </ion-label>
+          <ion-note item-end>
+            <code>{{resProvider.user.name}}</code>
+          </ion-note>
+          <ion-toggle checked="false"></ion-toggle>
+        </ion-item>
+
+        <ion-item class="zeipt-mail" *ngFor="let card of resProvider.user.cards; let idx = index">
+          <ion-label item-start>
+            Card
+          </ion-label>
+          <ion-note item-end>
+            <code> <div class="small">**** **** ****</div> {{card.lastfour.slice(12, 16)}}</code>
+          </ion-note>
+          <ion-toggle checked="false"></ion-toggle>
+        </ion-item>
+        <button (click)="goBack()" class="primary">Authorize/Activate</button>
+      </expandable>
+    </div>
+  </ion-list>
+</ion-content>

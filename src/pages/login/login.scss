@@ -2,8 +2,142 @@ page-login {
     .scroll-content {
         transform: translateY(-1px);
     }
+    #addToHome-fade {
+        transition: .5s background-color;
+        position: fixed;
+        z-index: 11;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(15, 40, 65, 0.5);
+        animation: .5s linear forwards;
+        @include animation-keyframes {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    }
+    #addToHome-fade {
+        ion-icon {
+            position: absolute;
+            text-align: center;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            font-size: 100px;
+            line-height: 50px;
+            text-shadow: 0 0 50px white;
+            animation: .5s alternate-reverse infinite;
+            @include animation-keyframes {
+                from {
+                    bottom: 0px;
+                }
+                to {
+                    bottom: 20px;
+                }
+            }
+        }
+    }
+    #addToHome-fade.closed {
+        pointer-events: none;
+        background-color: rgba(15, 40, 65, 0);
+        ion-icon {
+            opacity: 0;
+        }
+    }
+    #addToHome {
+        position: fixed;
+        z-index: 11;
+        color: color($colors, secondary);
+        top: 10px;
+        bottom: auto;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: calc(100% - 20px);
+        text-align: center;
+        background-color: white;
+        animation: .5s linear forwards;
+        transition: .5s;
+        @include animation-keyframes {
+            from {
+                opacity: 0;
+                transform: translateY(100vh);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0px);
+            }
+        }
+        .homevideo {
+            padding: 20px;
+            overflow: hidden;
+            color: color($colors, primary);
+            .instructions {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                padding-bottom: 20px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                .step {
+                    width: 50%;
+                    &:first-child {
+                        border-right: 1px solid rgba(0, 0, 0, 0.1);
+                    }
+                    img {
+                        height: 40px;
+                    }
+                }
+            }
+            video {
+                margin: 20px 0;
+                width: calc(100% - 20px);
+                border-radius: 40px;
+            }
+        }
+        .homeBanner {
+            z-index: 100;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: left;
+            padding: 10px;
+            color: white;
+            background-color: rgba(60, 191, 113, 1);
+            position: relative;
+            ion-icon {
+                transition: transform .5s;
+                margin-right: 10px;
+            }
+            img {
+                top: 50%;
+                transform: translateY(-50%);
+                height: 30px;
+                position: absolute;
+                right: 10px;
+                background-color: white;
+                padding: 5px;
+                border-radius: 5px;
+            }
+        }
+    }
+    #addToHome.closed {
+        bottom: 0;
+        top: auto;
+        ion-icon {
+            transform: scaleY(-1);
+        }
+        .homevideo {
+            height: 0;
+            padding: 0;
+        }
+    }
     .profile {
-        padding: 40px 0;
+        background-color: #0f2841;
+        padding: 20px;
         p {
             text-align: center;
             display: block;
@@ -11,13 +145,10 @@ page-login {
             margin-top: 8px;
         }
     }
-    .header {
-        position: relative;
-    }
     .userTabs {
         display: flex;
-        background-color: #0f2841;
         overflow: hidden;
+        position: relative;
     }
     .userTab {
         transform: perspective(100px) rotateX(10deg);
@@ -26,31 +157,44 @@ page-login {
         text-align: center;
         height: 50px;
         p {
+            color: #0f2841;
+            display: block;
             transform: perspective(100px) rotateX(-10deg) translateY(-50%);
             top: 50%;
             position: relative;
             font-size: 16px;
         }
     }
-    .activated{
+    .selected {
         z-index: 10;
         box-shadow: 0 0px 20px #0f2841;
         background-color: #f2f5fb;
     }
-    .notActivated {
+    .notSelected {
         background-color: rgba(242, 245, 251, 0.7);
+        box-shadow: inset 0 -5px 20px -6px #0f2841
+    }
+    .userInput{
+        position: relative;
     }
     .item-input {
         margin-bottom: 5px;
     }
     .error-txt {
-        color: color($colors, danger);
-        margin-bottom: 10px;
+        pointer-events: none;
+        position: absolute;
+        right: 0px;
+        bottom: 10px;
+        font-size: 12px;
+        color: white;
+        background-color: #a50707;
+        padding: 4px 8px;
+        max-width: 100px;
+        border-radius: 2px;
     }
     .buttons {
         display: flex;
     }
-    
     .error-msg {
         background-color: #0f2841;
         padding: 16px;

@@ -1,64 +1,93 @@
-<ion-header>
-  <div class="profile">
-    <img class="receiptguy big" src="../assets/img/receiptguy.svg" alt="">
+<ion-content overflow-scroll="true">
+
+  <div *ngIf="resProvider.showInstallMessage == true" id="addToHome-fade">
+    <ion-icon name="arrow-down"></ion-icon>
   </div>
-</ion-header>
+  <div *ngIf="resProvider.showInstallMessage == true" id="addToHome">
+    <p class="homeBanner" (click)="toggleInstall()">
+      <ion-icon name="arrow-down"></ion-icon>Install the app
+      <img src="assets/img/addtohome2.svg" alt="">
+    </p>
 
-<ion-content no-bounce>
-  <div class="fixed-content">
-
-  </div>
-  <div class="addToHome">
-
-  </div>
-  <div class="userTabs">
-    <div *ngIf="loginUserView" class="userTab activated">
-      <p>Login</p>
-    </div>
-    <div *ngIf="registerUserView" (click)="loginView()" class="userTab notActivated">
-      <p>Login</p>
-    </div>
-
-    <div *ngIf="registerUserView" class="userTab activated">
-      <p>New user</p>
-    </div>
-    <div *ngIf="loginUserView" (click)="registerView()" class="userTab notActivated">
-      <p>New user</p>
+    <div class="homevideo">
+      <p>
+        <b>Download the app as shown in the video below:</b>
+      </p>
+      <video loop autoplay playsinline class="videoPlayer">
+        <source src="assets/video/addtohome.mp4" type="video/mp4" />
+        <source src="assets/video/addtohome.webm" type="video/webm" />
+        <source src="assets/video/addtohome.gif" />
+        <img src="assets/img/logo.png" title="Your browser does not support the video-tag">
+      </video>
+      <button type="button" class="dark" (click)="toggleInstall()">Maybe later</button>
     </div>
   </div>
+
+  <div class="header">
+    <div class="profile">
+      <img class="receiptguy big" src="../assets/img/receiptguy.svg" alt="">
+    </div>
+    <div class="userTabs">
+      <div *ngIf="loginUserView" class="userTab selected">
+        <p>Login</p>
+      </div>
+      <div *ngIf="registerUserView" (click)="loginView()" class="userTab notSelected">
+        <p>Login</p>
+      </div>
+
+      <div *ngIf="registerUserView" class="userTab selected">
+        <p>New user</p>
+      </div>
+      <div *ngIf="loginUserView" (click)="registerView()" class="userTab notSelected">
+        <p>New user</p>
+      </div>
+    </div>
+  </div>
+
   <div class="info-content">
 
     <form [formGroup]="userForm">
 
-      <ion-item>
-        <ion-label color="primary" floating>Email</ion-label>
-        <ion-input formControlName="username" type="email" autocomplete='email'></ion-input>
-      </ion-item>
-      <div class="error-txt" *ngIf="userForm.controls.username.errors && userForm.controls.username.touched">Must be a valid email</div>
+      <div class="userInput">
+        <ion-item>
+          <ion-label color="primary" floating>Email</ion-label>
+          <ion-input formControlName="username" type="email" autocomplete='email'></ion-input>
+        </ion-item>
+        <div class="error-txt" *ngIf="userForm.controls.username.errors && userForm.controls.username.touched">Must be a valid email</div>
+      </div>
 
-      <ion-item>
-        <ion-label color="primary" floating>Password</ion-label>
-        <ion-input formControlName="password" type="password" autocomplete='password'></ion-input>
-      </ion-item>
-      <div class="error-txt" *ngIf="userForm.controls.password.errors && userForm.controls.password.touched">Password is required</div>
+      <div class="userInput">
+        <ion-item>
+          <ion-label color="primary" floating>Password</ion-label>
+          <ion-input formControlName="password" type="password" autocomplete='password'></ion-input>
+        </ion-item>
+        <div class="error-txt" *ngIf="userForm.controls.password.errors && userForm.controls.password.touched">Password is required</div>
+      </div>
 
-      <ion-item *ngIf="registerUserView" id="confirm-password">
-        <ion-label color="primary" floating>Confirm password</ion-label>
-        <ion-input formControlName="confirmPassword" type="password"></ion-input>
-
-      </ion-item>
-      <div class="error-txt" *ngIf="registerUserView && userForm.controls.confirmPassword.errors?.MatchPassword  && userForm.controls.confirmPassword.touched">Passwords doesn't match</div>
+      <div class="userInput">
+        <ion-item *ngIf="registerUserView" id="confirm-password">
+          <ion-label color="primary" floating>Confirm password</ion-label>
+          <ion-input formControlName="confirmPassword" type="password"></ion-input>
+        </ion-item>
+        <div class="error-txt" *ngIf="registerUserView && userForm.controls.confirmPassword.errors?.MatchPassword  && userForm.controls.confirmPassword.touched">Passwords doesn't match</div>
+      </div>
 
       <div *ngIf="loginUserView" class="buttons">
         <button *ngIf="!userForm.valid" type="button" class="secondary disabled">Login</button>
-        <button *ngIf="userForm.valid" type="button" class="primary" (click)="loginUser()">
-          <ion-spinner *ngIf="loading"></ion-spinner>Login</button>
+        <button *ngIf="userForm.valid && !loading" type="button" class="primary" (click)="loginUser()">
+          Login</button>
+
+        <button *ngIf="loading" type="button" style="opacity: 0.5;" class="primary">
+          <ion-spinner></ion-spinner>Login</button>
       </div>
 
       <div *ngIf="registerUserView" class="buttons">
         <button *ngIf="!userForm.valid" type="button" class="secondary disabled">Register</button>
-        <button *ngIf="userForm.valid" type="button" class="primary" (click)="registerUser()">
-          <ion-spinner *ngIf="loading"></ion-spinner>Register</button>
+        <button *ngIf="userForm.valid && !loading" type="button" class="primary" (click)="registerUser()">
+          Register</button>
+
+        <button *ngIf="loading" type="button" style="opacity: 0.5;" class="primary">
+          <ion-spinner></ion-spinner>Register</button>
       </div>
 
       <p class="error-msg" *ngIf="wrongUser">Wrong username or password</p>

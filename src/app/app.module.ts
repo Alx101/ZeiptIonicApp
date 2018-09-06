@@ -10,36 +10,37 @@ import {SuperTabsModule} from 'ionic2-super-tabs';
 import {MyApp} from './app.component';
 import {ResourcesProvider} from '../providers/resources/resources';
 
-import {ScanPage} from '../pages/scan/scan';
 import {LoginPage} from '../pages/login/login';
 import {HomePage} from '../pages/home/home';
 import {ReceiptDetailPage} from '../pages/receipt-detail/receipt-detail';
-import {AccordionComponent} from '../components/accordion/accordion';
+import {ExpandableComponent} from '../components/expandable/expandable';
+import { InAppBrowser } from "@ionic-native/in-app-browser";
 
-import {ngIntlTelInput} from 'ng-intl-tel-input'
-import {Ng2TelInputModule} from 'ng2-tel-input';
+import { SelectSearchableModule } from 'ionic-select-searchable';
+import { SendModalPage } from '../pages/send-modal/send-modal';
 
 enableProdMode();
 
 @NgModule({
     declarations: [
-        MyApp, LoginPage, HomePage, ReceiptDetailPage, AccordionComponent
+        MyApp, LoginPage, HomePage, ReceiptDetailPage, ExpandableComponent, SendModalPage
 
     ],
     imports: [
-        BrowserModule, HttpClientModule, IonicModule.forRoot(MyApp),
+        BrowserModule, HttpClientModule, SelectSearchableModule, IonicModule.forRoot(MyApp),
         IonicStorageModule.forRoot(),
         SuperTabsModule.forRoot()
     ],
     bootstrap: [IonicApp],
     entryComponents: [
-        MyApp, LoginPage, HomePage, ReceiptDetailPage, AccordionComponent
+        MyApp, LoginPage, HomePage, ReceiptDetailPage, ExpandableComponent, SendModalPage
     ],
     providers: [
         {
             provide: ErrorHandler,
             useClass: IonicErrorHandler
         },
+        InAppBrowser,
         ResourcesProvider,
         ReceiptDetailPage
     ]

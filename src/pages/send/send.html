@@ -1,4 +1,76 @@
-<ion-content padding>
-  Hei
+<ion-content>
+  <div class="send-content">
+    <ion-list class="bookkeeping">
+      <div class="id-title">
+        <button (click)="help('bookkeepinghelp')">
+          <ion-icon name="ios-help-circle-outline"></ion-icon>
+          <p>Bookkeeping</p>
+        </button>
+      </div>
+      <button class="visma" ion-item>
+        <div class="button-icon"></div>
+        <p>Visma</p>
+        <ion-note item-end>
+          <code class="active">Active</code>
+        </ion-note>
+      </button>
+      <button type="button" class="primary" (click)="openService('bookkeeping')">
+        <ion-icon name="add"></ion-icon>
+        <p>Activate another</p>
+      </button>
+    </ion-list>
+    <ion-list class="insurance">
+      <div class="id-title">
+        <button (click)="help('insurancehelp')">
+          <ion-icon name="ios-help-circle-outline"></ion-icon>
+          <p>Insurance</p>
+        </button>
+      </div>
+      <button class="if" ion-item>
+        <div class="button-icon"></div>
+        <p>If</p>
+        <ion-note item-end>
+          <code class="active">Active</code>
+        </ion-note>
+      </button>
+      <button type="button" class="primary">
+        <ion-icon name="add"></ion-icon>
+        <p>Activate another</p>
+      </button>
+    </ion-list>
+    <ion-list class="economy">
+      <div class="id-title">
+        <button (click)="help('economyhelp')">
+          <ion-icon name="ios-help-circle-outline"></ion-icon>
+          <p>Personal economy</p>
+        </button>
+      </div>
+      <button type="button" class="primary">
+        <ion-icon name="add"></ion-icon>
+        <p>Activate service</p>
+      </button>
+    </ion-list>
+    <ion-list class="payment">
+      <div class="id-title">
+        <button (click)="help('paymenthelp')">
+          <ion-icon name="ios-help-circle-outline"></ion-icon>
+          <p>Payment & bill split</p>
+        </button>
+      </div>
+      <button type="button" class="primary">
+        <ion-icon name="add"></ion-icon>
+        <p>Activate service</p>
+      </button>
+    </ion-list>
+    <ion-list class="other">
+      <div class="id-title">
+        <p>Other apps</p>
+      </div>
+      <button type="button" class="primary">
+        <ion-icon name="add"></ion-icon>
+        <p>Activate service</p>
+      </button>
+    </ion-list>
+  </div>
 
 </ion-content>

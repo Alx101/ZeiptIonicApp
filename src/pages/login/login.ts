@@ -1,9 +1,10 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild, ElementRef} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 import {ResourcesProvider} from '../../providers/resources/resources';
 import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import {PasswordValidation} from './password-validation';
 import {HomePage} from '../home/home';
+
 
 @Component({selector: 'page-login', templateUrl: 'login.html'})
 export class LoginPage {
@@ -32,6 +33,11 @@ export class LoginPage {
                 '', Validators.compose([Validators.required])
             ]
         });
+    }
+
+    toggleInstall(){
+        document.getElementById("addToHome").classList.toggle("closed");
+        document.getElementById("addToHome-fade").classList.toggle("closed");
     }
 
     loginView() {

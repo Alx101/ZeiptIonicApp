@@ -1,223 +1,216 @@
 page-receipts {
-    .fixed-content{
-        overflow-y: hidden;
-        z-index: 2;
-        pointer-events: none;
+  .fixed-content {
+    overflow-y: hidden;
+    z-index: 2;
+    pointer-events: none;
+  }
+  #monthList {
+    pointer-events: all;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    position: absolute;
+    background-color: #f2f5fb;
+    left: 0;
+    width: 100%;
+    -webkit-transition: top 0.2s ease-out, opacity 0.2s;
+    transition: top 0.2s ease-out, opacity 0.2s;
+    z-index: 10;
+    white-space: nowrap;
+    top: -70px;
+    > div {
+      display: inline-block;
     }
-    #monthList {
-        pointer-events: all;
-        overflow-x: scroll;
-        -webkit-overflow-scrolling: touch;
-        position: absolute;
-        background-color: #f2f5fb;
-        left: 0;
-        width: 100%;
-        -webkit-transition: top 0.2s ease-out, opacity 0.2s;
-        transition: top 0.2s ease-out, opacity 0.2s;
-        z-index: 10;
-        white-space: nowrap;
-        top: -70px;
-        >div {
-            display: inline-block;
-        }
-        .quickselect {
-            box-shadow: 0 1px 10px -4px #277098;
-            background-color: rgba(255, 255, 255, 0.9);
-            color: #0F2841;
-            padding: 15px 20px;
-            margin: 10px;
-            text-align: center;
-            display: inline-block;
-        }
-        .navyear {
-            margin: auto;
-            display: inline-block;
-            position: absolute;
-            border-top: 1px solid #0f2841;
-            height: 100%;
-            padding-left: 20px;
-            margin: 0 20px;
-            top: 0px;
-            transform: rotateZ(-90deg);
-            p {
-                color: #0f2841 !important;
-            }
-        }
-        .navyear>p:before,
-        .navyear>p:after {
-            width: 30%;
-            color: white;
-        }
-        .navyear + .quickselect{
-            margin-left: 40px;
-        }
+    .quickselect {
+      width: auto;
+      box-shadow: 0 1px 10px -4px #277098;
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #0f2841;
+      padding: 15px 20px;
+      margin: 10px;
+      text-align: center;
+      display: inline-block;
     }
-    #fade {
-        transition: opacity 0.2s;
-        opacity: 0;
-        width: 100vw;
-        height: 100vh;
-        right: 0;
-        left: 0;
-        background-color: rgba(15, 40, 65, 0.5);
-        z-index: 9;
-        pointer-events: none;
-    }
-    
-
-    .overflow-scroll {
-        overflow-y: scroll !important;
-    }
-    .overflow-scroll.hideScroll {
-        overflow: hidden;
-        overflow-y: hidden !important;
-    }
-    ion-content {
-        overflow-x: hidden;
-    }
-    .searchbar {
-        min-height: 46px;
-        transition: top .2s;
-        top: -56px;
-        margin-bottom: -20px;
-        background-color: #0f2841;
-        pointer-events: auto;
-    }
-    .scroll-content {
-        padding-top: 0px;
-        padding-bottom: 10vh;
-        top: -10px;
-    }
-    
-    
-    .year,
     .navyear {
-        overflow: hidden;
-        margin-top: 20px;
-        margin-bottom: -20px;
-        >p {
-            text-align: center;
-            font-size: 12px;
-            margin-top: 5px;
-            position: relative;
-            color: #0f2841;
-            font-style: italic;
-            font-weight: 600;
-            &:before,
-            &:after {
-                content: '';
-                position: absolute;
-                top: 40%;
-                width: 40%;
-                height: 1px;
-                background-color: rgba(15, 40, 65, 0.1);
-            }
-            &:before {
-                left: 0;
-            }
-            &:after {
-                right: 0;
-            }
-        }
-        .navyear>p {
-            margin-top: 20px;
-        }
-        &+.month:after {
-            display: none;
-        }
+      margin: auto;
+      display: inline-block;
+      position: absolute;
+      border-top: 1px solid #0f2841;
+      height: 100%;
+      padding-left: 20px;
+      margin: 0 20px;
+      top: 0px;
+      transform: rotateZ(-90deg);
+      p {
+        color: #0f2841 !important;
+      }
     }
-    .month {
-        position: relative;
-        &:after {
-            content: '';
-            position: absolute;
-            width: 40px;
-            top: -15px;
-            left: 0;
-            margin: auto;
-            right: 0;
-            border-top: 2px dashed;
-        }
-        >p {
-            text-align: left;
-            font-weight: bold;
-            font-size: 16px;
-            padding-top: 5px;
-            padding-left: 10px;
-            margin: 30px 0px 0px;
-            position: relative;
-            color: #0f2841;
-            box-shadow: 0 -10px 30px -10px rgba(39, 112, 152, 0.2);
-        }
+    .navyear > p:before,
+    .navyear > p:after {
+      width: 30%;
+      color: white;
     }
-    .datenr {
-        margin-top: 15px;
-        margin-bottom: 2px;
-        margin-left: 10px;
-        >p {
-            font-size: 14px;
-            color: #277098;
-        }
+    .navyear + .quickselect {
+      margin-left: 40px;
     }
-    .day {
-        border-left: 1px solid #277098;
-        padding: 0.1px 20px 0px 10px;
-        margin-left: 10px;
-        &:after {
-            content: "";
-            display: table;
-            clear: both;
-        }
+  }
+  .overflow-scroll {
+    overflow-y: scroll !important;
+  }
+  .overflow-scroll.hideScroll {
+    overflow: hidden;
+    overflow-y: hidden !important;
+  }
+  ion-content {
+    overflow-x: hidden;
+  }
+  .searchbar {
+    min-height: 46px;
+    transition: top 0.2s;
+    top: -56px;
+    margin-bottom: -20px;
+    background-color: #0f2841;
+    pointer-events: auto;
+  }
+  .scroll-content {
+    padding-top: 0px;
+    padding-bottom: 10vh;
+  }
+  .year,
+  .navyear {
+    overflow: hidden;
+    margin-top: 20px;
+    margin-bottom: -20px;
+    > p {
+      text-align: center;
+      font-size: 12px;
+      margin-top: 5px;
+      position: relative;
+      color: #0f2841;
+      font-style: italic;
+      font-weight: 600;
+      &:before,
+      &:after {
+        content: "";
+        position: absolute;
+        top: 40%;
+        width: 40%;
+        height: 1px;
+        background-color: rgba(39, 112, 152, 0.2);
+      }
+      &:before {
+        left: 0;
+      }
+      &:after {
+        right: 0;
+      }
     }
-    
-    .receiptbtn {
-        box-shadow: 0 1px 10px -4px #277098;
-        width: 100%;
-        display: flex;
-        background-color: rgba(255, 255, 255, 0.9);
-        box-sizing: border-box;
-        text-align: left;
-        padding: 5px 10px;
-        margin: auto;
-        border-radius: 0;
-        margin: 5px 0px;
-        position: relative;
-        .half {
-            width: 50%;
-        }
-        .info {
-            border-left: 1px solid rgba(15, 40, 65, 0.1);
-            padding-left: 10px;
-        }
-        p.name,
-        p.total {
-            font-size: 16px;
-            color: black;
-            margin-bottom: 5px;
-            margin-top: 5px;
-        }
-        p.city,
-        p.time {
-            font-size: 14px;
-            margin-bottom: 5px;
-            color: #666666;
-        }
-        .sum p {
-            display: inline-block;
-        }
-        .currency {
-            font-size: 10px !important;
-            position: absolute;
-            padding-left: 4px;
-            padding-top: 6px;
-            color: #666666;
-        }
+    .navyear > p {
+      margin-top: 20px;
     }
-    
-    .endofreceipts {
+    & + .month:after {
+      display: none;
+    }
+  }
+  .month {
+    position: relative;
+    &:after {
+      content: "";
+      position: absolute;
+      width: 40px;
+      top: -15px;
+      left: 0;
+      margin: auto;
+      right: 0;
+      border-top: 2px dashed;
+    }
+    > p {
+      text-align: left;
+      font-weight: bold;
+      font-size: 16px;
+      padding-top: 5px;
+      margin: 30px 0px 0px;
+      position: relative;
+      color: #0f2841;
+      box-shadow: 0 -10px 30px -10px rgba(39, 112, 152, 0.2);
+    }
+  }
+  .datenr {
+    margin-top: 15px;
+    margin-bottom: 2px;
+    margin-left: 10px;
+    > p {
+      font-size: 14px;
+      color: #277098;
+    }
+  }
+  .day {
+    border-left: 1px solid #277098;
+    padding: 0.1px 20px 0px 10px;
+    margin-left: 10px;
+    &:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+    .tags {
+      p {
+        display: inline-block;
+        margin-right: 2px;
+        margin-left: 2px;
+        transform: translateY(-8px);
+        padding: 0px 6px 1px;
+        border-radius: 9px;
         color: #0f2841;
-        font-style: italic;
-        text-align: center;
-        margin-top: 50px;
+      }
     }
+  }
+  .receiptbtn {
+    box-shadow: 0 1px 10px -4px #277098;
+    width: 100%;
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-sizing: border-box;
+    text-align: left;
+    padding: 5px 10px;
+    margin: auto;
+    border-radius: 0;
+    margin: 5px 0px;
+    position: relative;
+    .half {
+      width: 50%;
+    }
+    .info {
+      border-left: 1px solid rgba(15, 40, 65, 0.1);
+      padding-left: 10px;
+    }
+    p.name,
+    p.total {
+      font-size: 16px;
+      color: black;
+      margin-bottom: 5px;
+      margin-top: 5px;
+    }
+    p.city,
+    p.time {
+      font-size: 14px;
+      margin-bottom: 5px;
+      color: #666666;
+    }
+    .sum p {
+      display: inline-block;
+    }
+    .currency {
+      font-size: 10px !important;
+      position: absolute;
+      padding-left: 4px;
+      padding-top: 6px;
+      color: #666666;
+    }
+  }
+  .endofreceipts {
+    color: #0f2841;
+    font-style: italic;
+    text-align: center;
+    margin-top: 50px;
+  }
 }

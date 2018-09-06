@@ -1,0 +1,112 @@
+page-send-modal {
+    ion-content {
+        background-color: rgba(241, 245, 250, 0.7) !important;
+    }
+    .scroll-content {
+        padding: 10px;
+    }
+    
+    #bgclose {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 100%;
+    }
+    .column.right {
+        ion-icon {
+            margin-right: 5px;
+        }
+    }
+    ion-list {
+        background-color: white;
+        padding: 0px 10px;
+        border: 1px solid rgba(39, 112, 152, 0.5);
+        border-radius: 5px;
+        position: relative;
+        margin-bottom: 30px !important;
+        margin-top: 10px !important;
+        ion-item:last-child {
+            border-bottom: none !important;
+        }
+        .item:last-child {
+            border-bottom: none !important;
+        }
+        .label {
+            margin: 15px 8px 15px 0 !important;
+        }
+        code {
+            font-size: 15px;
+        }
+        .item-inner {
+            
+            ion-note {
+                
+                .small {
+                    font-size: 10px;
+                    display: inline;
+                }
+                .active {
+                    color: #3CBF71;
+                }
+            }
+        }
+        .zeipt-mail .item-inner{
+            flex: 3;
+        }
+        .item-inner {
+            background-image: none !important;
+            padding-right: 0 !important;
+            p {
+                margin-left: 60px;
+                color: black;
+            }
+            ion-label ion-icon {
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transition: transform .4s;
+                transform: translateY(-50%) rotateX(0deg);
+                &.not-up{
+                    transform: translateY(-50%) rotateX(180deg) !important;
+                }
+            }
+            .button-icon {
+                width: 50px;
+                height: 30px;
+                background-position: center;
+                background-size: contain;
+                background-repeat: no-repeat;
+                display: inline-block;
+                margin-right: 10px;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+        }
+        .id-title {
+            position: absolute;
+            left: 0;
+            top: -20px;
+            text-align: left;
+            button {
+                background-color: unset;
+                padding: unset;
+                color: unset;
+                margin: unset;
+            }
+            p {
+                display: inline;
+            }
+        }
+    }
+    .visma .button-icon {
+        background-image: url("../assets/img/vismalogo.png")
+    }
+    .sevenoffice .button-icon {
+        background-image: url("../assets/img/sevenofficelogo.svg")
+    }
+    .fiken .button-icon {
+        background-image: url("../assets/img/fikenlogo.png")
+    }
+}

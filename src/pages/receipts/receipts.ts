@@ -1,9 +1,8 @@
-import {Component, ViewChild, ViewChildren, OnChanges} from '@angular/core';
+import {Component, ViewChild, ViewChildren} from '@angular/core';
 import {Content} from 'ionic-angular';
-import {IonicPage, ModalController, NavController, NavParams, LoadingController} from 'ionic-angular';
+import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
 import {ResourcesProvider} from '../../providers/resources/resources';
 import {ReceiptDetailPage} from '../receipt-detail/receipt-detail';
-import {ProfilePage} from '../profile/profile';
 import {SuperTabs, SuperTabsController} from "ionic2-super-tabs";
 
 @IonicPage()
@@ -23,44 +22,38 @@ export class ReceiptsPage {
 
   searchOpen = false;
 
-  loadedReceipts : any = [];
+  receipttabs = 'receipts';
 
   constructor(public modalCtrl : ModalController, public navCtrl : NavController, public navParams : NavParams, public resProvider : ResourcesProvider, private superTabsCtrl : SuperTabsController, private superTabs : SuperTabs) {
-
-    this
-      .resProvider
-      .updateReceipts();
-
+    this.resProvider.loadedReceipts = resProvider.user.receipts;
   }
 
   ionViewDidLoad() {
-    this
-      .resProvider
-      .loadReceiptStorage()
-    this.loadedReceipts = this.resProvider.user.receipts;
+    this.receipttabs = 'receipts';
+  }
+
+  segmentChanged(yea) {
+    console.log(yea);
   }
   getItems(event : any) {
-
     if (event) {
       let value = event.target.value;
       if (value && value.trim() != '') {
-        this.resProvider.user.receipts = this
+        this.resProvider.loadedReceipts = this
           .resProvider
           .user
           .receipts
           .filter((item) => {
             return (item.year.toString().toLowerCase().indexOf(value.toLowerCase()) > -1) || (item.month.toLowerCase().indexOf(value.toLowerCase()) > -1) || (item.day.toLowerCase().indexOf(value.toLowerCase()) > -1) || (item.datenr.toString().toLowerCase().indexOf(value.toLowerCase()) > -1) || (item.receipt.sum.total.toString().toLowerCase().indexOf(value.toLowerCase()) > -1) || (item.receipt.merchant.name.toLowerCase().indexOf(value.toLowerCase()) > -1) || (item.receipt.merchant.city.toLowerCase().indexOf(value.toLowerCase()) > -1);
           })
-        console.log(this.resProvider.user.receipts);
       } else {
-        this.resProvider.user.receipts = this.loadedReceipts;
+        this.resProvider.loadedReceipts = this.resProvider.user.receipts;
       }
     } else {
-      this.resProvider.user.receipts = this.loadedReceipts;
+      this.resProvider.loadedReceipts = this.resProvider.user.receipts;
     }
   }
-
-  scrollHandler(event) {
+  scrollHandler() {
     var passedMonthElements = [];
     var passedYearElements = [];
     for (var i = 0; i < this.monthBreaks.length; i++) {
@@ -88,36 +81,6 @@ export class ReceiptsPage {
       }
     }
   }
-  search() {
-    if (this.searchOpen) {
-      document
-        .getElementById("searchbar")
-        .getElementsByTagName("input")[0]
-        .value = "";
-      document
-        .getElementById("searchbar")
-        .style
-        .top = "-56px";
-      document
-        .getElementById("searchtxt")
-        .textContent = "Search";
-      this.searchOpen = false;
-      this.getItems("");
-    } else {
-      document
-        .getElementById("searchbar")
-        .style
-        .top = "0px";
-      document
-        .getElementById("searchtxt")
-        .textContent = "Close";
-      document
-        .getElementById("searchbar")
-        .focus();
-      clearInterval(this.resProvider.refreshInterval);
-      this.searchOpen = true;
-    }
-  }
 
   scrollToMonth(scrollToMonth) {
     let yOffset = document
@@ -128,7 +91,7 @@ export class ReceiptsPage {
       .scrollTo(0, yOffset - 78, 1000)
   }
 
-  toggleList() {
+  closeList() {
     this
       .superTabsCtrl
       .enableTabsSwipe(true);
@@ -141,11 +104,11 @@ export class ReceiptsPage {
       .style
       .opacity = "0";
     document
-      .getElementById("fade")
+      .getElementById("receipts-fade")
       .style
       .opacity = "0";
     document
-      .getElementById("fade")
+      .getElementById("receipts-fade")
       .style
       .pointerEvents = "none";
     document
@@ -158,14 +121,7 @@ export class ReceiptsPage {
       .backgroundColor = ("#0f2841");
     this.resProvider.listIsOpen = false;
   }
-  /*
-  goToReceipt(clickedReceipt) {
-    this.resProvider.receiptView = true;
-    this
-      .navCtrl
-      .push(ReceiptDetailPage, {receipt: clickedReceipt});
-  }
-*/
+
   goToCards() {
     this
       .superTabs
@@ -174,12 +130,12 @@ export class ReceiptsPage {
 
   update(event) {
     event.complete();
-    console.log("update");
   }
-  goToReceipt(clickedReceipt) {
+
+  goToReceipt(clickedReceipt, i) {
     let profileModal = this
       .modalCtrl
-      .create(ReceiptDetailPage, {receipt: clickedReceipt});
+      .create(ReceiptDetailPage, {receipt: clickedReceipt, index: i});
     profileModal.present();
   }
 }

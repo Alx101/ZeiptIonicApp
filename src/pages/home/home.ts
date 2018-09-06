@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Content} from 'ionic-angular';
 
@@ -16,47 +16,146 @@ export class HomePage {
     {
       pageName: 'ScanPage',
       title: 'Scan',
-      icon: 'camera-outline',
+      icon: 'ios-camera-outline',
       id: 'camera'
     }, {
       pageName: 'ReceiptsPage',
       title: 'Receipts',
-      icon: 'home',
+      icon: 'ios-home',
       id: 'home'
     }, {
       pageName: 'ProfilePage',
       title: 'Profile',
-      icon: 'contact-outline',
+      icon: 'ios-contact-outline',
       id: 'contact'
     }, {
       pageName: 'SendPage',
-      title: 'Send',
-      icon: 'send-outline',
+      title: 'Share',
+      icon: 'ios-send-outline',
       id: 'send'
     }
   ];
-  searchOpen = false;
 
+  dialogueTabs = 'events';
+
+  searchOpen = false;
+  dialogueOpen = false;
+  helpDialogueOpen = false;
+  openHelp = '';
   selectedTab = 1;
   structuredReceipts : any = [];
-
 
   @ViewChild(SuperTabs)superTabs : SuperTabs;
   @ViewChild(Content)content : Content;
 
-  monthBreaks = document.getElementsByClassName("month");
-  yearBreaks = document.getElementsByClassName("year");
-
-  loadedReceipts : any = [];
-
   constructor(public navCtrl : NavController, public navParams : NavParams, public resProvider : ResourcesProvider, private superTabsCtrl : SuperTabsController) {}
 
   ionViewDidLoad() {
-    this
-      .resProvider
-      .loadReceiptStorage();
-    this.loadedReceipts = this.resProvider.user.receipts;
     this.superTabs.config.allowElementScroll = true;
+    this.dialogueTabs = 'events';
+  }
+
+  dialogueSegmentChanged(e) {
+    console.log("hey");
+  }
+
+  help(service) {
+    
+    if (this.helpDialogueOpen) {
+      document
+        .getElementById(service)
+        .style
+        .transform = "translateY(-10px)";
+      document
+        .getElementById(service)
+        .style
+        .opacity = "0";
+      document
+        .getElementById("help-fade")
+        .style
+        .opacity = "0";
+      document
+        .getElementById(service)
+        .style
+        .pointerEvents = "none";
+      document
+        .getElementById("help-fade")
+        .style
+        .pointerEvents = "none";
+      this.helpDialogueOpen = false;
+    } else {
+      document
+        .getElementById(service)
+        .style
+        .transform = "translateY(0px)";
+      document
+        .getElementById(service)
+        .style
+        .opacity = "1";
+      document
+        .getElementById("help-fade")
+        .style
+        .opacity = "1";
+      document
+        .getElementById(service)
+        .style
+        .pointerEvents = "auto";
+      document
+        .getElementById("help-fade")
+        .style
+        .pointerEvents = "auto";
+      this.openHelp = service;
+      this.helpDialogueOpen = true;
+    }
+  }
+
+  openDialogue() {
+    console.log(this.dialogueOpen);
+    if (this.dialogueOpen) {
+      document
+        .getElementById("dialogue")
+        .style
+        .transform = "translateY(-10px)";
+      document
+        .getElementById("dialogue")
+        .style
+        .opacity = "0";
+      document
+        .getElementById("home-fade")
+        .style
+        .opacity = "0";
+      document
+        .getElementById("dialogue")
+        .style
+        .pointerEvents = "none";
+      document
+        .getElementById("home-fade")
+        .style
+        .pointerEvents = "none";
+      this.dialogueOpen = false;
+    } else {
+      document
+        .getElementById("dialogue")
+        .style
+        .transform = "translateY(0px)";
+      document
+        .getElementById("dialogue")
+        .style
+        .opacity = "1";
+      document
+        .getElementById("home-fade")
+        .style
+        .opacity = "1";
+      document
+        .getElementById("dialogue")
+        .style
+        .pointerEvents = "auto";
+      document
+        .getElementById("home-fade")
+        .style
+        .pointerEvents = "auto";
+      this.dialogueOpen = true;
+    }
   }
 
   onTabSelect(ev : any) {
@@ -64,16 +163,20 @@ export class HomePage {
     this
       .pages
       .forEach(page => {
+
         if (page.icon.indexOf('-outline') == -1) {
           page.icon += '-outline';
         }
         if (page.id == ev.id) {
-          page.icon = ev.id;
+          page.icon = 'ios-' + ev.id;
         }
       });
   }
 
   toggleList() {
+    if (this.searchOpen == true) {
+      this.toggleSearch();
+    }
     if (this.resProvider.listIsOpen) {
       this
         .superTabsCtrl
@@ -87,11 +190,11 @@ export class HomePage {
         .style
         .opacity = "0";
       document
-        .getElementById("fade")
+        .getElementById("receipts-fade")
         .style
         .opacity = "0";
       document
-        .getElementById("fade")
+        .getElementById("receipts-fade")
         .style
         .pointerEvents = "none";
       document
@@ -103,7 +206,7 @@ export class HomePage {
         .style
         .backgroundColor = ("#0f2841");
       this.resProvider.listIsOpen = false;
-      
+
     } else {
       this
         .superTabsCtrl
@@ -117,11 +220,11 @@ export class HomePage {
         .style
         .opacity = "1";
       document
-        .getElementById("fade")
+        .getElementById("receipts-fade")
         .style
         .opacity = "1";
       document
-        .getElementById("fade")
+        .getElementById("receipts-fade")
         .style
         .pointerEvents = "auto";
       document
@@ -133,33 +236,25 @@ export class HomePage {
     }
   }
 
-  search() {
+  toggleSearch() {
+    var searchbar = document.getElementById("searchbar");
+    if (this.resProvider.listIsOpen == true) {
+      this.toggleList();
+    }
     if (this.searchOpen) {
-      document
-        .getElementById("searchbar")
-        .getElementsByTagName("input")[0]
-        .value = "";
-      document
-        .getElementById("searchbar")
-        .style
-        .top = "-56px";
+      searchbar.getElementsByTagName("input")[0].value = "";
+      this.resProvider.loadedReceipts = this.resProvider.user.receipts;
+      searchbar.style.top = "-56px";
       document
         .getElementById("searchtxt")
         .textContent = "Search";
       this.searchOpen = false;
-      this.resProvider.user.receipts = this.loadedReceipts;
     } else {
-      document
-        .getElementById("searchbar")
-        .style
-        .top = "0px";
+      searchbar.style.top = "0px";
       document
         .getElementById("searchtxt")
         .textContent = "Close";
-      document
-        .getElementById("searchbar")
-        .focus();
-      clearInterval(this.resProvider.refreshInterval);
+      searchbar.focus();
       this.searchOpen = true;
     }
   }

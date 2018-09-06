@@ -1,8 +1,18 @@
 page-receipt-detail {
     ion-content {
-        background-color: rgba(241, 245, 250, 0.90) !important;
+        background-color: rgba(241, 245, 250, 0.7) !important;
     }
-    .back-button{
+    .column.left {
+        ion-icon {
+            margin-right: 5px;
+        }
+    }
+    .column.right {
+        ion-icon {
+            margin-right: 5px;
+        }
+    }
+    .back-button {
         display: none !important;
     }
     #bgclose {
@@ -12,24 +22,34 @@ page-receipt-detail {
         top: 0;
         height: 100%;
     }
-    ion-refresher{
+    .actions {
+        position: relative;
+        .action {
+            color: #0f2841;
+            border-radius: 100px;
+            padding: 2px 10px;
+            margin-bottom: 5px;
+        }
+    }
+    ion-refresher {
         display: block;
         z-index: 2;
         top: 42px !important;
         pointer-events: none;
         position: relative;
     }
-    .has-refresher > .scroll-content {
+    .scroll-content {
         background-color: transparent;
         border: none;
+        padding: 10px 20px;
     }
     .the-receipt {
-        margin: 20px auto;
+        margin-top: 10px;
         padding: 10px;
         background-color: #FEFEF8;
-        box-shadow: 0 5px 20px rgba(39,112,152,0.15);
+        box-shadow: 0 5px 20px rgba(39, 112, 152, 0.15);
         position: relative;
-        width: calc(100% - 40px);
+        width: 100%;
     }
     .the-receipt:after {
         content: '';

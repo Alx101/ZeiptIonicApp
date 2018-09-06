@@ -1,0 +1,30 @@
+// Shared Variables
+$shadows: (
+  greenshadow:      0 0 15px #3CBF71,
+  darkshadow:       0 0 30px rgba(39, 112, 152, 0.1),
+  btnshadow:        0 1px 10px -4px #277098
+);
+
+
+// Named Color Variables
+$colors: (
+  darkblue:    #0F2841,   //Header & dark background color
+  icon:        #277098,   //Icon & illustration color + borders & shadow
+  green:       #3CBF71,   //Logo-color & ex cta-button
+  light:       #F1F5FA,   //Light background color
+  danger:      #dd0000    //errors etc
+);
+
+// Ionicons
+// --------------------------------------------------
+// The premium icon font for Ionic. For more info, please see:
+// http://ionicframework.com/docs/v2/ionicons/
+
+@import "ionic.ionicons";
+
+
+// Fonts
+// --------------------------------------------------
+
+@import "roboto";
+@import "noto-sans";
